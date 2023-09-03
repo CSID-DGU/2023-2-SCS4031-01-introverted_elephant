@@ -13,10 +13,10 @@
         android:theme="@style/Theme.CapstoneDesign"
         tools:targetApi="31">
         <activity
-            android:name=".SignUpActivity"
+            android:name=".login.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".login.LoginActivity"
             android:exported="true"> <!-- LoginActivity를 런처 액티비티로 설정 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

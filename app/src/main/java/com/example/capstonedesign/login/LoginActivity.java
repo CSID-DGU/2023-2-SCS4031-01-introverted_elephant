@@ -1,4 +1,4 @@
-package com.example.capstonedesign;
+package com.example.capstonedesign.login;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.capstonedesign.MainActivity;
+import com.example.capstonedesign.R;
 import com.google.android.gms.common.SignInButton;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
