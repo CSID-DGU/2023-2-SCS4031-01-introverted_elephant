@@ -1,10 +1,15 @@
 package com.example.capstonedesign;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -12,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.capstonedesign.login.LoginActivity;
@@ -34,27 +40,26 @@ public class MyFragment extends Fragment {
         //로그아웃 버튼 클릭 시 로그아웃
         signOut(view);
 
-        mAuth = FirebaseAuth.getInstance();
-        deleteIDChip = view.findViewById(R.id.deleteIDChip);
+        //회원 탈퇴 버튼 클릭 시 회원 탈퇴
+        deleteID(view);
 
-        deleteIDChip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDeleteConfirmationDialog();
-            }
-        });
-
+        TextView nicknameTextView = view.findViewById(R.id.nicknameTextView);
+        Context context = getActivity();
+        SharedPreferences preferences = context.getSharedPreferences("user_preferences", MODE_PRIVATE);
+        String nickName = preferences.getString("nickName", "임시 닉네임");
+        nicknameTextView.setText(nickName);
 
         return view;
+        //여기까지 oncreateview
     }
-    //여기까지 oncreateview
 
 
 
     //로그아웃 함수
-    private void signOut(View view) {
+    private void signOut(@NonNull View view) {
         // 로그아웃 버튼을 찾아서 클릭 리스너를 설정합니다.
         Chip signOutChip = view.findViewById(R.id.signOutChip);
+
         signOutChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +70,19 @@ public class MyFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish(); // 현재 액티비티를 종료하여 뒤로 가기 버튼으로 돌아갈 수 없게 함
+            }
+        });
+    }
+
+    //회원 탈퇴 버튼 함수
+    private void deleteID(View view) {
+        mAuth = FirebaseAuth.getInstance();
+        deleteIDChip = view.findViewById(R.id.deleteIDChip);
+
+        deleteIDChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteConfirmationDialog();
             }
         });
     }

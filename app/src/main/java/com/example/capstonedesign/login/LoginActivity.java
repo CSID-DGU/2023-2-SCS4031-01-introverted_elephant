@@ -23,9 +23,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -46,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         // 현재 사용자 확인
         FirebaseUser currentUser = auth.getCurrentUser();
 
-        // 사용자가 로그인한 경우에만 MainActivity로 이동
+        // 사용자가 로그인이 된 경우에만 MainActivity로 이동
         if (currentUser != null) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -57,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             passwordEditText = findViewById(R.id.passwordEditText);
             signUpButton = findViewById(R.id.signUpButton);
             signInButton = findViewById(R.id.signInButton);
+
 
             // 구글 로그인 버튼 클릭 이벤트 핸들러
             SignInButton googleSignInButton = findViewById(R.id.btn_google_sign_in);
@@ -74,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
 
-
+            //회원가입 버튼
             signUpButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -83,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
 
+            //로그인 버튼
             signInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -142,8 +150,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+
+        //onCreate
     }
 
+    //구글 로그인
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -151,25 +162,57 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if (resultCode == RESULT_OK) {
-                // 구글 로그인 성공
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                // 이제 로그인한 사용자 정보를 활용할 수 있습니다.
-                // 예: user.getDisplayName(), user.getEmail() 등
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                if (currentUser != null) {
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    DocumentReference userRef = db.collection("Users").document(currentUser.getUid());
 
-                // 로그인 성공 후 MainActivity로 이동하는 코드를 추가하세요.
-                Toast.makeText(this, "구글 아이디로 로그인 하였습니다.", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            } else {
-                // 구글 로그인 실패 또는 사용자가 취소한 경우
-                if (response == null) {
-                    Toast.makeText(this, "구글 로그인이 취소되었습니다.", Toast.LENGTH_SHORT).show();
-                    return;
+                    // 사용자 정보를 가져오기
+                    userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    // 이미 사용자 정보가 Firestore에 있음
+                                    // MainActivity로 이동
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    // Firestore에 사용자 정보가 없음
+                                    // 정보를 저장하고 MainActivity로 이동
+                                    Map<String, Object> userInfo = new HashMap<>();
+                                    userInfo.put("nickname", "사용자의 닉네임");
+                                    userInfo.put("nickname1", "사용자의 닉네임1");
+
+
+                                    userRef.set(userInfo, SetOptions.merge())
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        // 사용자 정보 저장 성공
+                                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    } else {
+                                                        // 사용자 정보 저장 실패 처리
+                                                        // 오류 메시지를 표시하거나 다른 조치를 취할 수 있음
+                                                    }
+                                                }
+                                            });
+                                }
+                            } else {
+                                // Firestore에서 정보 가져오기 실패 처리
+                                // 오류 메시지를 표시하거나 다른 조치를 취할 수 있음
+                            }
+                        }
+                    });
                 }
-                Toast.makeText(this, "구글 로그인 실패: " + response.getError().getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
+
 
 }

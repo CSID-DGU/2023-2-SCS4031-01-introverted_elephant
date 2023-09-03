@@ -15,6 +15,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -52,6 +59,18 @@ public class SignUpActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // 회원가입 성공
                                     Toast.makeText(SignUpActivity.this, "회원가입에 성공했습니다. 자동으로 로그인됩니다.", Toast.LENGTH_LONG).show();
+                                    // Firebase Firestore에 사용자 정보 저장
+                                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                    if (currentUser != null) {
+                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                        DocumentReference userRef = db.collection("Users").document(currentUser.getUid());
+
+                                        Map<String, Object> userInfo = new HashMap<>();
+                                        userInfo.put("nickname", "임시 닉네임");
+
+                                        userRef.set(userInfo, SetOptions.merge()); // SetOptions.merge()를 사용하여 문서를 덮어쓰지 않고 업데이트
+                                    }
+
                                     Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                                     startActivity(intent);
 

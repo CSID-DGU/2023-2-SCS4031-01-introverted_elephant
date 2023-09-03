@@ -28,22 +28,24 @@ public class MainActivity extends AppCompatActivity {
         init(); //객체 정의
         SettingListener(); //리스너 등록
 
+
+
         //맨 처음 시작할 탭 설정
         bottomNavigationView.setSelectedItemId(R.id.item_main_fragment);
 
-
+//onCreate
     }
 
     private void init() {
         main_frame = findViewById(R.id.main_frame);
         bottomNavigationView = findViewById(R.id.bottomNavi);
     }
-
     private void SettingListener() {
         //선택 리스너 등록
         bottomNavigationView.setOnNavigationItemSelectedListener(new TabSelectedListener());
     }
 
+    //네비게이션 바
     class TabSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
         @SuppressLint("NonConstantResourceId")
         @Override
