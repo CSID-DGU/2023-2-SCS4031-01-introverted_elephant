@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 } else {
                                     // 회원가입 실패, 오류 메시지 출력
                                     String errorMessage = task.getException().getMessage();
-                                    Toast.makeText(SignUpActivity.this, "회원가입에 실패했습니다. 오류: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignUpActivity.this, "회원가입에 실패했습니다. 이메일 양식에 맞는 지 확인해주세요." + errorMessage, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
