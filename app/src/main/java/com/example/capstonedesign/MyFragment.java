@@ -17,20 +17,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.capstonedesign.login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyFragment extends Fragment {
 
     private Button deleteIDChip;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private SharedPreferences preferences;
+    private TextView nicknameTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,17 +54,84 @@ public class MyFragment extends Fragment {
         //회원 탈퇴 버튼 클릭 시 회원 탈퇴
         deleteID(view);
 
+        //닉네임 관련 함수
+        nicknameEvent(view);
+
+        return view;
+        //여기까지 oncreateview
+    }
+
+    //닉네임 불러오고 변경하는 함수
+    private void nicknameEvent(View view) {
+        //닉네임 불러오기
         TextView nicknameTextView = view.findViewById(R.id.nicknameTextView);
         Context context = getActivity();
         SharedPreferences preferences = context.getSharedPreferences("user_preferences", MODE_PRIVATE);
         String nickName = preferences.getString("nickName", "임시 닉네임");
         nicknameTextView.setText(nickName);
 
-        return view;
-        //여기까지 oncreateview
+        Chip nicknameChangeChip = view.findViewById(R.id.nicknameChangeChip);
+        nicknameChangeChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final EditText editText = new EditText(getActivity());
+                editText.setHint("변경하실 닉네임을 입력해주세요.");
+
+                // AlertDialog 생성
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("닉네임 변경");
+                builder.setView(editText);
+                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 입력된 텍스트를 사용하여 원하는 작업 수행
+                        String enteredText = editText.getText().toString();
+
+                        // 현재 사용자 가져오기
+                        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                        if (currentUser != null) {
+                            // 파이어스토어 인스턴스 가져오기
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            // 현재 사용자의 UID 가져오기
+                            String uid = currentUser.getUid();
+                            // Users 컬렉션에서 현재 사용자의 UID로 된 문서 업데이트
+                            DocumentReference userRef = db.collection("Users").document(uid);
+                            // 업데이트할 데이터 생성
+                            Map<String, Object> updates = new HashMap<>();
+                            updates.put("nickname", enteredText);
+
+                            // 문서 업데이트
+                            userRef.update(updates)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // 업데이트 성공 시 작업 수행
+                                            SharedPreferences preferences = getActivity().getSharedPreferences("user_preferences", MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = preferences.edit();
+                                            editor.putString("nickName", enteredText);
+                                            editor.apply();
+
+                                            Toast.makeText(getActivity(), "닉네임이 변경되었습니다.", Toast.LENGTH_SHORT).show();
+
+                                            nicknameTextView.setText(enteredText);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getActivity(), "오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    }
+                });
+                builder.setNegativeButton("취소", null);
+
+                // 다이얼로그 표시
+                builder.create().show();
+            }
+        });
     }
-
-
 
     //로그아웃 함수
     private void signOut(@NonNull View view) {
