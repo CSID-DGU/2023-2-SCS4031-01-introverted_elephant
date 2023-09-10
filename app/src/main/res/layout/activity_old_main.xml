@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".old_man.OldMainActivity">
+
+    <Button
+        android:id="@+id/oldSettingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="설정"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/backgroundTextView1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#6A57EF35"
+        app:layout_constraintBottom_toBottomOf="@+id/yesButton1"
+        app:layout_constraintEnd_toEndOf="@+id/contentTextView1"
+        app:layout_constraintStart_toStartOf="@+id/contentTextView1"
+        app:layout_constraintTop_toTopOf="@+id/timeTextView1" />
+
+    <TextView
+        android:id="@+id/titleTextView1"
+        android:layout_width="124dp"
+        android:layout_height="47dp"
+        android:text="일정 알림"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/contentTextView1"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/contentTextView1" />
+
+    <TextView
+        android:id="@+id/contentTextView1"
+        android:layout_width="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_height="130dp"
+        android:text="아버님, 오늘 요양원 3시까지 가셔야 합니다~ 늦으시면 안되요! 신분증 꼭 챙기세요!"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeTextView1" />
+
+    <TextView
+        android:id="@+id/timeTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:text="13시 40분"
+        android:textSize="30sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/contentTextView1"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/oldSettingButton" />
+
+    <Button
+        android:id="@+id/yesButton1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/contentTextView1"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/contentTextView1" />
+
+    <Button
+        android:id="@+id/noButton1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="실패"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/contentTextView1"
+        app:layout_constraintTop_toBottomOf="@+id/contentTextView1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/backgroundTextView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#6AEFD635"
+        app:layout_constraintBottom_toBottomOf="@+id/yesButton2"
+        app:layout_constraintEnd_toEndOf="@+id/contentTextView2"
+        app:layout_constraintStart_toStartOf="@+id/contentTextView2"
+        app:layout_constraintTop_toTopOf="@+id/timeTextView2" />
+
+    <TextView
+        android:id="@+id/titleTextView2"
+        android:layout_width="124dp"
+        android:layout_height="47dp"
+        android:text="투약 알림"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/contentTextView2"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/contentTextView2" />
+
+    <TextView
+        android:id="@+id/contentTextView2"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:text="약 드실 시간입니다. 빨간약 한개 흰 약 2개 드세요~ "
+        android:textSize="30sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeTextView2" />
+
+    <TextView
+        android:id="@+id/timeTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:text="15시 40분"
+
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/contentTextView2"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/yesButton1" />
+
+    <Button
+        android:id="@+id/yesButton2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/contentTextView2"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/contentTextView2" />
+
+    <Button
+        android:id="@+id/noButton2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="실패"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/contentTextView2"
+        app:layout_constraintTop_toBottomOf="@+id/contentTextView2" />
+
+    <TextView
+        android:id="@+id/backgroundTextView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#6A35EFB4"
+        app:layout_constraintBottom_toBottomOf="@+id/yesButton3"
+        app:layout_constraintEnd_toEndOf="@+id/contentTextView3"
+        app:layout_constraintStart_toStartOf="@+id/contentTextView3"
+        app:layout_constraintTop_toTopOf="@+id/timeTextView3" />
+
+    <TextView
+        android:id="@+id/titleTextView3"
+        android:layout_width="124dp"
+        android:layout_height="47dp"
+        android:text="저녁 알림"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/contentTextView3"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/contentTextView3" />
+
+    <TextView
+        android:id="@+id/contentTextView3"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:text="저녁 드셔야합니다~ 밥솥에 밥 있어요~"
+        android:textSize="30sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeTextView3" />
+
+    <TextView
+        android:id="@+id/timeTextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:text="18시 40분"
+        android:textSize="30sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/contentTextView3"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/yesButton2" />
+
+    <Button
+        android:id="@+id/yesButton3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/contentTextView3"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintTop_toBottomOf="@+id/contentTextView3" />
+
+    <Button
+        android:id="@+id/noButton3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="실패"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
+        app:layout_constraintStart_toStartOf="@+id/contentTextView3"
+        app:layout_constraintTop_toBottomOf="@+id/contentTextView3" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

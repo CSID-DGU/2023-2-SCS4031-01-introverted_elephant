@@ -183,8 +183,8 @@ public class LoginActivity extends AppCompatActivity {
                                     // Firestore에 사용자 정보가 없음
                                     // 정보를 저장하고 MainActivity로 이동
                                     Map<String, Object> userInfo = new HashMap<>();
-                                    userInfo.put("nickname", "사용자의 닉네임");
-                                    userInfo.put("nickname1", "사용자의 닉네임1");
+                                    userInfo.put("nickname", "임시 닉네임");
+                                    //userInfo.put("추가정보", "추가정보");
 
 
                                     userRef.set(userInfo, SetOptions.merge())

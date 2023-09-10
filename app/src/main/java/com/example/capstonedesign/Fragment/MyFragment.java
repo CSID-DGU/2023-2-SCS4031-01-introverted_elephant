@@ -1,4 +1,4 @@
-package com.example.capstonedesign;
+package com.example.capstonedesign.Fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.capstonedesign.R;
 import com.example.capstonedesign.login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

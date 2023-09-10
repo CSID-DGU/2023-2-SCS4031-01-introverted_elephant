@@ -4,21 +4,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+
+import com.example.capstonedesign.Fragment.CommunityFragment;
+import com.example.capstonedesign.Fragment.MainFragment;
+import com.example.capstonedesign.Fragment.MyFragment;
+import com.example.capstonedesign.login.LoginActivity;
+import com.example.capstonedesign.old_man.OldMainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Objects;
@@ -37,12 +39,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         init(); //객체 정의
-        SettingListener(); //리스너 등록
 
         userInformation(); //사용자 정보
 
         //맨 처음 시작할 탭 설정
-        bottomNavigationView.setSelectedItemId(R.id.item_main_fragment);
 
 //onCreate
     }
@@ -70,23 +70,53 @@ public class MainActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document != null && document.exists()) {
-                                    // Firestore에서 닉네임 필드 가져오기
-                                    String userNickname = Objects.requireNonNull(document.getString("nickname"));
+                                    if (document.contains("who")) {
+                                        // 'who' 필드가 있는 경우
 
-                                    // SharedPreferences에 닉네임 저장
-                                    SharedPreferences.Editor editor = preferences.edit();
-                                    editor.putString("nickName", userNickname);
-                                    editor.apply();
-                                } else {
-                                    // 문서가 없거나 문서 내에 'nickname' 필드가 없을 경우 처리
-                                    Toast.makeText(MainActivity.this, "사용자 닉네임을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show();
+                                        String who = Objects.requireNonNull(document.getString("who"));
+
+                                        //admin이 아니면 노약자 페이지로
+                                        if (!who.equals("admin")) {
+                                            Intent intent = new Intent(MainActivity.this, OldMainActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        } else {
+
+                                            // 보호자 필드들 가져오기
+                                            String userNickname = Objects.requireNonNull(document.getString("nickname"));
+                                            String oldMan = document.getString("oldMan");
+                                            if (oldMan == null) {
+                                                oldMan = "";
+                                            }
+
+                                            // SharedPreferences에 값들 저장
+                                            SharedPreferences.Editor editor = preferences.edit();
+                                            editor.putString("nickName", userNickname);
+                                            editor.putString("who", who);
+                                            editor.putString("oldMan", oldMan);
+                                            editor.apply();
+
+                                        }
+
+                                    } else {
+                                        // 'who' 필드가 없는 경우 초기 화면으로
+                                        Intent intent = new Intent(MainActivity.this, StartActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+
+
+                                    //fragment 등록
+                                    SettingListener(); //리스너 등록
+                                    bottomNavigationView.setSelectedItemId(R.id.item_main_fragment);
+
                                 }
-                            } else {
-                                // Firestore에서 데이터를 가져오지 못한 경우 처리
-                                Toast.makeText(MainActivity.this, "Firestore에서 사용자 정보를 가져오지 못했습니다.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
+
+
         }
     }
 
@@ -103,6 +133,11 @@ public class MainActivity extends AppCompatActivity {
                         .replace(R.id.main_frame, new MainFragment())
                         .commit();
                 return true;
+            } else if (itemId == R.id.item_community_fragment) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_frame, new CommunityFragment())
+                        .commit();
+                return true;
             } else if (itemId == R.id.item_my_fragment) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.main_frame, new MyFragment())
@@ -114,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     }
+
     private void init() {
         main_frame = findViewById(R.id.main_frame);
         bottomNavigationView = findViewById(R.id.bottomNavi);

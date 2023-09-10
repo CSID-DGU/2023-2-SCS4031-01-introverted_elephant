@@ -13,6 +13,24 @@
         android:theme="@style/Theme.CapstoneDesign"
         tools:targetApi="31">
         <activity
+            android:name=".MedicineActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MasterStartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".old_man.OldSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".old_man.OldStartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".old_man.OldMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".login.SignUpActivity"
             android:exported="false" />
         <activity
@@ -20,13 +38,13 @@
             android:exported="true"> <!-- LoginActivity를 런처 액티비티로 설정 -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>
