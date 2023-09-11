@@ -7,11 +7,11 @@
     tools:context=".MedicineActivity">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/memoTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:text="투약 알림"
+        android:text="알림"
         app:layout_constraintBottom_toTopOf="@+id/textTextInputLayout"
         app:layout_constraintStart_toStartOf="@+id/textTextInputLayout" />
 
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:text="12시 30분"
+        android:text="오늘 12시 30분"
         app:layout_constraintBottom_toTopOf="@+id/textTextInputLayout"
         app:layout_constraintEnd_toEndOf="@+id/textTextInputLayout" />
 

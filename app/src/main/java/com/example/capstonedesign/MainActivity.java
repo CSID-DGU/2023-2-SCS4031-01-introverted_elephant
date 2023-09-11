@@ -77,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
 
                                         //admin이 아니면 노약자 페이지로
                                         if (!who.equals("admin")) {
+                                            SharedPreferences.Editor editor = preferences.edit();
+                                            editor.putString("uid", uid);
+                                            editor.apply();
+
                                             Intent intent = new Intent(MainActivity.this, OldMainActivity.class);
                                             startActivity(intent);
                                             finish();

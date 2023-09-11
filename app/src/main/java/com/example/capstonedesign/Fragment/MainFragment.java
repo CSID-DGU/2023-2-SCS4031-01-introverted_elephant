@@ -24,21 +24,25 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainFragment extends Fragment {
 
-    private SharedPreferences preferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        SharedPreferences preferences = getActivity().getSharedPreferences("user_preferences", MODE_PRIVATE);
 
         FloatingActionButton medicineButton = view.findViewById(R.id.medicineButton);
         medicineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // SharedPreferences에 값들 저장
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("title", "투약알림");
+                editor.apply();
                 Intent intent = new Intent(getActivity(), MedicineActivity.class);
                 startActivity(intent);
-                //getActivity().finish();
+
             }
         });
 
@@ -46,7 +50,12 @@ public class MainFragment extends Fragment {
         foodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 버튼이 클릭되었을 때 수행할 작업을 여기에 추가
+                // SharedPreferences에 값들 저장
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("title", "식사알림");
+                editor.apply();
+                Intent intent = new Intent(getActivity(), MedicineActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -54,7 +63,12 @@ public class MainFragment extends Fragment {
         hospitalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 버튼이 클릭되었을 때 수행할 작업을 여기에 추가
+                // SharedPreferences에 값들 저장
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("title", "병원알림");
+                editor.apply();
+                Intent intent = new Intent(getActivity(), MedicineActivity.class);
+                startActivity(intent);
             }
         });
 

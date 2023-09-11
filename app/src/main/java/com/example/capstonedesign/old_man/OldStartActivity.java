@@ -76,10 +76,20 @@ public class OldStartActivity extends AppCompatActivity {
                                                                         @Override
                                                                         public void onSuccess(Void aVoid) {
 
-                                                                            Toast.makeText(OldStartActivity.this, "설정되었습니다.", Toast.LENGTH_SHORT).show();
-                                                                            Intent intent = new Intent(OldStartActivity.this, MainActivity.class);
-                                                                            startActivity(intent);
-                                                                            finish();
+                                                                            Map<String, Object> messageCollection = new HashMap<>();
+                                                                            db.collection("Users").document(uid)
+                                                                                    .collection("message") // "message" 컬렉션을 "whoValue" 문서 내에 추가
+                                                                                    .document("anyDocument") // 빈 문서 추가
+                                                                                    .set(messageCollection) // 빈 문서에 데이터 추가
+                                                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                        @Override
+                                                                                        public void onSuccess(Void aVoid) {
+                                                                                            Toast.makeText(OldStartActivity.this, "설정되었습니다.", Toast.LENGTH_SHORT).show();
+                                                                                            Intent intent = new Intent(OldStartActivity.this, MainActivity.class);
+                                                                                            startActivity(intent);
+                                                                                            finish();
+                                                                                        }
+                                                                                    });
 
                                                                         }
                                                                     });
