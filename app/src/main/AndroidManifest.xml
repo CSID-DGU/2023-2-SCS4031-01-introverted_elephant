@@ -13,19 +13,19 @@
         android:theme="@style/Theme.CapstoneDesign"
         tools:targetApi="31">
         <activity
-            android:name=".MedicineActivity"
+            android:name=".NotificationActivity"
             android:exported="false" />
         <activity
-            android:name=".MasterStartActivity"
+            android:name=".start.MasterStartActivity"
             android:exported="false" />
         <activity
-            android:name=".StartActivity"
+            android:name=".start.StartActivity"
             android:exported="false" />
         <activity
             android:name=".old_man.OldSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".old_man.OldStartActivity"
+            android:name=".start.OldStartActivity"
             android:exported="false" />
         <activity
             android:name=".old_man.OldMainActivity"

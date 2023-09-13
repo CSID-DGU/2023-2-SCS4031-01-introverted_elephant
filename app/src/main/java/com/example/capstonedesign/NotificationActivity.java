@@ -1,21 +1,17 @@
 package com.example.capstonedesign;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MedicineActivity extends AppCompatActivity {
+public class NotificationActivity extends AppCompatActivity {
 
     private String time = "";
     private int hour = 12;
@@ -35,7 +31,7 @@ public class MedicineActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medicine);
+        setContentView(R.layout.activity_notification);
 
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
         String title = preferences.getString("title", "");
@@ -85,7 +81,7 @@ public class MedicineActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                Toast.makeText(MedicineActivity.this, "알림이 전송되었습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NotificationActivity.this, "알림이 전송되었습니다.", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         });
@@ -100,7 +96,7 @@ public class MedicineActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(MedicineActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(NotificationActivity.this);
                 View dialogView = getLayoutInflater().inflate(R.layout.dialog_time_setting, null);
 
                 NumberPicker dayPicker = dialogView.findViewById(R.id.dayPicker);

@@ -12,10 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.capstonedesign.MainActivity;
-import com.example.capstonedesign.MedicineActivity;
 import com.example.capstonedesign.R;
-import com.example.capstonedesign.login.LoginActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;

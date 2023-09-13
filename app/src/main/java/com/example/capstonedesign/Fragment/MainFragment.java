@@ -2,7 +2,6 @@ package com.example.capstonedesign.Fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,14 +11,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.example.capstonedesign.MainActivity;
-import com.example.capstonedesign.MedicineActivity;
+import com.example.capstonedesign.NotificationActivity;
 import com.example.capstonedesign.R;
-import com.example.capstonedesign.login.LoginActivity;
-import com.example.capstonedesign.old_man.OldMainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainFragment extends Fragment {
@@ -40,7 +34,7 @@ public class MainFragment extends Fragment {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("title", "투약알림");
                 editor.apply();
-                Intent intent = new Intent(getActivity(), MedicineActivity.class);
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
                 startActivity(intent);
 
             }
@@ -54,7 +48,7 @@ public class MainFragment extends Fragment {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("title", "식사알림");
                 editor.apply();
-                Intent intent = new Intent(getActivity(), MedicineActivity.class);
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
                 startActivity(intent);
             }
         });
@@ -67,7 +61,7 @@ public class MainFragment extends Fragment {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("title", "병원알림");
                 editor.apply();
-                Intent intent = new Intent(getActivity(), MedicineActivity.class);
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
                 startActivity(intent);
             }
         });
