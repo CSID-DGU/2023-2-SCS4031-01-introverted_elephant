@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Toast;
 
@@ -36,8 +37,24 @@ public class OldSettingActivity extends AppCompatActivity {
         //회원 탈퇴 버튼 클릭 시 회원 탈퇴
         deleteID(view);
 
+        notification(view);
+
     }
 
+    private void notification(View view) {
+        Chip finishChip = view.findViewById(R.id.finishChip);
+        finishChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 앱 종료
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                startActivity(intent);
+
+            }
+        });
+    }
 
 
     //로그아웃 함수

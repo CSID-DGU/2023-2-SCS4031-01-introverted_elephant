@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.capstonedesign.FirestoreNotificationService;
 import com.example.capstonedesign.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +30,10 @@ public class OldMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_old_main);
+
+        //알림 서비스 킴
+        Intent serviceIntent = new Intent(this, FirestoreNotificationService.class);
+        startService(serviceIntent);
 
 
         //설정창 가기
