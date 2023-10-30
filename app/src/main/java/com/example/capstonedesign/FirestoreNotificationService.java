@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.IBinder;
 import android.util.Log;
@@ -14,16 +15,18 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.example.capstonedesign.login.LoginActivity;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.MetadataChanges;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class FirestoreNotificationService extends Service {
 
     private static final String TAG = "FirestoreNotification";
-    private static final String NOTIFICATION_CHANNEL_ID = "your_notification_channel_id";
-
+    private static final String DEFAULT_NOTIFICATION_CHANNEL_ID = "default_notification_channel";
+    private static final String CUSTOM_NOTIFICATION_CHANNEL_ID = "custom_notification_channel";
     private FirebaseFirestore db;
     private ListenerRegistration registration;
 
@@ -35,7 +38,8 @@ public class FirestoreNotificationService extends Service {
         db = FirebaseFirestore.getInstance();
 
         // 알림 채널 생성
-        createNotificationChannel();
+        createDefaultNotificationChannel();
+        createCustomNotificationChannel();
     }
 
     @Override
@@ -44,15 +48,30 @@ public class FirestoreNotificationService extends Service {
         startListeningToFirestoreChanges();
 
         // 서비스를 Foreground Service로 시작
-        startForeground(1, getNotification("앱이 백그라운드에서 실행 중입니다."));
+        startForeground(2, getNotification2("앱이 백그라운드에서 실행 중입니다2."));
+        startForeground(1, getNotification1("앱이 백그라운드에서 실행 중입니다1."));
 
         // 서비스가 종료되지 않도록 START_STICKY 반환
         return START_STICKY;
     }
 
-    private Notification getNotification(String contentText) {
+    private Notification getNotification1(String contentText) {
         // Foreground Service를 나타내는 알림 생성
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+        // 이거 지워도 잘 되는지 확인!!!!!!!!!
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, DEFAULT_NOTIFICATION_CHANNEL_ID);
+        builder.setSmallIcon(R.drawable.baseline_chat_24);
+        builder.setContentTitle("앱 이름");
+        builder.setContentText(contentText);
+        // 다른 액티비티로 이동할 수 있는 PendingIntent 설정
+
+        // 반환
+        return builder.build();
+    }
+
+    private Notification getNotification2(String contentText) {
+        // Foreground Service를 나타내는 알림 생성
+        // 이거 지워도 잘 되는지 확인!!!!!!!!!
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CUSTOM_NOTIFICATION_CHANNEL_ID);
         builder.setSmallIcon(R.drawable.baseline_chat_24);
         builder.setContentTitle("앱 이름");
         builder.setContentText(contentText);
@@ -67,7 +86,6 @@ public class FirestoreNotificationService extends Service {
         // Firestore 변경 사항 감지 중지
         stopListeningToFirestoreChanges();
 
-        //밑에 코드 두줄 지우면 앱 꺼져있어도 알림 계속 받기 가능, 하지만 플레이스토어 등록 불가
         // Foreground Service 중지
         stopForeground(true);
         // 서비스 종료
@@ -84,21 +102,36 @@ public class FirestoreNotificationService extends Service {
 
     public void startListeningToFirestoreChanges() {
         registration = db.collection("Users").document("Q2nzmvWZgRSPZzaaHlXePgprpie2")
-                .collection("message") // "message" 서브컬렉션을 감시
-                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                .collection("message")
+                .addSnapshotListener(MetadataChanges.INCLUDE, (queryDocumentSnapshots, e) -> {
                     if (e != null) {
-                        Log.w(TAG, "Listen failed.", e);
+                        // 오류 처리
                         return;
                     }
 
                     for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                         if (dc.getType() == DocumentChange.Type.ADDED) {
-                            // Firestore 문서가 추가되면 로컬 알림 표시
-                            sendLocalNotification("새로운 문서가 추가되었습니다.");
+                            int hourValue = 0; // 기본값 설정
+                            Long hourLong = dc.getDocument().getLong("hour");
+                            if (hourLong != null) {
+                                hourValue = hourLong.intValue();
+                            }
+
+                            if (hourValue == 12) {
+                                // hour가 12이면 첫 번째 알림 표시
+                                sendDefaultLocalNotification("새로운 알림이 도착했습니다.");
+                                Log.d("121212", "1212");
+
+                            } else if (hourValue == 13) {
+                                // hour가 13이면 두 번째 알림 표시
+                                Log.d("121212", "1313");
+                                sendCustomLocalNotification("사용자 지정 알림이 도착했습니다.");
+                            }
                         }
                     }
                 });
     }
+
 
     public void stopListeningToFirestoreChanges() {
         if (registration != null) {
@@ -106,31 +139,71 @@ public class FirestoreNotificationService extends Service {
         }
     }
 
-    private void createNotificationChannel() {
+    // 기본 알림 채널 생성
+    private void createDefaultNotificationChannel() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            CharSequence channelName = "Your Channel Name";
+            CharSequence channelName = "Default Channel";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
 
-            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName, importance);
-
-            // 알림 채널을 시스템에 등록
+            NotificationChannel channel = new NotificationChannel(DEFAULT_NOTIFICATION_CHANNEL_ID, channelName, importance);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
     }
 
-    private void sendLocalNotification(String message) {
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+    // 사용자 지정 알림 채널 생성
+    private void createCustomNotificationChannel() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            CharSequence channelName = "Custom Channel";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
 
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+            NotificationChannel channel = new NotificationChannel(CUSTOM_NOTIFICATION_CHANNEL_ID, channelName, importance);
+            // 알림음 설정 (res/raw 디렉토리에 있는 galaxy.mp3 사용)
+            Uri soundUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.galaxy);
+            channel.setSound(soundUri, null);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    // 기본 알림 보내기
+    private void sendDefaultLocalNotification(String message) {
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, DEFAULT_NOTIFICATION_CHANNEL_ID);
+
+        // 진동 패턴 설정
+        long[] pattern = {0, 1000, 1000, 1000};
+        notificationBuilder.setVibrate(pattern);
+
+        Intent intent = new Intent(this, LoginActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         notificationBuilder.setSmallIcon(R.drawable.baseline_chat_24);
-        notificationBuilder.setContentTitle("메일 알림");
+        notificationBuilder.setContentTitle("알림 도착");
         notificationBuilder.setContentText(message);
         notificationBuilder.setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, notificationBuilder.build());
+    }
+
+    // 사용자 지정 알림 보내기
+    private void sendCustomLocalNotification(String message) {
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CUSTOM_NOTIFICATION_CHANNEL_ID);
+
+        // 진동 패턴 설정
+        long[] pattern = {0, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000};
+        notificationBuilder.setVibrate(pattern);
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+
+        notificationBuilder.setSmallIcon(R.drawable.baseline_chat_24);
+        notificationBuilder.setContentTitle("사용자 지정 알림 도착");
+        notificationBuilder.setContentText(message);
+        notificationBuilder.setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(2, notificationBuilder.build());
     }
 }
