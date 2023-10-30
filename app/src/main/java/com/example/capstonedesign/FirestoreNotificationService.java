@@ -193,11 +193,11 @@ public class FirestoreNotificationService extends Service {
         long[] pattern = {0, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000};
         notificationBuilder.setVibrate(pattern);
 
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, oldWarningActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         notificationBuilder.setSmallIcon(R.drawable.baseline_chat_24);
-        notificationBuilder.setContentTitle("사용자 지정 알림 도착");
+        notificationBuilder.setContentTitle("경고 알림 도착");
         notificationBuilder.setContentText(message);
         notificationBuilder.setContentIntent(pendingIntent);
 
