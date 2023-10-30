@@ -16,6 +16,9 @@
         android:theme="@style/Theme.CapstoneDesign"
         tools:targetApi="31">
         <activity
+            android:name=".oldWarningActivity"
+            android:exported="false" />
+        <activity
             android:name=".NotificationActivity"
             android:exported="false" />
         <activity
@@ -48,8 +51,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-        <service android:name=".FirestoreNotificationService" />
 
+        <service android:name=".FirestoreNotificationService" />
     </application>
 
 </manifest>

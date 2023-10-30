@@ -111,24 +111,22 @@ public class FirestoreNotificationService extends Service {
 
                     for (DocumentChange dc : queryDocumentSnapshots.getDocumentChanges()) {
                         if (dc.getType() == DocumentChange.Type.ADDED) {
-                            int hourValue = 0; // 기본값 설정
-                            Long hourLong = dc.getDocument().getLong("hour");
-                            if (hourLong != null) {
-                                hourValue = hourLong.intValue();
-                            }
+                            String titleValue = dc.getDocument().getString("title");
 
-                            if (hourValue == 12) {
-                                // hour가 12이면 첫 번째 알림 표시
-                                sendDefaultLocalNotification("새로운 알림이 도착했습니다.");
-                                Log.d("121212", "1212");
-
-                            } else if (hourValue == 13) {
-                                // hour가 13이면 두 번째 알림 표시
-                                Log.d("121212", "1313");
-                                sendCustomLocalNotification("사용자 지정 알림이 도착했습니다.");
+                            if (titleValue != null) {
+                                if (titleValue.equals("경고")) {
+                                    sendCustomLocalNotification("경고 알림이 도착했습니다. 보호자께서 걱정하고 있으니 꼭 확인해주세요.");
+                                    Log.d("121212", "경고알림도착");
+                                } else {
+                                    Log.d("121212", "일반알림도착");
+                                    sendDefaultLocalNotification("새로운 알림이 도착했습니다.");
+                                }
+                            } else {
+                                Log.d("121212", "titleValue가 null입니다.");
                             }
                         }
                     }
+
                 });
     }
 

@@ -70,4 +70,15 @@
         app:layout_constraintTop_toBottomOf="@+id/hospitalButton" />
 
 
+    <Button
+        android:id="@+id/warningButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="경고 알림 보내기"
+        app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
+        app:layout_constraintStart_toStartOf="@+id/medicineButton"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

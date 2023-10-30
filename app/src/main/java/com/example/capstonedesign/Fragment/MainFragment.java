@@ -2,6 +2,8 @@ package com.example.capstonedesign.Fragment;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,10 +13,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.capstonedesign.NotificationActivity;
 import com.example.capstonedesign.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainFragment extends Fragment {
 
@@ -63,6 +73,46 @@ public class MainFragment extends Fragment {
                 editor.apply();
                 Intent intent = new Intent(getActivity(), NotificationActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button warningButton = view.findViewById(R.id.warningButton);
+        warningButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 경고 메시지 생성
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("경고 전송");
+                builder.setMessage("보호대상자의 핸드폰으로 확인이 필수적인 경고가 즉시 전송됩니다. 전송하시겠습니까?");
+                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // SharedPreferences에 값들 저장
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        String oldMan = preferences.getString("oldMan", "");
+
+                        // message 문서 내용
+                        Map<String, Object> newUser = new HashMap<>();
+                        newUser.put("title", "경고");
+
+                        // 컬렉션("users")에 문서 추가
+                        db.collection("Users").document(oldMan).collection("message")
+                                .add(newUser)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Toast.makeText(getActivity(), "경고 알림이 전송되었습니다.", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                });
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
             }
         });
 
