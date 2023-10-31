@@ -1,86 +1,87 @@
 package com.example.test;
 
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.content.Intent;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+import com.example.test.R;
+import com.example.test.StepCounterService;
 
-    SensorManager sensorManager;
-    Sensor stepCountSensor;
-    TextView stepCountView;
-    Button resetButton;
+public class MainActivity extends AppCompatActivity {
 
-    //현재 걸음 수
-    int currentSteps = 0;
+    private TextView tvSteps;
+    private Button btnStartService, btnStopService;
+    private StepReceiver stepReceiver;
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        stepCountView = findViewById(R.id.stepCountView);
-        resetButton = findViewById(R.id.resetButton);
+        tvSteps = findViewById(R.id.tvSteps);
+        btnStartService = findViewById(R.id.btnStartService);
+        btnStopService = findViewById(R.id.btnStopService);
+        stepReceiver = new StepReceiver();
 
-        //활동 퍼미선 체크
-        if(ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED){
-            requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
-        }
+        // 이 예제에서는 걸음 수를 실시간으로 업데이트하지 않았습니다.
+        // BroadcastReceiver나 다른 메커니즘을 사용하여 실시간으로 걸음 수를 업데이트할 수 있습니다.
 
-        //걸음 센서 연결
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        stepCountSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-
-        //디바이스에 걸음 센서의 존재 여부 체크
-        if(stepCountSensor == null){
-            Toast.makeText(this, "No Step Sensor", Toast.LENGTH_SHORT).show();
-        }
-
-        //리셋 버튼 추가 - 리셋 기능
-        resetButton.setOnClickListener(new View.OnClickListener(){
+        btnStartService.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                currentSteps = 0;
-                stepCountView.setText(String.valueOf(currentSteps));
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startStepCounterService();
+                }
+            }
+        });
+
+        btnStopService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopStepCounterService();
             }
         });
     }
-
-    public void onStart() {
-        super.onStart();
-        if(stepCountSensor != null){
-            sensorManager.registerListener(this, stepCountSensor,SensorManager.SENSOR_DELAY_FASTEST);
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(stepReceiver, new IntentFilter("com.example.stepcountapp.STEP_UPDATE"));
     }
 
     @Override
-    public void onSensorChanged(SensorEvent event){
-        if(event.sensor.getType() == Sensor.TYPE_STEP_DETECTOR){
-            if(event.values[0] == 1.0f){
-                currentSteps++;
-                stepCountView.setText(String.valueOf(currentSteps));
-            }
-        }
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(stepReceiver);
     }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy){
+    private class StepReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int steps = intent.getIntExtra("steps", 0);
+            tvSteps.setText("Steps: " + steps);
+        }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startStepCounterService() {
+        Intent serviceIntent = new Intent(this, StepCounterService.class);
+        startForegroundService(serviceIntent);
+        Log.d("MainActivity", "Service started");
 
+    }
+
+    private void stopStepCounterService() {
+        Intent serviceIntent = new Intent(this, StepCounterService.class);
+        stopService(serviceIntent);
     }
 }
