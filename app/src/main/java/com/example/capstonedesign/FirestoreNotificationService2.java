@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.MetadataChanges;
 
-public class FirestoreNotificationService extends Service {
+public class FirestoreNotificationService2 extends Service {
 
     private static final String TAG = "FirestoreNotification";
     private static final String DEFAULT_NOTIFICATION_CHANNEL_ID = "default_notification_channel";
@@ -38,7 +38,7 @@ public class FirestoreNotificationService extends Service {
 
         // 알림 채널 생성
         createDefaultNotificationChannel();
-        createCustomNotificationChannel();
+//        createCustomNotificationChannel();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class FirestoreNotificationService extends Service {
         startListeningToFirestoreChanges();
 
         // 서비스를 Foreground Service로 시작
-        startForeground(2, getNotification2("앱이 백그라운드에서 실행 중입니다2."));
+//        startForeground(2, getNotification2("앱이 백그라운드에서 실행 중입니다2."));
         startForeground(1, getNotification1("앱이 백그라운드에서 실행 중입니다1."));
 
         // 서비스가 종료되지 않도록 START_STICKY 반환
@@ -121,7 +121,7 @@ public class FirestoreNotificationService extends Service {
                                     Log.d("121212", "경고알림도착");
                                 } else {
                                     Log.d("121212", "일반알림도착");
-                                    sendDefaultLocalNotification("새로운 알림이 도착했습니다.");
+                                    sendDefaultLocalNotification("어르신의 안전이 확인되었습니다.");
                                 }
                             } else {
                                 Log.d("121212", "titleValue가 null입니다.");
@@ -179,7 +179,7 @@ public class FirestoreNotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         notificationBuilder.setSmallIcon(R.drawable.baseline_chat_24);
-        notificationBuilder.setContentTitle("알림 도착");
+        notificationBuilder.setContentTitle("안전 확인 완료");
         notificationBuilder.setContentText(message);
         notificationBuilder.setContentIntent(pendingIntent);
 

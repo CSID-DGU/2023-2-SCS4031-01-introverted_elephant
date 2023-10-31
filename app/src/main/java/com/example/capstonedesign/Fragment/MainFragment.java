@@ -96,14 +96,18 @@ public class MainFragment extends Fragment {
                         newUser.put("title", "경고");
 
                         // 컬렉션("users")에 문서 추가
-                        db.collection("Users").document(oldMan).collection("message")
-                                .add(newUser)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        db.collection("Users")
+                                .document(oldMan)
+                                .collection("message")
+                                .document("1") // 원하는 문서 이름 "1"을 설정
+                                .set(newUser) // 데이터 설정
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
-                                    public void onSuccess(DocumentReference documentReference) {
+                                    public void onSuccess(Void aVoid) {
                                         Toast.makeText(getActivity(), "경고 알림이 전송되었습니다.", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+
                     }
                 });
                 builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {

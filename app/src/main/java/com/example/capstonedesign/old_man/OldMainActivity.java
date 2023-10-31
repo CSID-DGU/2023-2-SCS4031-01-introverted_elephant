@@ -31,14 +31,8 @@ public class OldMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_old_main);
 
-        //알림 서비스 킴
-        Intent serviceIntent = new Intent(this, FirestoreNotificationService.class);
-        startService(serviceIntent);
-
-
         //설정창 가기
         oldSetting();
-
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);

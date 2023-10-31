@@ -76,14 +76,22 @@ public class MainActivity extends AppCompatActivity {
 
                                         //admin이 아니면 노약자 페이지로
                                         if (!who.equals("admin")) {
+                                            //알림 서비스 킴
+                                            Intent serviceIntent = new Intent(MainActivity.this, FirestoreNotificationService.class);
+                                            startService(serviceIntent);
+
                                             SharedPreferences.Editor editor = preferences.edit();
                                             editor.putString("uid", uid);
+                                            editor.putString("who", who);
                                             editor.apply();
 
                                             Intent intent = new Intent(MainActivity.this, OldMainActivity.class);
                                             startActivity(intent);
                                             finish();
                                         } else {
+                                            //알림 서비스 킴
+                                            Intent serviceIntent = new Intent(MainActivity.this, FirestoreNotificationService2.class);
+                                            startService(serviceIntent);
 
                                             // 보호자 필드들 가져오기
                                             String userNickname = Objects.requireNonNull(document.getString("nickname"));
@@ -97,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                                             editor.putString("nickName", userNickname);
                                             editor.putString("who", who);
                                             editor.putString("oldMan", oldMan);
+                                            editor.putString("uid", uid);
                                             editor.apply();
 
                                         }
