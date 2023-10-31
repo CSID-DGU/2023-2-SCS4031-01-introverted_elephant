@@ -1,4 +1,4 @@
-package com.example.capstonedesign;
+package com.example.capstonedesign.old_man;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.capstonedesign.old_man.OldMainActivity;
+import com.example.capstonedesign.R;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -71,6 +71,7 @@ public class OldWarningActivity extends AppCompatActivity {
                                                         Log.d("Firestore", "New document added with ID: " + documentReference.getId());
                                                         Intent intent = new Intent(OldWarningActivity.this, OldMainActivity.class);
                                                         startActivity(intent);
+                                                        finish();
                                                         Log.d("121212", "삭제 성공");
                                                     })
                                                     .addOnFailureListener(e -> {

@@ -6,13 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.capstonedesign.FirestoreNotificationService;
 import com.example.capstonedesign.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,6 +25,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.List;
 
 public class OldMainActivity extends AppCompatActivity {
+
+    private Handler handler = new Handler();
+    private Runnable periodicTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +49,20 @@ public class OldMainActivity extends AppCompatActivity {
                 .orderBy("minute", Query.Direction.ASCENDING)
                 .limit(3); // 상위 3개 문서만 가져오기
 
-        //메모 가져오기
-        memoLoad(query);
+        // Runnable을 정의하여 주기적으로 실행할 작업을 구현합니다.
+        periodicTask = new Runnable() {
+            @Override
+            public void run() {
+                // 주기적으로 호출하려는 함수를 여기에 호출
+                memoLoad(query);
+
+                // 3초마다 실행하려면 3000 밀리초(3초) 지연 시간을 설정
+                handler.postDelayed(this, 2000);
+            }
+        };
+
+        // 처음에 한 번 호출하고, 그 후 3초마다 실행
+        handler.post(periodicTask);
 
         Button yesButton1 =  findViewById(R.id.yesButton1);
         yesButton1.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +155,8 @@ public class OldMainActivity extends AppCompatActivity {
 
 //여기까지 onCreate
     }
+
+
 
     //메모 가져오기
     private void memoLoad(Query query) {

@@ -42,7 +42,7 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 // SharedPreferences에 값들 저장
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("title", "투약알림");
+                editor.putString("title", "투약 알림");
                 editor.apply();
                 Intent intent = new Intent(getActivity(), NotificationActivity.class);
                 startActivity(intent);
@@ -56,7 +56,7 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 // SharedPreferences에 값들 저장
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("title", "식사알림");
+                editor.putString("title", "식사 알림");
                 editor.apply();
                 Intent intent = new Intent(getActivity(), NotificationActivity.class);
                 startActivity(intent);
@@ -69,7 +69,85 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 // SharedPreferences에 값들 저장
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("title", "병원알림");
+                editor.putString("title", "병원 알림");
+                editor.apply();
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton workButton = view.findViewById(R.id.workButton);
+        workButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // SharedPreferences에 값들 저장
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("title", "할일 알림");
+                editor.apply();
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton exerciseButton = view.findViewById(R.id.exerciseButton);
+        exerciseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // SharedPreferences에 값들 저장
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("title", "운동 알림");
+                editor.apply();
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton institutionButton = view.findViewById(R.id.institutionButton);
+        institutionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // SharedPreferences에 값들 저장
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("title", "기관 알림");
+                editor.apply();
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton familyButton = view.findViewById(R.id.familyButton);
+        familyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // SharedPreferences에 값들 저장
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("title", "가족 알림");
+                editor.apply();
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton carButton = view.findViewById(R.id.carButton);
+        carButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // SharedPreferences에 값들 저장
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("title", "이동 알림");
+                editor.apply();
+                Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        FloatingActionButton etcButton = view.findViewById(R.id.etcButton);
+        etcButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // SharedPreferences에 값들 저장
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("title", "기타 알림");
                 editor.apply();
                 Intent intent = new Intent(getActivity(), NotificationActivity.class);
                 startActivity(intent);

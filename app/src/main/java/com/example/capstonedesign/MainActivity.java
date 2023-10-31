@@ -14,6 +14,8 @@ import com.example.capstonedesign.Fragment.CommunityFragment;
 import com.example.capstonedesign.Fragment.MainFragment;
 import com.example.capstonedesign.Fragment.MyFragment;
 import com.example.capstonedesign.old_man.OldMainActivity;
+import com.example.capstonedesign.service.FirestoreNotificationService;
+import com.example.capstonedesign.service.FirestoreNotificationService2;
 import com.example.capstonedesign.start.StartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
