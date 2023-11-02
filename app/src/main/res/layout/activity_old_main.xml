@@ -18,19 +18,19 @@
         android:id="@+id/backgroundTextView1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#6A57EF35"
+        android:background="@drawable/bg_custom_button"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/yesButton1"
+        app:layout_constraintBottom_toBottomOf="@+id/contentTextView1"
         app:layout_constraintEnd_toEndOf="@+id/contentTextView1"
         app:layout_constraintStart_toStartOf="@+id/contentTextView1"
-        app:layout_constraintTop_toTopOf="@+id/timeTextView1" />
+        app:layout_constraintTop_toTopOf="@+id/contentTextView1" />
 
     <TextView
         android:id="@+id/titleTextView1"
         android:layout_width="124dp"
         android:layout_height="47dp"
         android:text=""
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/contentTextView1"
         app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
         app:layout_constraintStart_toStartOf="@+id/contentTextView1" />
@@ -40,9 +40,10 @@
         android:layout_width="match_parent"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_height="130dp"
+        android:padding="10dp"
+        android:layout_height="100dp"
         android:text=""
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeTextView1" />
@@ -52,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="46dp"
         android:text=""
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="@+id/contentTextView1"
         app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
@@ -115,6 +116,7 @@
         android:layout_height="130dp"
         android:text=""
         android:textSize="30sp"
+
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -221,7 +223,14 @@
         app:layout_constraintStart_toStartOf="@+id/contentTextView3"
         app:layout_constraintTop_toBottomOf="@+id/contentTextView3" />
 
-
+    <Button
+        android:id="@+id/workButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="만보기"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
