@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.capstonedesign.NotificationActivity;
 import com.example.capstonedesign.R;
+import com.example.capstonedesign.RecordActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentReference;
@@ -197,6 +198,17 @@ public class MainFragment extends Fragment {
                 builder.show();
             }
         });
+
+        Button RecordButton = view.findViewById(R.id.RecordButton);
+        RecordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getActivity(), RecordActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
 
         return view;

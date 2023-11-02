@@ -206,6 +206,16 @@
         app:layout_constraintStart_toStartOf="@+id/medicineButton"
         app:layout_constraintTop_toTopOf="@+id/textView3" />
 
+    <Button
+        android:id="@+id/RecordButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="기록 보기"
+        app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
+        app:layout_constraintStart_toStartOf="@+id/medicineButton"
+        app:layout_constraintTop_toBottomOf="@+id/warningButton" />
+
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizonGuideline"
         android:layout_width="wrap_content"
