@@ -3,6 +3,9 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     namespace 'com.example.capstonedesign'
     compileSdk 33
@@ -15,6 +18,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        resValue "string", "APPKEY", properties.APP_KEY
+        buildConfigField "String", "RESTAPIKEY", properties.REST_API_KEY
+    }
+
+    buildFeatures {
+        buildConfig true
     }
 
     buildTypes {
@@ -27,6 +36,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    // 카카오맵 띄우기 위한 작업
+    splits {
+        abi {
+            enable true
+            reset()
+            include "x86", "armeabi-v7a", "x86_64"
+        }
+    }
+
+
 }
 
 dependencies {
@@ -45,6 +65,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    // 위치정보 얻어오기 dnl한 의존성
+    implementation("com.google.android.gms:play-services-location:17.0.0")
     //파이어베이스
     implementation platform('com.google.firebase:firebase-bom:32.2.3')
     implementation 'com.google.firebase:firebase-analytics'
@@ -54,5 +76,13 @@ dependencies {
     implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.google.firebase:firebase-messaging-ktx")
     implementation 'com.firebaseui:firebase-ui-auth:8.0.0'
+
+    // 카카오맵 의존성
+    implementation ("com.kakao.maps.open:android:2.6.0")
+    implementation(files(" src\\main\\jniLibs"))
+    implementation (files("libs/libDaumMapAndroid.jar"))
+    // REST API를 사용하기위해 Retrofit2 다운로드
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
 }
