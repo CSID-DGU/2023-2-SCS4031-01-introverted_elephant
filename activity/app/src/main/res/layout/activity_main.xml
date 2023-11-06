@@ -12,10 +12,37 @@
         android:id="@+id/tvSteps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Steps: 0"
+        android:text="하루 걸음 수: 0"
         android:textSize="24sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목표 걸음 수:"
+            android:textSize="24sp"
+            android:gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/numberEditText"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:hint="숫자를 입력하세요."
+            android:textSize="20sp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+
+
 
     <Button
         android:id="@+id/btnStartService"
@@ -29,7 +56,7 @@
         android:id="@+id/btnStopService"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stop Service"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:text="Stop Service" />
 
 </LinearLayout>

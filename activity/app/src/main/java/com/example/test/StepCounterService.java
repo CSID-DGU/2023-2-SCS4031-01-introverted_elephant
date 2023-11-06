@@ -108,7 +108,7 @@ public class StepCounterService extends Service implements SensorEventListener {
 
         return new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Step Counter")
-                .setContentText("Steps: " + steps)
+                .setContentText("하루 걸음 수: " + steps)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentIntent(pendingIntent)
                 .build();
