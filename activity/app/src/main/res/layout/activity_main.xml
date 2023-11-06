@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     android:padding="16dp"
     tools:context=".MainActivity">
 
@@ -12,51 +13,42 @@
         android:id="@+id/tvSteps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="하루 걸음 수: 0"
+        android:text="Steps: 0"
         android:textSize="24sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
 
+    <TextView
+        android:id="@+id/goalSteps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Goal: 0"
+        android:textSize="24sp"
+        android:layout_marginBottom="16dp"/>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center">
 
-        <TextView
+        <Button
+            android:id="@+id/btnStopService"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="목표 걸음 수:"
-            android:textSize="24sp"
-            android:gravity="center_vertical"/>
+            android:text="Stop Service"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="8dp"/>
 
-        <EditText
-            android:id="@+id/numberEditText"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <Button
+            android:id="@+id/btnStartService"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="숫자를 입력하세요."
-            android:textSize="20sp"
-            android:gravity="center"/>
+            android:layout_gravity="center_horizontal"
+            android:text="Start Service" />
 
     </LinearLayout>
 
-
-
-
-    <Button
-        android:id="@+id/btnStartService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Service"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="8dp"/>
-
-    <Button
-        android:id="@+id/btnStopService"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Stop Service" />
 
 </LinearLayout>

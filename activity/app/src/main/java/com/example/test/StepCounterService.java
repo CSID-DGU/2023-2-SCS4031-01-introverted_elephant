@@ -46,7 +46,7 @@ public class StepCounterService extends Service implements SensorEventListener {
             float z = event.values[2];
 
             float magnitude = (float) Math.sqrt(x*x + y*y + z*z);
-            float threshold = 15.0f;  // 임의의 임계값입니다. 조절이 필요할 수 있습니다. (민감도)
+            float threshold = 30.0f;  // 임의의 임계값입니다. 조절이 필요할 수 있습니다. (민감도)
 
             if (magnitude > threshold) {
                 steps ++;
@@ -108,7 +108,7 @@ public class StepCounterService extends Service implements SensorEventListener {
 
         return new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Step Counter")
-                .setContentText("하루 걸음 수: " + steps)
+                .setContentText("Steps: " + steps)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentIntent(pendingIntent)
                 .build();

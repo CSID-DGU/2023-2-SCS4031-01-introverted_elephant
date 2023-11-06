@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.test.R;
@@ -24,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvSteps;
     private Button btnStartService, btnStopService;
     private StepReceiver stepReceiver;
-    private EditText numberEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         btnStartService = findViewById(R.id.btnStartService);
         btnStopService = findViewById(R.id.btnStopService);
         stepReceiver = new StepReceiver();
-        numberEditText = findViewById(R.id.numberEditText);
 
         // 이 예제에서는 걸음 수를 실시간으로 업데이트하지 않았습니다.
         // BroadcastReceiver나 다른 메커니즘을 사용하여 실시간으로 걸음 수를 업데이트할 수 있습니다.
@@ -55,11 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 stopStepCounterService();
             }
         });
-    }
-
-    public void onButtonClick(View view){
-        //EditText에서 입력된 숫자를 가져옵니다.
-        String inputText = numberEditText.getText().toString();
     }
     @Override
     protected void onResume() {
