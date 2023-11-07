@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- Always include this permission 대략적인 위치 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Include only if your app benefits from precise location access. 정확한 위치 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Required only when requesting background location access on Android 10 (API level 29) and higher. 백그라운드 위치 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- API 및 Firebase 사용 시 인터넷 권한 있어야함 -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +18,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CapstoneDesign"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".location.MapActivity"
+            android:exported="false" />
+        <!-- http 프로토콜을 사용하기 위한 설정 -->
+        <activity
+            android:name=".location.LocationActivity"
+            android:exported="false" />
         <activity
             android:name=".RecordActivity"
             android:exported="false" />
@@ -55,8 +67,14 @@
             android:name=".MainActivity"
             android:exported="false" />
 
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/APPKEY"
+            />
+
         <service android:name=".service.FirestoreNotificationService" />
         <service android:name=".service.FirestoreNotificationService2" />
+
     </application>
 
 </manifest>
