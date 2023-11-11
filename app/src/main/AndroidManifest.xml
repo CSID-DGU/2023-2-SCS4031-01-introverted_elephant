@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- API 및 Firebase 사용 시 인터넷 권한 있어야함 -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-feature android:name="android.hardware.sensor.stepdetector" android:required="true" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -20,10 +22,18 @@
         android:theme="@style/Theme.CapstoneDesign"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <service android:name=".StepCounterService" android:exported="false" android:foregroundServiceType="dataSync">
+            <intent-filter>
+                <action android:name="com.example.stepcountapp.START_FOREGROUND_SERVICE" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".StepCounterActivity"
+            android:exported="false" />
         <activity
             android:name=".location.MapActivity"
-            android:exported="false" />
-        <!-- http 프로토콜을 사용하기 위한 설정 -->
+            android:exported="false" /> <!-- http 프로토콜을 사용하기 위한 설정 -->
         <activity
             android:name=".location.LocationActivity"
             android:exported="false" />
@@ -69,12 +79,10 @@
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="@string/APPKEY"
-            />
+            android:value="@string/APPKEY" />
 
         <service android:name=".service.FirestoreNotificationService" />
         <service android:name=".service.FirestoreNotificationService2" />
-
     </application>
 
 </manifest>
