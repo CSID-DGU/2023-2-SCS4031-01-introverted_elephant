@@ -232,5 +232,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/oldMapButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="지도 기능"
+        app:layout_constraintEnd_toStartOf="@+id/workButton"
+        app:layout_constraintHorizontal_bias="0.647"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

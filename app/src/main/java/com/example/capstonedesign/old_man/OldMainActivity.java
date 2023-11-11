@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.capstonedesign.R;
+import com.example.capstonedesign.location.LocationActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
@@ -41,6 +42,15 @@ public class OldMainActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
         String uid = preferences.getString("uid", "");
         CollectionReference collectionReference = db.collection("Users").document(uid).collection("message");
+
+        Button oldMapButton =  findViewById(R.id.oldMapButton);
+        oldMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(OldMainActivity.this, LocationActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // 색인 조건 설정
         Query query = collectionReference

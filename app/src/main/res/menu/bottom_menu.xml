@@ -4,15 +4,15 @@
     <item
         android:id="@+id/item_main_fragment"
         android:enabled="true"
-        android:icon="@drawable/baseline_elderly_24"
-        android:title="어르신"
+        android:icon="@drawable/baseline_add_alert_24"
+        android:title="알림"
         />
 
     <item
         android:id="@+id/item_community_fragment"
         android:enabled="true"
-        android:icon="@drawable/baseline_chat_24"
-        android:title="커뮤니티"
+        android:icon="@drawable/baseline_elderly_24"
+        android:title="관리"
         />
 
     <item
