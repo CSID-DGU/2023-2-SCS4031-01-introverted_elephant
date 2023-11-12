@@ -1,4 +1,4 @@
-package com.example.capstonedesign;
+package com.example.capstonedesign.service;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -15,6 +15,9 @@ import android.os.Build;
 import android.os.IBinder;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+
+import com.example.capstonedesign.MainActivity;
+import com.example.capstonedesign.R;
 
 public class StepCounterService extends Service implements SensorEventListener {
 
@@ -107,8 +110,8 @@ public class StepCounterService extends Service implements SensorEventListener {
 
 
         return new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Step Counter")
-                .setContentText("Steps: " + steps)
+                .setContentTitle("Capstone Design")
+                .setContentText("만보기 실행 중")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentIntent(pendingIntent)
                 .build();

@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.capstonedesign.R;
-import com.example.capstonedesign.StepCounterActivity;
 import com.example.capstonedesign.location.LocationActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,7 +56,7 @@ public class OldMainActivity extends AppCompatActivity {
         workButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OldMainActivity.this, StepCounterActivity.class);
+                Intent intent = new Intent(OldMainActivity.this, OldStepCounterActivity.class);
                 startActivity(intent);
             }
         });
