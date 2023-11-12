@@ -6,6 +6,9 @@ plugins {
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
+
+
+
 android {
     namespace 'com.example.capstonedesign'
     compileSdk 33
@@ -45,7 +48,6 @@ android {
             include "x86", "armeabi-v7a", "x86_64"
         }
     }
-
 
 }
 
@@ -89,5 +91,6 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.google.android.gms:play-services-fitness:21.1.0") //활동부분
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
 
 }
