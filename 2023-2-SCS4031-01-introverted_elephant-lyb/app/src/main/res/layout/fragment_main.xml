@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.MainFragment">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="어르신에게 보낼 알림의 카테고리를 선택해주세요."
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/carButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/medicineButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="36dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/horizonGuideline"
+        app:layout_constraintEnd_toStartOf="@+id/foodButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/baseline_medication_liquid_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/foodButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="36dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/horizonGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/baseline_food_bank_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/hospitalButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="36dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/horizonGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/foodButton"
+        app:srcCompat="@drawable/baseline_local_hospital_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/exerciseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="60dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/hospitalButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/foodButton"
+        app:srcCompat="@drawable/baseline_directions_run_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/workButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="60dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/hospitalButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/baseline_edit_calendar_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/institutionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="60dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/hospitalButton"
+        app:layout_constraintEnd_toStartOf="@+id/foodButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/baseline_festival_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/familyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="60dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/exerciseButton"
+        app:layout_constraintEnd_toStartOf="@+id/foodButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/baseline_family_restroom_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/carButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="60dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/exerciseButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/baseline_directions_car_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/etcButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="60dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/exerciseButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/workButton"
+        app:srcCompat="@drawable/baseline_pending_24" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="투약 알림"
+        app:layout_constraintEnd_toEndOf="@+id/medicineButton"
+        app:layout_constraintStart_toStartOf="@+id/medicineButton"
+        app:layout_constraintTop_toBottomOf="@+id/medicineButton" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기관 알림"
+        app:layout_constraintEnd_toEndOf="@+id/medicineButton"
+        app:layout_constraintStart_toStartOf="@+id/medicineButton"
+        app:layout_constraintTop_toBottomOf="@+id/institutionButton" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="가족 알림"
+        app:layout_constraintEnd_toEndOf="@+id/medicineButton"
+        app:layout_constraintStart_toStartOf="@+id/medicineButton"
+        app:layout_constraintTop_toBottomOf="@+id/familyButton" />
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="식사 알림"
+        app:layout_constraintEnd_toEndOf="@+id/foodButton"
+        app:layout_constraintStart_toStartOf="@+id/foodButton"
+        app:layout_constraintTop_toBottomOf="@+id/foodButton" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="병원 알림"
+        app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
+        app:layout_constraintStart_toStartOf="@+id/hospitalButton"
+        app:layout_constraintTop_toBottomOf="@+id/hospitalButton" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="운동 알림"
+        app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
+        app:layout_constraintStart_toStartOf="@+id/hospitalButton"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseButton" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기타 알림"
+        app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
+        app:layout_constraintStart_toStartOf="@+id/hospitalButton"
+        app:layout_constraintTop_toBottomOf="@+id/familyButton" />
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="할일 알림"
+        app:layout_constraintEnd_toEndOf="@+id/workButton"
+        app:layout_constraintStart_toStartOf="@+id/workButton"
+        app:layout_constraintTop_toBottomOf="@+id/exerciseButton" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이동 알림"
+        app:layout_constraintEnd_toEndOf="@+id/workButton"
+        app:layout_constraintStart_toStartOf="@+id/workButton"
+        app:layout_constraintTop_toBottomOf="@+id/familyButton" />
+
+    <Button
+        android:id="@+id/warningButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="경고 알림 보내기"
+        app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
+        app:layout_constraintStart_toStartOf="@+id/medicineButton"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizonGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75239396" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
