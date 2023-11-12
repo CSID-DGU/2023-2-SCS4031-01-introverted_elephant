@@ -56,6 +56,7 @@ public class OldStepCounterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_old_step_counter);
 
         tvSteps = findViewById(R.id.tvSteps);
+
         Button btnStopService = findViewById(R.id.btnStopService);
         stepReceiver = new StepReceiver();
 
@@ -190,10 +191,40 @@ public class OldStepCounterActivity extends AppCompatActivity {
                             tvSteps.setText("Steps: " + stepValue);
                         }
 
+                        TextView totalStepTextView = findViewById(R.id.totalStepTextView);
+                        TextView goalTextView = findViewById(R.id.goalTextView);
+                        // jsonList에 있는 값들의 평균 계산
+                        double sum = 0;
+                        for (Number value : jsonList) {
+                            sum += value.doubleValue();
+                        }
+                        double average = sum / jsonList.size();
+
+                        // 평균값을 totalStepTextView에 설정
+                        totalStepTextView.setText(String.format("%.1f", average)); // 소수점 2자리까지 표시
+
+                        // jsonList이 비어있지 않은 경우
+                        if (!jsonList.isEmpty()) {
+                            int lastValue = jsonList.get(jsonList.size() - 1).intValue();
+
+                            // 마지막 값이 10000 이상인 경우 "성공" 아니면 "미달성" 설정
+                            String goalResult = (lastValue >= 10000) ? "성공" : "미달성";
+
+                            // goalTextView에 결과 설정
+                            goalTextView.setText(goalResult);
+                        } else {
+                            // jsonList가 비어있는 경우에 대한 처리
+                            goalTextView.setText("데이터 없음");
+                        }
+
+
+
+
+
                         // 문서가 7개 미만이면 나머지 자리에 "x"와 0 추가
                         int remaining = 7 - labelList.size();
                         for (int i = 0; i < remaining; i++) {
-                            labelList.add("x");
+                            labelList.add("-");
                             jsonList.add(0);
                         }
 
