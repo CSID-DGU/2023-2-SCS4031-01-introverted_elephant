@@ -5,13 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".login.LoginActivity">
+    
+    <TextView
+        android:id="@+id/loginTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원 로그인"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/emailEditText"
+        app:layout_constraintLeft_toLeftOf="@+id/emailEditText"/>
 
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="12"
-        android:hint="Email"
+        android:ems="13"
+        android:hint="전화번호를 -없이 입력해주세요"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,36 +34,52 @@
         android:id="@+id/passwordEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="12"
-        android:hint="Password"
+        android:ems="13"
+        android:hint="비밀번호를 입력해주세요"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/emailEditText"
         app:layout_constraintStart_toStartOf="@+id/emailEditText"
         app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
     <Button
-        android:id="@+id/signUpButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="회원가입"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:backgroundTint="@color/orange"
-        app:layout_constraintStart_toStartOf="@+id/passwordEditText"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
-
-    <Button
         android:id="@+id/signInButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ems="12"
+        android:background="@drawable/rect_orange"
         android:text="로그인"
         android:textStyle="bold"
         android:textSize="20dp"
         android:textColor="@color/black"
-        android:backgroundTint="@color/orange"
-        app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="@+id/passwordEditText"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+
+    <TextView
+        android:id="@+id/signUpdescript"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="* 회원가입 후 이용 가능한 서비스입니다."
+        android:textSize="10dp"
+        android:layout_margin="20dp"
+        app:layout_constraintLeft_toLeftOf="@+id/signInButton"
+        app:layout_constraintTop_toBottomOf="@+id/signInButton"/>
+
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/round_orange"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:text="회원가입"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toRightOf="@+id/signUpdescript"
+        app:layout_constraintTop_toBottomOf="@+id/signInButton"/>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btn_google_sign_in"
