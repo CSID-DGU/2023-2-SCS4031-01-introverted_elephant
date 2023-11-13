@@ -6,41 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".start.OldStartActivity">
 
-    <Button
-        android:id="@+id/button3"
+    <TextView
+        android:id="@+id/matchingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="@+id/numberCheckEditText"
-        app:layout_constraintTop_toBottomOf="@+id/numberCheckEditText" />
+        android:text="매칭"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView7"
+        app:layout_constraintLeft_toLeftOf="@+id/numberCheckEditText"/>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="보호자의 전화번호를 입력하고\n매칭을 위한 비밀번호를 설정해주세요"
+        android:textSize="15dp"
+        android:textColor="@color/black"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/numberCheckEditText"
+        app:layout_constraintStart_toStartOf="@+id/numberCheckEditText" />
+
+    <EditText
+        android:id="@+id/numberCheckEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:inputType="text"
+        android:hint="전화번호를 - 없이 입력해주세요"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/passwordEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="13"
+        android:hint="비밀번호를 입력해주세요"
+        android:inputType="textPassword"
+        app:layout_constraintLeft_toLeftOf="@+id/numberCheckEditText"
+        app:layout_constraintTop_toBottomOf="@+id/numberCheckEditText"/>
 
     <Button
         android:id="@+id/numberCheckButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="확인"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:background="@drawable/rect_orange"
+        android:ems="12"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="@+id/numberCheckEditText"
-        app:layout_constraintTop_toBottomOf="@+id/numberCheckEditText" />
-
-    <EditText
-        android:id="@+id/numberCheckEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="- 없이 입력해주세요"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="보호자의 전화번호를 입력해주세요"
-        app:layout_constraintBottom_toTopOf="@+id/numberCheckEditText"
-        app:layout_constraintEnd_toEndOf="@+id/numberCheckEditText"
-        app:layout_constraintStart_toStartOf="@+id/numberCheckEditText" />
+        app:layout_constraintStart_toStartOf="@+id/numberCheckEditText"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
