@@ -25,8 +25,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class OldMainActivity extends AppCompatActivity {
 
@@ -66,6 +68,7 @@ public class OldMainActivity extends AppCompatActivity {
 
         // 색인 조건 설정
         Query query = collectionReference
+                .orderBy("check", Query.Direction.ASCENDING)
                 .orderBy("day", Query.Direction.ASCENDING)
                 .orderBy("hour", Query.Direction.ASCENDING)
                 .orderBy("minute", Query.Direction.ASCENDING)
@@ -102,14 +105,15 @@ public class OldMainActivity extends AppCompatActivity {
                               SimpleDateFormat dateFormat = new SimpleDateFormat("MM월 dd일 HH시 mm분", Locale.getDefault());
                               String currentTime = dateFormat.format(new Date());
 
-                              // time 필드 업데이트
-                              firstDocument.getReference().update("time", currentTime)
+                              // time 필드와 check 필드 업데이트
+                              Map<String, Object> updates = new HashMap<>();
+                              updates.put("time", currentTime);
+                              updates.put("check", "1");
+
+                              firstDocument.getReference().update(updates)
                                       .addOnSuccessListener(aVoid -> {
                                           // 업데이트 성공 시 실행할 코드
                                           Toast.makeText(OldMainActivity.this, "확인되었습니다.", Toast.LENGTH_SHORT).show();
-                                          Intent intent = new Intent(OldMainActivity.this, OldMainActivity.class);
-                                          startActivity(intent);
-                                          finish();
                                       })
                                       .addOnFailureListener(e -> {
                                           // 업데이트 실패 시 처리
@@ -120,6 +124,7 @@ public class OldMainActivity extends AppCompatActivity {
                               Log.d("Firestore", "문서가 없습니다.");
                           }
                       });
+
 
 
                   }
@@ -135,15 +140,27 @@ public class OldMainActivity extends AppCompatActivity {
                                                   // 문서 가져오기 성공 시
                                                   List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
                                                   if (!documents.isEmpty()) {
-                                                      // 가져온 문서 중 첫 번째 문서 삭제
+                                                      // 가져온 문서 중 첫 번째 문서 업데이트
                                                       DocumentSnapshot firstDocument = documents.get(1);
-                                                      firstDocument.getReference().delete()
+
+                                                      // 현재 시간을 "00월 00일 00시 00분" 형식의 문자열로 포맷
+                                                      SimpleDateFormat dateFormat = new SimpleDateFormat("MM월 dd일 HH시 mm분", Locale.getDefault());
+                                                      String currentTime = dateFormat.format(new Date());
+
+                                                      // time 필드와 check 필드 업데이트
+                                                      Map<String, Object> updates = new HashMap<>();
+                                                      updates.put("time", currentTime);
+                                                      updates.put("check", "1");
+
+                                                      firstDocument.getReference().update(updates)
                                                               .addOnSuccessListener(aVoid -> {
-                                                                  // 삭제 성공 시 실행할 코드
+                                                                  // 업데이트 성공 시 실행할 코드
                                                                   Toast.makeText(OldMainActivity.this, "확인되었습니다.", Toast.LENGTH_SHORT).show();
-                                                                  Intent intent = new Intent(OldMainActivity.this, OldMainActivity.class);
-                                                                  startActivity(intent);
-                                                                  finish();
+
+                                                              })
+                                                              .addOnFailureListener(e -> {
+                                                                  // 업데이트 실패 시 처리
+                                                                  Log.e("Firestore", "업데이트 실패", e);
                                                               });
                                                   } else {
                                                       // 가져온 문서가 없을 경우 처리
@@ -164,15 +181,27 @@ public class OldMainActivity extends AppCompatActivity {
                                                   // 문서 가져오기 성공 시
                                                   List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
                                                   if (!documents.isEmpty()) {
-                                                      // 가져온 문서 중 첫 번째 문서 삭제
+                                                      // 가져온 문서 중 첫 번째 문서 업데이트
                                                       DocumentSnapshot firstDocument = documents.get(2);
-                                                      firstDocument.getReference().delete()
+
+                                                      // 현재 시간을 "00월 00일 00시 00분" 형식의 문자열로 포맷
+                                                      SimpleDateFormat dateFormat = new SimpleDateFormat("MM월 dd일 HH시 mm분", Locale.getDefault());
+                                                      String currentTime = dateFormat.format(new Date());
+
+                                                      // time 필드와 check 필드 업데이트
+                                                      Map<String, Object> updates = new HashMap<>();
+                                                      updates.put("time", currentTime);
+                                                      updates.put("check", "1");
+
+                                                      firstDocument.getReference().update(updates)
                                                               .addOnSuccessListener(aVoid -> {
-                                                                  // 삭제 성공 시 실행할 코드
+                                                                  // 업데이트 성공 시 실행할 코드
                                                                   Toast.makeText(OldMainActivity.this, "확인되었습니다.", Toast.LENGTH_SHORT).show();
-                                                                  Intent intent = new Intent(OldMainActivity.this, OldMainActivity.class);
-                                                                  startActivity(intent);
-                                                                  finish();
+
+                                                              })
+                                                              .addOnFailureListener(e -> {
+                                                                  // 업데이트 실패 시 처리
+                                                                  Log.e("Firestore", "업데이트 실패", e);
                                                               });
                                                   } else {
                                                       // 가져온 문서가 없을 경우 처리
@@ -215,75 +244,148 @@ public class OldMainActivity extends AppCompatActivity {
 
 
                         for (int i = 1; i <= resultDocuments.size(); i++) {
-                            // 문서 데이터 사용
-                            Long day = resultDocuments.get(i - 1).getLong("day");
-                            String dayString = (day != null) ? String.valueOf(day) : "";
+                            String check = resultDocuments.get(i - 1).getString("check");
+                            if ( check.equals("0")) {
+                                // 문서 데이터 사용
+                                Long day = resultDocuments.get(i - 1).getLong("day");
+                                String dayString = (day != null) ? String.valueOf(day) : "";
 
-                            Long hour = resultDocuments.get(i - 1).getLong("hour");
-                            String hourString = (hour != null) ? String.valueOf(hour) : "";
+                                Long hour = resultDocuments.get(i - 1).getLong("hour");
+                                String hourString = (hour != null) ? String.valueOf(hour) : "";
 
-                            Long minute = resultDocuments.get(i - 1).getLong("minute");
-                            String minuteString = (minute != null) ? String.valueOf(minute) : "";
+                                Long minute = resultDocuments.get(i - 1).getLong("minute");
+                                String minuteString = (minute != null) ? String.valueOf(minute) : "";
 
-                            String title = resultDocuments.get(i - 1).getString("title");
-                            String titleString = (title != null) ? title : "";
+                                String title = resultDocuments.get(i - 1).getString("title");
+                                String titleString = (title != null) ? title : "";
 
-                            String content = resultDocuments.get(i - 1).getString("content");
-                            String contentString = (content != null) ? content : "";
+                                String content = resultDocuments.get(i - 1).getString("content");
+                                String contentString = (content != null) ? content : "";
 
 
-                            String daytime = "";
-                            if (dayString.equals("0")) {
-                                daytime = "오늘";
-                            } else if (dayString.equals("1")) {
-                                daytime = "내일";
-                            }  else if (dayString.equals("2")) {
-                                daytime = "모래";
-                            } else if (dayString.equals("3")) {
-                                daytime = "사흘";
-                            } else if (dayString.equals("4")) {
-                                daytime = "나흘";
-                            }
+                                String daytime = "";
+                                if (dayString.equals("0")) {
+                                    daytime = "오늘";
+                                } else if (dayString.equals("1")) {
+                                    daytime = "내일";
+                                }  else if (dayString.equals("2")) {
+                                    daytime = "모래";
+                                } else if (dayString.equals("3")) {
+                                    daytime = "사흘";
+                                } else if (dayString.equals("4")) {
+                                    daytime = "나흘";
+                                }
 
-                            String time = daytime + " " + hourString + "시 " + minuteString + "분";
+                                String time = daytime + " " + hourString + "시 " + minuteString + "분";
 
-                            // 해당 순서의 TextView를 업데이트
-                            int titleTextViewId = getResources().getIdentifier("titleTextView" + i, "id", getPackageName());
-                            TextView titleTextView = findViewById(titleTextViewId);
-                            if (titleTextView != null) {
-                                titleTextView.setText(titleString);
+                                // 해당 순서의 TextView를 업데이트
+                                int titleTextViewId = getResources().getIdentifier("titleTextView" + i, "id", getPackageName());
+                                TextView titleTextView = findViewById(titleTextViewId);
+                                if (titleTextView != null) {
+                                    titleTextView.setText(titleString);
+                                } else {
+                                    titleTextView.setText("");
+                                }
+                                int timeTextViewId = getResources().getIdentifier("timeTextView" + i, "id", getPackageName());
+                                TextView timeTextView = findViewById(timeTextViewId);
+                                if (timeTextView != null) {
+                                    timeTextView.setText(time);
+                                }else {
+                                    titleTextView.setText("");
+                                }
+                                int contentTextViewId = getResources().getIdentifier("contentTextView" + i, "id", getPackageName());
+                                TextView contentTextView = findViewById(contentTextViewId);
+                                if (contentTextView != null) {
+                                    contentTextView.setText(contentString);
+                                }else {
+                                    titleTextView.setText("");
+                                }
+                                int yesButtonId = getResources().getIdentifier("yesButton" + i, "id", getPackageName());
+                                Button yesButton = findViewById(yesButtonId);
+                                if (hourString.equals("")) {
+                                    yesButton.setVisibility(View.INVISIBLE);
+                                }else {
+                                    yesButton.setVisibility(View.VISIBLE);
+                                }
+                                int backgroundTextViewId = getResources().getIdentifier("backgroundTextView" + i, "id", getPackageName());
+                                TextView backgroundTextView = findViewById(backgroundTextViewId);
+                                if (hourString.equals("")) {
+                                    backgroundTextView.setVisibility(View.INVISIBLE);
+                                }else {
+                                    backgroundTextView.setVisibility(View.VISIBLE);
+                                }
+
                             } else {
-                                titleTextView.setText("");
-                            }
-                            int timeTextViewId = getResources().getIdentifier("timeTextView" + i, "id", getPackageName());
-                            TextView timeTextView = findViewById(timeTextViewId);
-                            if (timeTextView != null) {
-                                timeTextView.setText(time);
-                            }else {
-                                titleTextView.setText("");
-                            }
-                            int contentTextViewId = getResources().getIdentifier("contentTextView" + i, "id", getPackageName());
-                            TextView contentTextView = findViewById(contentTextViewId);
-                            if (contentTextView != null) {
-                                contentTextView.setText(contentString);
-                            }else {
-                                titleTextView.setText("");
-                            }
-                            int yesButtonId = getResources().getIdentifier("yesButton" + i, "id", getPackageName());
-                            Button yesButton = findViewById(yesButtonId);
-                            if (hourString.equals("")) {
-                                yesButton.setVisibility(View.INVISIBLE);
-                            }else {
-                                yesButton.setVisibility(View.VISIBLE);
-                            }
-                            int backgroundTextViewId = getResources().getIdentifier("backgroundTextView" + i, "id", getPackageName());
-                            TextView backgroundTextView = findViewById(backgroundTextViewId);
-                            if (hourString.equals("")) {
-                                backgroundTextView.setVisibility(View.INVISIBLE);
-                            }else {
-                                backgroundTextView.setVisibility(View.VISIBLE);
-                            }
 
+                                Long day = resultDocuments.get(i - 1).getLong("day");
+                                String dayString = (day != null) ? String.valueOf(day) : "";
+
+                                Long hour = resultDocuments.get(i - 1).getLong("hour");
+                                String hourString = (hour != null) ? String.valueOf(hour) : "";
+
+                                Long minute = resultDocuments.get(i - 1).getLong("minute");
+                                String minuteString = (minute != null) ? String.valueOf(minute) : "";
+
+                                String title = resultDocuments.get(i - 1).getString("title");
+                                String titleString = (title != null) ? title : "";
+
+                                String content = resultDocuments.get(i - 1).getString("content");
+                                String contentString = (content != null) ? content : "";
+
+
+                                String daytime = "";
+                                if (dayString.equals("0")) {
+                                    daytime = "오늘";
+                                } else if (dayString.equals("1")) {
+                                    daytime = "내일";
+                                }  else if (dayString.equals("2")) {
+                                    daytime = "모래";
+                                } else if (dayString.equals("3")) {
+                                    daytime = "사흘";
+                                } else if (dayString.equals("4")) {
+                                    daytime = "나흘";
+                                }
+
+                                String time = daytime + " " + hourString + "시 " + minuteString + "분";
+
+                                // 해당 순서의 TextView를 업데이트
+                                int titleTextViewId = getResources().getIdentifier("titleTextView" + i, "id", getPackageName());
+                                TextView titleTextView = findViewById(titleTextViewId);
+                                if (titleTextView != null) {
+                                    titleTextView.setText("");
+                                } else {
+                                    titleTextView.setText("");
+                                }
+                                int timeTextViewId = getResources().getIdentifier("timeTextView" + i, "id", getPackageName());
+                                TextView timeTextView = findViewById(timeTextViewId);
+                                if (timeTextView != null) {
+                                    timeTextView.setText("");
+                                }else {
+                                    titleTextView.setText("");
+                                }
+                                int contentTextViewId = getResources().getIdentifier("contentTextView" + i, "id", getPackageName());
+                                TextView contentTextView = findViewById(contentTextViewId);
+                                if (contentTextView != null) {
+                                    contentTextView.setText("");
+                                }else {
+                                    titleTextView.setText("");
+                                }
+                                int yesButtonId = getResources().getIdentifier("yesButton" + i, "id", getPackageName());
+                                Button yesButton = findViewById(yesButtonId);
+                                if (hourString.equals("")) {
+                                    yesButton.setVisibility(View.INVISIBLE);
+                                }else {
+                                    yesButton.setVisibility(View.INVISIBLE);
+                                }
+                                int backgroundTextViewId = getResources().getIdentifier("backgroundTextView" + i, "id", getPackageName());
+                                TextView backgroundTextView = findViewById(backgroundTextViewId);
+                                if (hourString.equals("")) {
+                                    backgroundTextView.setVisibility(View.INVISIBLE);
+                                }else {
+                                    backgroundTextView.setVisibility(View.INVISIBLE);
+                                }
+
+                            }
 
                         }
 

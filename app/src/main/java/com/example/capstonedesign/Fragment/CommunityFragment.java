@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.capstonedesign.R;
+import com.example.capstonedesign.StepCounterActivity;
 import com.example.capstonedesign.location.LocationActivity;
 import com.example.capstonedesign.old_man.OldMainActivity;
 
@@ -32,6 +33,14 @@ public class CommunityFragment extends Fragment {
             }
         });
 
+        Button stepButton = view.findViewById(R.id.stepButton);
+        stepButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), StepCounterActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
         //여기까지 oncreateview
