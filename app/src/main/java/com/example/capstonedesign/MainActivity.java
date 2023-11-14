@@ -164,16 +164,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void init() {
-        main_frame = findViewById(R.id.main_frame);
-        bottomNavigationView = findViewById(R.id.bottomNavi);
-    }
     private void SettingListener() {
         //선택 리스너 등록
         bottomNavigationView.setOnNavigationItemSelectedListener(new TabSelectedListener());
     }
 
 
+    private void init() {
+        main_frame = findViewById(R.id.main_frame);
+        bottomNavigationView = findViewById(R.id.bottomNavi);
+    }
 
 
 

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.capstonedesign.LoadingActivity;
 import com.example.capstonedesign.MainActivity;
 import com.example.capstonedesign.R;
 import com.google.android.gms.common.SignInButton;
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // 사용자가 로그인이 된 경우에만 MainActivity로 이동
         if (currentUser != null) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, LoadingActivity.class);
             startActivity(intent);
             finish();
         } else {
@@ -122,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         userRef.child("username").setValue(email);
                                                         userRef.child("fcmToken").setValue(token);
 
-                                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                        Intent intent = new Intent(LoginActivity.this, LoadingActivity.class);
                                                         startActivity(intent);
                                                         finish();
                                                     } else {

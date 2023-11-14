@@ -59,7 +59,6 @@ public class RecordActivity extends AppCompatActivity {
         private ArrayList<Person> telephoneBook = new ArrayList<>();
 
         public RecyclerViewAdapter() {
-            // telephoneBook의 문서를 불러온 뒤 Person으로 변환해 ArrayList에 담음
             firestore.collection("Users").document(oldMan).collection("message").addSnapshotListener((querySnapshot, firebaseFirestoreException) -> {
                 // ArrayList 비워줌
                 telephoneBook.clear();

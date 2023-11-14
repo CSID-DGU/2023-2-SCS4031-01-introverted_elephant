@@ -98,8 +98,8 @@ public class OldStepCounterActivity extends AppCompatActivity {
     private class StepReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            int steps = intent.getIntExtra("steps", 0);
-            tvSteps.setText("Steps: " + steps);
+            double steps = intent.getIntExtra("steps", 0);
+            tvSteps.setText("오늘 걸음 수 : " + String.format("%.0f", steps)+ " 걸음");
 
             SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
             String uid = preferences.getString("uid", "");
@@ -188,7 +188,7 @@ public class OldStepCounterActivity extends AppCompatActivity {
                             Long step = document.getLong("step");
                             double stepValue = (step != null) ? step.intValue() : 0;
                             jsonList.add((int) stepValue);
-                            tvSteps.setText("Steps: " + stepValue);
+                            tvSteps.setText("오늘 걸음 수 : " + String.format("%.0f", stepValue)+ " 걸음");
                         }
 
                         TextView totalStepTextView = findViewById(R.id.totalStepTextView);
@@ -201,14 +201,14 @@ public class OldStepCounterActivity extends AppCompatActivity {
                         double average = sum / jsonList.size();
 
                         // 평균값을 totalStepTextView에 설정
-                        totalStepTextView.setText(String.format("%.1f", average)); // 소수점 2자리까지 표시
+                        totalStepTextView.setText("일주일 평균 걸음 수 : " + String.format("%.0f", average) + " 걸음"); // 소수점 2자리까지 표시
 
                         // jsonList이 비어있지 않은 경우
                         if (!jsonList.isEmpty()) {
                             int lastValue = jsonList.get(jsonList.size() - 1).intValue();
 
                             // 마지막 값이 10000 이상인 경우 "성공" 아니면 "미달성" 설정
-                            String goalResult = (lastValue >= 10000) ? "성공" : "미달성";
+                            String goalResult = (lastValue >= 10000) ? "하루 만 보 걷기 : 달성" : "하루 만 보 걷기 : 미달성";
 
                             // goalTextView에 결과 설정
                             goalTextView.setText(goalResult);
