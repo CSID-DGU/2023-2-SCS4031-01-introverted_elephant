@@ -1,19 +1,16 @@
 package com.example.capstonedesign.location;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
-import com.example.capstonedesign.BuildConfig;
-import com.example.capstonedesign.R;
-
-import androidx.annotation.NonNull;
-
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.capstonedesign.BuildConfig;
+import com.example.capstonedesign.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +22,6 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,14 +31,14 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MapActivity extends AppCompatActivity {
+public class MapActivity_Oldman extends AppCompatActivity {
 
     private MapView mapView;
     private ViewGroup mapViewContainer;
 
     private final String BASE_URL = "https://dapi.kakao.com/";
 
-    private String RESR_API_KEY = "KakaoAK "+ BuildConfig.RESTAPIKEY; // REST API 키
+    private  String RESR_API_KEY = "KakaoAK "+ BuildConfig.RESTAPIKEY; // REST API 키
 
     private DatabaseReference mDatabase;
 
@@ -81,7 +77,7 @@ public class MapActivity extends AppCompatActivity {
         // 좌표를 입력받아 현 위치로 출력
         marker1.setMapPoint(MARKER_POINT1);
 
-        // (클릭 전)기본으로 제공하는 BluePin 마커 모양의 색.
+        //  (클릭 전)기본으로 제공하는 BluePin 마커 모양의 색.
         marker1.setMarkerType(MapPOIItem.MarkerType.BluePin);
 
         // (클릭 후) 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
@@ -94,10 +90,6 @@ public class MapActivity extends AppCompatActivity {
         geoinfo(longitude,latitude);
         Button nearcenter = findViewById(R.id.nearcenter);
         nearcenter.setOnClickListener(view -> showcenter(agencyList));
-        Button centerlist = findViewById(R.id.center_list);
-        centerlist.setOnClickListener(view -> movecenterlist(agencyList));
-        Button setsafety = findViewById(R.id.setsafetyzone);
-        setsafety.setOnClickListener(view -> movesetsaftyzone());
 
     } // End of onCreate
 
@@ -126,6 +118,16 @@ public class MapActivity extends AppCompatActivity {
                     for (KakaoApiResponse.Document document : documents) {
                         if ("B".equals(document.getRegion_type())) {
                             // Rest api 로그 출력 테스트용 코드
+//                            Log.d("Test", "Region Name: " + document.getAddress_name());
+//                            Log.d("Test", "Region Type: " + document.getRegion_type());
+//                            Log.d("Test", "Code: " + document.getCode());
+//                            Log.d("Test", "1depth Name: " + document.getRegion_1depth_name());
+//                            Log.d("Test", "2depth Name: " + document.getRegion_2depth_name());
+//                            Log.d("Test", "3depth Name: " + document.getRegion_3depth_name());
+//                            Log.d("Test", "4depth Name: " + document.getRegion_4depth_name());
+//                            Log.d("Test", "x : " + document.getX());
+//                            Log.d("Test", "y : " + document.getY());
+//                          resultText.append("Region Name: " + document.getAddress_name() + "\n");
                             resultText.append("Code_5digits: " + document.getCode().substring(0,5) + "00000" + "\n");
                             RegionCode_B = Long.parseLong(document.getCode().substring(0,5) + "00000");
                             Log.d("좌표test", "좌표 : " + RegionCode_B);
@@ -155,6 +157,20 @@ public class MapActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for (DataSnapshot lawSnapshot : snapshot.getChildren()) {
+                                        String name = lawSnapshot.child("name").getValue(String.class);
+                                        String address = lawSnapshot.child("address").getValue(String.class);
+                                        String phoneNumber = lawSnapshot.child("phonenumber").getValue(String.class);
+                                        double latitude = lawSnapshot.child("latitude").getValue(Double.class);
+                                        double longitude = lawSnapshot.child("longitude").getValue(Double.class);
+                                        long comtcAdministCode = lawSnapshot.child("district_code").getValue(long.class);
+
+                                        // 데이터 로그 출력 테스트용
+//                                        Log.d("Firebase", "Name: " + name);
+//                                        Log.d("Firebase", "Address: " + address);
+//                                        Log.d("Firebase", "Phone Number: " + phoneNumber);
+//                                        Log.d("Firebase", "Latitude: " + latitude);
+//                                        Log.d("Firebase", "Longitude: " + longitude);
+//                                        Log.d("Firebase", "ComtcAdministCode: " + comtcAdministCode);
                                         Institution agency = lawSnapshot.getValue(Institution.class);
                                         if (agency != null) {
                                             agencyList.add(agency);
@@ -207,18 +223,6 @@ public class MapActivity extends AppCompatActivity {
             // 지도화면 위에 추가되는 아이콘을 추가하기 위한 호출(말풍선 모양)
             mapView.addPOIItem(marker);
         }
-    }
-
-    public void movecenterlist(List<Institution> Agencylist){
-        // MapActivity 호출
-        Intent intent = new Intent(MapActivity.this, CenterActivity.class);
-        intent.putExtra("centers", (Serializable) Agencylist);
-        startActivity(intent);
-    }
-
-    public void movesetsaftyzone(){
-        Intent intent = new Intent(MapActivity.this, SetSafetyZoneActivity.class);
-        startActivity(intent);
     }
 
 } // End of Activity

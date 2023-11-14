@@ -1,22 +1,16 @@
 package com.example.capstonedesign.location;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.SharedPreferences;
-import android.os.Bundle;
-
-import com.example.capstonedesign.R;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
-
+import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Button;
@@ -25,9 +19,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.capstonedesign.R;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationAvailability;
@@ -38,15 +34,13 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class LocationActivity extends AppCompatActivity {
+public class LocationActivity_Oldman extends AppCompatActivity {
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1981;
     private static final int REQUEST_CODE_LOCATION_SETTINGS = 2981;
 
@@ -76,11 +70,13 @@ public class LocationActivity extends AppCompatActivity {
     private Button btnCheck;
 
     private double longitude, latitude;
-    private String uid;
 
-    private static final String TAG = LocationActivity.class.getSimpleName();
+    private static final String TAG = LocationActivity_Oldman.class.getSimpleName();
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
+    String uid = preferences.getString("uid", "");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +86,6 @@ public class LocationActivity extends AppCompatActivity {
 
         btnCheck = findViewById(R.id.btnCheck);
         btnCheck.setOnClickListener(v -> checkLocation());
-        SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
-        uid = preferences.getString("uid", "");
     } // End of onCreate
 
     @Override
@@ -100,10 +94,10 @@ public class LocationActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_LOCATION_SETTINGS) {
             switch (resultCode) {
                 case Activity.RESULT_OK:
-                    Toast.makeText(LocationActivity.this, "Result OK", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LocationActivity_Oldman.this, "Result OK", Toast.LENGTH_SHORT).show();
                     break;
                 case Activity.RESULT_CANCELED:
-                    Toast.makeText(LocationActivity.this, "Result Cancel", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LocationActivity_Oldman.this, "Result Cancel", Toast.LENGTH_SHORT).show();
                     break;
                 default:
                     break;
@@ -159,8 +153,8 @@ public class LocationActivity extends AppCompatActivity {
             @SuppressLint("MissingPermission")
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(LocationActivity.this);
-                if (ActivityCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(LocationActivity_Oldman.this);
+                if (ActivityCompat.checkSelfPermission(LocationActivity_Oldman.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(LocationActivity_Oldman.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 mFusedLocationClient.requestLocationUpdates(mLocationRequest, locationCallback, null);
@@ -222,12 +216,12 @@ public class LocationActivity extends AppCompatActivity {
 
             //Location 콜렉션의 target 문서에 대입
             db.collection("Users").document(uid)
-                    .update(location)
+                    .set(location)
                     .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
                     .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
 
-            // MapActivity 호출
-            Intent intent = new Intent(LocationActivity.this, MapActivity.class);
+
+            Intent intent = new Intent(LocationActivity_Oldman.this, MapActivity.class);
             intent.putExtra("latitude", latitude);
             intent.putExtra("longitude", longitude);
             startActivity(intent);

@@ -8,21 +8,63 @@
 
     <com.kakao.vectormap.MapView
         android:id="@+id/map_view"
-        android:layout_width="0dp"
-        android:layout_height="405dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/nearcenter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="104dp"
-        android:text="근처기관찾기"
+        android:layout_width="409dp"
+        android:layout_height="503dp"
+        android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+    </com.kakao.vectormap.MapView>
+
+    <Button
+        android:id="@+id/setsafetyzone"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
+        android:text="안전구역 설정"
+        app:layout_constraintEnd_toStartOf="@+id/nearcenter"
+        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map_view" />
+
+    <Button
+        android:id="@+id/center_list"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
+        android:text="기관리스트"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/nearcenter"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="@+id/nearcenter"
+        app:layout_constraintTop_toBottomOf="@+id/nearcenter"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/nearcenter"
+        android:layout_width="153dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="28dp"
+        android:text="근처기관찾기"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.829"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map_view" />
+
+    <Button
+        android:id="@+id/send_notification"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="알림 전송"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/setsafetyzone"
+        app:layout_constraintStart_toStartOf="@+id/setsafetyzone"
+        app:layout_constraintTop_toBottomOf="@+id/setsafetyzone"
+        app:layout_constraintVertical_bias="0.365" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

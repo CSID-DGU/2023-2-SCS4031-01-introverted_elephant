@@ -1,5 +1,8 @@
 package com.example.capstonedesign.location;
-public class Institution {
+
+import java.io.Serializable;
+
+public class Institution implements Serializable {
     String name;
     String address;
     String phonenumber;
