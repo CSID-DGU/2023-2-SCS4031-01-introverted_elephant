@@ -23,7 +23,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class OldMainActivity extends AppCompatActivity {
 
@@ -92,21 +95,32 @@ public class OldMainActivity extends AppCompatActivity {
                           // 문서 가져오기 성공 시
                           List<DocumentSnapshot> documents = queryDocumentSnapshots.getDocuments();
                           if (!documents.isEmpty()) {
-                              // 가져온 문서 중 첫 번째 문서 삭제
+                              // 가져온 문서 중 첫 번째 문서 업데이트
                               DocumentSnapshot firstDocument = documents.get(0);
-                              firstDocument.getReference().delete()
+
+                              // 현재 시간을 "00월 00일 00시 00분" 형식의 문자열로 포맷
+                              SimpleDateFormat dateFormat = new SimpleDateFormat("MM월 dd일 HH시 mm분", Locale.getDefault());
+                              String currentTime = dateFormat.format(new Date());
+
+                              // time 필드 업데이트
+                              firstDocument.getReference().update("time", currentTime)
                                       .addOnSuccessListener(aVoid -> {
-                                          // 삭제 성공 시 실행할 코드
+                                          // 업데이트 성공 시 실행할 코드
                                           Toast.makeText(OldMainActivity.this, "확인되었습니다.", Toast.LENGTH_SHORT).show();
                                           Intent intent = new Intent(OldMainActivity.this, OldMainActivity.class);
                                           startActivity(intent);
                                           finish();
+                                      })
+                                      .addOnFailureListener(e -> {
+                                          // 업데이트 실패 시 처리
+                                          Log.e("Firestore", "업데이트 실패", e);
                                       });
                           } else {
                               // 가져온 문서가 없을 경우 처리
                               Log.d("Firestore", "문서가 없습니다.");
                           }
                       });
+
 
                   }
               }
