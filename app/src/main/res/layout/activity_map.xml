@@ -13,11 +13,10 @@
         android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-    </com.kakao.vectormap.MapView>
+        app:layout_constraintVertical_bias="0.303" />
 
     <Button
         android:id="@+id/setsafetyzone"
@@ -66,5 +65,6 @@
         app:layout_constraintStart_toStartOf="@+id/setsafetyzone"
         app:layout_constraintTop_toBottomOf="@+id/setsafetyzone"
         app:layout_constraintVertical_bias="0.365" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

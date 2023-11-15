@@ -19,7 +19,7 @@
     </com.kakao.vectormap.MapView>
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/searchbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="14dp"
@@ -29,27 +29,27 @@
         app:layout_constraintTop_toBottomOf="@+id/map_view" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/okbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="확인"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.306"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText"
-        app:layout_constraintVertical_bias="0.693" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+        app:layout_constraintVertical_bias="0.623" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="88dp"
+        android:layout_marginEnd="84dp"
         android:text="좌표"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText"
-        app:layout_constraintVertical_bias="0.323" />
+        app:layout_constraintVertical_bias="0.451" />
 
     <TextView
         android:id="@+id/textView12"
@@ -58,21 +58,53 @@
         android:text="주소"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView13"
-        app:layout_constraintHorizontal_bias="0.378"
+        app:layout_constraintHorizontal_bias="0.36"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText"
-        app:layout_constraintVertical_bias="0.323" />
+        app:layout_constraintVertical_bias="0.451" />
 
     <EditText
         android:id="@+id/editTextText"
         android:layout_width="0dp"
         android:layout_height="43dp"
-        android:layout_marginStart="11dp"
         android:layout_marginEnd="15dp"
         android:ems="10"
         android:hint="주소입력"
         android:inputType="text"
-        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/searchbutton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map_view" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="293dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="거리"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+
+    <Button
+        android:id="@+id/dist_insert"
+        android:layout_width="87dp"
+        android:layout_height="52dp"
+        android:text="입력"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toEndOf="@+id/editTextNumber"
+        app:layout_constraintTop_toBottomOf="@+id/searchbutton" />
+
+    <Button
+        android:id="@+id/setzone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구역설정"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toEndOf="@+id/okbutton"
+        app:layout_constraintTop_toBottomOf="@+id/dist_insert"
+        app:layout_constraintVertical_bias="0.637" />
 </androidx.constraintlayout.widget.ConstraintLayout>
