@@ -1,5 +1,6 @@
 package com.example.capstonedesign.location;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,13 +44,14 @@ public class MapActivity extends AppCompatActivity {
 
     private final String BASE_URL = "https://dapi.kakao.com/";
 
-    private String RESR_API_KEY = "KakaoAK "+ BuildConfig.RESTAPIKEY; // REST API 키
+    private String REST_API_KEY = "KakaoAK "+ BuildConfig.RESTAPIKEY; // REST API 키
 
     private DatabaseReference mDatabase;
 
-
     public long RegionCode_B;
     public List<Institution> agencyList = new ArrayList<>();
+
+    private static final int REQUEST_CODE_OTHER_ACTIVITY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class MapActivity extends AppCompatActivity {
         Intent intent = getIntent();
         double latitude = intent.getDoubleExtra("latitude", 0);
         double longitude = intent.getDoubleExtra("longitude", 0);
+        // initMapView();
+
         mapView = new MapView(this);
         mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
@@ -101,6 +106,59 @@ public class MapActivity extends AppCompatActivity {
 
     } // End of onCreate
 
+    protected void onRestart() {
+        super.onRestart();
+
+        if (mapViewContainer != null && mapViewContainer.indexOfChild(mapView) != -1) {
+            try {
+                mapViewContainer.addView(mapView);
+                //initMapView();
+            } catch (RuntimeException re) {
+                Log.e("maperror", "RuntimeException occurred", re);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // 다른 액티비티에서 돌아왔을 때 호출되는 콜백 메서드
+        if (requestCode == REQUEST_CODE_OTHER_ACTIVITY) {
+            if (resultCode == RESULT_OK) {
+                // 다른 액티비티에서 OK 결과를 받았을 때 처리할 작업 수행
+                // 예: 지도 업데이트 등
+                updateMapView();
+            } else if (resultCode == RESULT_CANCELED) {
+                // 다른 액티비티에서 취소되었거나 오류가 있을 때 처리할 작업 수행
+                // 예: 사용자가 뒤로가기 버튼을 눌렀을 때
+                handleCancelOperation();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mapViewContainer.getChildCount() == 0) {
+            mapView = new MapView(this);
+            mapViewContainer.addView(mapView);
+        }
+
+    }
+
+    private void updateMapView() {
+        // 지도 업데이트 등의 작업을 수행
+    }
+
+    private void handleCancelOperation() {
+        // 사용자가 뒤로가기로 돌아왔을 때 실행되는 코드
+        // 예: 취소 메시지 표시, 아무 작업도 수행하지 않기 등
+        mapViewContainer.addView(mapView);
+        mapView = new MapView(this);
+        mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
+    }
+
     private void geoinfo(double lng, double lat) {
         Retrofit retrofit = new Retrofit.Builder() // Retrofit 구성
                 .baseUrl(BASE_URL)
@@ -108,7 +166,7 @@ public class MapActivity extends AppCompatActivity {
                 .build();
 
         KakaoAPI api = retrofit.create(KakaoAPI.class); // 통신 인터페이스를 객체로 생성
-        Call<KakaoApiResponse> call = api.getRegionInfo(RESR_API_KEY, lng,lat); // 검색 조건 입력
+        Call<KakaoApiResponse> call = api.getRegionInfo(REST_API_KEY, lng,lat); // 검색 조건 입력
 
         // API 서버에 요청
         call.enqueue(new Callback<KakaoApiResponse>() {
@@ -129,6 +187,7 @@ public class MapActivity extends AppCompatActivity {
                             resultText.append("Code_5digits: " + document.getCode().substring(0,5) + "00000" + "\n");
                             RegionCode_B = Long.parseLong(document.getCode().substring(0,5) + "00000");
                             Log.d("좌표test", "좌표 : " + RegionCode_B);
+                            // firebase Query
                             Query locationquery = mDatabase.child("Comtcadministcode").orderByChild("Comtcadministcode").equalTo(RegionCode_B);
                             locationquery.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -217,8 +276,26 @@ public class MapActivity extends AppCompatActivity {
     }
 
     public void movesetsaftyzone(){
+        mapViewContainer.removeView(mapView);
         Intent intent = new Intent(MapActivity.this, SetSafetyZoneActivity.class);
         startActivity(intent);
+    }
+
+    private void initMapView() {
+        mapView = new MapView(this);
+        mapViewContainer = new RelativeLayout(this);
+        mapViewContainer.setLayoutParams(new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+        ));
+        setContentView(mapViewContainer);
+        mapViewContainer.addView(mapView);
+        // 춤 레벨 변경
+        mapView.setZoomLevel(1, true);
+        // 줌 인
+        mapView.zoomIn(true);
+        // 줌 아웃
+        mapView.zoomOut(true);
     }
 
 } // End of Activity

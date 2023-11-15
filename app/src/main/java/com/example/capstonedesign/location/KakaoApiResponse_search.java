@@ -1,6 +1,7 @@
 package com.example.capstonedesign.location;
 
 import java.util.List;
+
 public class KakaoApiResponse_search {
     private Meta meta;
     private List<Document> documents;
@@ -9,19 +10,9 @@ public class KakaoApiResponse_search {
         return meta;
     }
 
-    public void setMeta(Meta meta) {
-        this.meta = meta;
-    }
+    public List<Document> getDocuments() { return documents; }
 
-    public List<Document> getDocuments() {
-        return documents;
-    }
-
-    public void setDocuments(List<Document> documents) {
-        this.documents = documents;
-    }
-
-    public class Meta {
+    public static class Meta {
         private int total_count;
         private int pageable_count;
         private boolean is_end;
@@ -51,11 +42,11 @@ public class KakaoApiResponse_search {
         }
     }
 
-    public class Document {
+    public static class Document {
         private String address_name;
         private String address_type;
-        private String x;
-        private String y;
+        private double x;
+        private double y;
         private Address address;
         private RoadAddress road_address;
 
@@ -75,20 +66,12 @@ public class KakaoApiResponse_search {
             this.address_type = address_type;
         }
 
-        public String getX() {
+        public double getX() {
             return x;
         }
 
-        public void setX(String x) {
-            this.x = x;
-        }
-
-        public String getY() {
+        public double getY() {
             return y;
-        }
-
-        public void setY(String y) {
-            this.y = y;
         }
 
         public Address getAddress() {
@@ -108,7 +91,7 @@ public class KakaoApiResponse_search {
         }
     }
 
-    public class Address {
+    public static class Address {
         private String address_name;
         private String region_1depth_name;
         private String region_2depth_name;
@@ -119,8 +102,8 @@ public class KakaoApiResponse_search {
         private String mountain_yn;
         private String main_address_no;
         private String sub_address_no;
-        private String x;
-        private String y;
+        private double x;
+        private double y;
 
         public String getAddressName() {
             return address_name;
@@ -162,16 +145,16 @@ public class KakaoApiResponse_search {
             return sub_address_no;
         }
 
-        public String getX() {
+        public double getX() {
             return x;
         }
 
-        public String getY() {
+        public double getY() {
             return y;
         }
     }
 
-    public class RoadAddress {
+    public static class RoadAddress {
         private String address_name;
         private String region_1depth_name;
         private String region_2depth_name;
@@ -182,8 +165,8 @@ public class KakaoApiResponse_search {
         private String sub_building_no;
         private String building_name;
         private String zone_no;
-        private String x;
-        private String y;
+        private double x;
+        private double y;
 
         public String getAddressName() {
             return address_name;
@@ -225,11 +208,11 @@ public class KakaoApiResponse_search {
             return zone_no;
         }
 
-        public String getX() {
+        public double getX() {
             return x;
         }
 
-        public String getY() {
+        public double getY() {
             return y;
         }
     }
