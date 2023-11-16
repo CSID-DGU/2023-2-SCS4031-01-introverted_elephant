@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_item1"
+        android:icon="@drawable/baseline_directions_run_24"
+        android:title="만보기"
+        />
+    <item
+        android:id="@+id/navigation_item2"
+        android:icon="@drawable/baseline_map_24"
+        android:title="지도" />
+    <item
+        android:id="@+id/navigation_item3"
+        android:icon="@drawable/baseline_pending_24"
+        android:title="설정" />
+</menu>

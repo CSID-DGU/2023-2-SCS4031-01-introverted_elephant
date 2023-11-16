@@ -4,20 +4,29 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.capstonedesign.Fragment.CommunityFragment;
+import com.example.capstonedesign.Fragment.MainFragment;
+import com.example.capstonedesign.Fragment.MyFragment;
+import com.example.capstonedesign.MainActivity;
 import com.example.capstonedesign.R;
 import com.example.capstonedesign.location.LocationActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,7 +41,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public class OldMainActivity extends AppCompatActivity {
-
+    BottomNavigationView bottomNavigationView; //바텀 네비게이션 뷰
+    FrameLayout main_frame;
     private Handler handler = new Handler();
     private Runnable periodicTask;
 
@@ -41,31 +51,19 @@ public class OldMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_old_main);
 
-        //설정창 가기
-        oldSetting();
+
+        init(); //객체 정의
+
+        //fragment 등록
+        SettingListener(); //리스너 등록
+        bottomNavigationView.setSelectedItemId(R.id.item_main_fragment);
+
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
         String uid = preferences.getString("uid", "");
         CollectionReference collectionReference = db.collection("Users").document(uid).collection("message");
 
-        Button oldMapButton =  findViewById(R.id.oldMapButton);
-        oldMapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(OldMainActivity.this, LocationActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button workButton =  findViewById(R.id.workButton);
-        workButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(OldMainActivity.this, OldStepCounterActivity.class);
-                startActivity(intent);
-            }
-        });
 
         // 색인 조건 설정
         Query query = collectionReference
@@ -220,6 +218,41 @@ public class OldMainActivity extends AppCompatActivity {
     }
 
 
+    class TabSelectedListener implements BottomNavigationView.OnNavigationItemSelectedListener {
+        @SuppressLint("NonConstantResourceId")
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            int itemId = menuItem.getItemId(); // 선택한 메뉴 아이템의 ID를 가져옵니다.
+
+            if (itemId == R.id.navigation_item1) {
+                Intent intent = new Intent(getApplicationContext(), OldStepCounterActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (itemId == R.id.navigation_item2) {
+                Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
+                startActivity(intent);
+                return true;
+            } else if (itemId == R.id.navigation_item3) {
+                Intent intent = new Intent(getApplicationContext(), OldSettingActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            // 나머지 경우에 대한 처리를 여기에 추가합니다.
+
+            return false;
+        }
+    }
+
+
+    private void SettingListener() {
+        //선택 리스너 등록
+        bottomNavigationView.setOnNavigationItemSelectedListener(new TabSelectedListener());
+    }
+
+
+    private void init() {
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
+    }
 
     //메모 가져오기
     private void memoLoad(Query query) {
@@ -243,13 +276,6 @@ public class OldMainActivity extends AppCompatActivity {
                             resultDocuments = documents; // 모든 문서 가져오기
                         }
 
-//                        if (resultDocuments.size() == 0) {
-//                            TextView nullTextView = findViewById(R.id.nullTextView);
-//                            nullTextView.setVisibility(View.VISIBLE);
-//                        } else {
-//                            TextView nullTextView = findViewById(R.id.nullTextView);
-//                            nullTextView.setVisibility(View.INVISIBLE);
-//                        }
 
                         for (int i = 1; i <= resultDocuments.size(); i++) {
                             String check = resultDocuments.get(i - 1).getString("check");
@@ -423,18 +449,6 @@ public class OldMainActivity extends AppCompatActivity {
     }
 
 
-    //설정창 가는 함수
-    private void oldSetting() {
-        Button oldSettingButton = findViewById(R.id.oldSettingButton);
-        oldSettingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // OldSettingActivity를 시작
-                Intent intent = new Intent(OldMainActivity.this, OldSettingActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
 
 
 }
