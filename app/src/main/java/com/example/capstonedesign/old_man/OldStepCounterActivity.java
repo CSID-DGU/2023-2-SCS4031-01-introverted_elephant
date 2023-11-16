@@ -57,20 +57,12 @@ public class OldStepCounterActivity extends AppCompatActivity {
 
         tvSteps = findViewById(R.id.tvSteps);
 
-        Button btnStopService = findViewById(R.id.btnStopService);
         stepReceiver = new StepReceiver();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startStepCounterService();
         }
 
-
-        btnStopService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopStepCounterService();
-            }
-        });
 
         barChart = (BarChart) findViewById(R.id.fragment_bluetooth_chat_barchart);
         graphInitSetting();       //그래프 기본 세팅

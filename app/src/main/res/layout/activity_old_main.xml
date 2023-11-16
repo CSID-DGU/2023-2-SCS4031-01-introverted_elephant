@@ -14,247 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        app:cardElevation="10dp"
-        app:cardCornerRadius="10dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/backgroundTextView1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="#FFC107"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/titleTextView1"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text=""
-            android:textSize="23sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/verticalGuideline1"
-            />
-
-            <TextView
-                android:id="@+id/contentTextView1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:padding="10dp"
-                android:text=""
-                android:textSize="23sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/timeTextView1"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <TextView
-            android:id="@+id/timeTextView1"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text=""
-            android:textSize="23sp"
-            app:layout_constraintTop_toTopOf="@id/titleTextView1"
-            app:layout_constraintStart_toStartOf="@id/verticalGuideline1"
-            app:layout_constraintEnd_toEndOf="parent"
-             />
-
-        <Button
-            android:id="@+id/yesButton1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="확인"
-            android:visibility="invisible"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/verticalGuideline1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
-
-            <TextView
-                android:id="@+id/horizonTextView1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:text=""
-                app:layout_constraintTop_toBottomOf="@id/titleTextView1"
-                android:layout_marginTop="3dp"
-                android:background="#1B1E16"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/verticalGuideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <TextView
-        android:id="@+id/backgroundTextView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#6AEFD635"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/yesButton2"
-        app:layout_constraintEnd_toEndOf="@+id/contentTextView2"
-        app:layout_constraintStart_toStartOf="@+id/contentTextView2"
-        app:layout_constraintTop_toTopOf="@+id/timeTextView2" />
-
-    <TextView
-        android:id="@+id/titleTextView2"
-        android:layout_width="124dp"
-        android:layout_height="47dp"
-        android:text=""
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/contentTextView2"
-        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
-        app:layout_constraintStart_toStartOf="@+id/contentTextView2" />
-
-    <TextView
-        android:id="@+id/contentTextView2"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:text=""
-        android:textSize="30sp"
-
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeTextView2" />
-
-    <TextView
-        android:id="@+id/timeTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:text=""
-
-        android:textSize="30sp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/contentTextView2"
-        app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/yesButton1" />
-
-    <Button
-        android:id="@+id/yesButton2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="확인"
-        android:visibility="invisible"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/contentTextView2"
-        app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/contentTextView2" />
-
-    <Button
-        android:id="@+id/noButton2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="거절"
-        android:visibility="invisible"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
-        app:layout_constraintStart_toStartOf="@+id/contentTextView2"
-        app:layout_constraintTop_toBottomOf="@+id/contentTextView2" />
-
-    <TextView
-        android:id="@+id/backgroundTextView3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#6A35EFB4"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/yesButton3"
-        app:layout_constraintEnd_toEndOf="@+id/contentTextView3"
-        app:layout_constraintStart_toStartOf="@+id/contentTextView3"
-        app:layout_constraintTop_toTopOf="@+id/timeTextView3" />
-
-    <TextView
-        android:id="@+id/titleTextView3"
-        android:layout_width="124dp"
-        android:layout_height="47dp"
-        android:text=""
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/contentTextView3"
-        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
-        app:layout_constraintStart_toStartOf="@+id/contentTextView3" />
-
-    <TextView
-        android:id="@+id/contentTextView3"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:text=""
-        android:textSize="25sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeTextView3" />
-
-    <TextView
-        android:id="@+id/timeTextView3"
-        android:layout_width="wrap_content"
-        android:layout_height="46dp"
-        android:text=""
-        android:textSize="30sp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/contentTextView3"
-        app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/yesButton2" />
-
-    <Button
-        android:id="@+id/yesButton3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="확인"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/contentTextView3"
-        app:layout_constraintStart_toStartOf="@+id/verticalGuideline"
-        app:layout_constraintTop_toBottomOf="@+id/contentTextView3" />
-
-    <Button
-        android:id="@+id/noButton3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="거절"
-        android:textSize="20sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/verticalGuideline"
-        app:layout_constraintStart_toStartOf="@+id/contentTextView3"
-        app:layout_constraintTop_toBottomOf="@+id/contentTextView3" />
-
     <Button
         android:id="@+id/workButton"
         android:layout_width="wrap_content"
@@ -273,6 +32,319 @@
         app:layout_constraintHorizontal_bias="0.647"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/nullTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="도착한 알림이 없습니다 :)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/cardView1"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView1"
+        android:layout_width="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/workButton">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/backgroundTextView1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#FFD073"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/titleTextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=""
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="@id/verticalGuideline1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/contentTextView1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="23sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timeTextView1" />
+
+            <TextView
+                android:id="@+id/timeTextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=""
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/verticalGuideline1"
+                app:layout_constraintTop_toTopOf="@id/titleTextView1" />
+
+            <Button
+                android:id="@+id/yesButton1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="확인"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/verticalGuideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/horizonTextView1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="5dp"
+                android:background="#1B1E16"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@id/titleTextView1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/backgroundTextView2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#FFD073"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/titleTextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=""
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="@id/verticalGuideline2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/contentTextView2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="23sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timeTextView2" />
+
+            <TextView
+                android:id="@+id/timeTextView2"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=""
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/verticalGuideline2"
+                app:layout_constraintTop_toTopOf="@id/titleTextView2" />
+
+            <Button
+                android:id="@+id/yesButton2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="확인"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/verticalGuideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/horizonTextView2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="5dp"
+                android:background="#1B1E16"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@id/titleTextView2" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView3"
+        android:layout_width="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/backgroundTextView3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#FFD073"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/titleTextView3"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=""
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="@id/verticalGuideline3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/contentTextView3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="23sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timeTextView3" />
+
+            <TextView
+                android:id="@+id/timeTextView3"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=""
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/verticalGuideline3"
+                app:layout_constraintTop_toTopOf="@id/titleTextView3" />
+
+            <Button
+                android:id="@+id/yesButton3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="확인"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/verticalGuideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <TextView
+                android:id="@+id/horizonTextView3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginEnd="5dp"
+                android:background="#1B1E16"
+                android:text=""
+                app:layout_constraintTop_toBottomOf="@id/titleTextView3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

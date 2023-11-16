@@ -2,6 +2,7 @@ package com.example.capstonedesign.old_man;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -242,6 +243,13 @@ public class OldMainActivity extends AppCompatActivity {
                             resultDocuments = documents; // 모든 문서 가져오기
                         }
 
+//                        if (resultDocuments.size() == 0) {
+//                            TextView nullTextView = findViewById(R.id.nullTextView);
+//                            nullTextView.setVisibility(View.VISIBLE);
+//                        } else {
+//                            TextView nullTextView = findViewById(R.id.nullTextView);
+//                            nullTextView.setVisibility(View.INVISIBLE);
+//                        }
 
                         for (int i = 1; i <= resultDocuments.size(); i++) {
                             String check = resultDocuments.get(i - 1).getString("check");
@@ -314,6 +322,13 @@ public class OldMainActivity extends AppCompatActivity {
                                 }else {
                                     backgroundTextView.setVisibility(View.VISIBLE);
                                 }
+                                int cardViewId = getResources().getIdentifier("cardView" + i, "id", getPackageName());
+                                CardView cardView = findViewById(cardViewId);
+                                if (hourString.equals("")) {
+                                    cardView.setVisibility(View.INVISIBLE);
+                                }else {
+                                    cardView.setVisibility(View.VISIBLE);
+                                }
 
                             } else {
 
@@ -383,6 +398,13 @@ public class OldMainActivity extends AppCompatActivity {
                                     backgroundTextView.setVisibility(View.INVISIBLE);
                                 }else {
                                     backgroundTextView.setVisibility(View.INVISIBLE);
+                                }
+                                int cardViewId = getResources().getIdentifier("cardView" + i, "id", getPackageName());
+                                CardView cardView = findViewById(cardViewId);
+                                if (hourString.equals("")) {
+                                    cardView.setVisibility(View.INVISIBLE);
+                                }else {
+                                    cardView.setVisibility(View.INVISIBLE);
                                 }
 
                             }
