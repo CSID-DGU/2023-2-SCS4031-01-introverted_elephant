@@ -8,9 +8,9 @@
 
     <TextView
         android:id="@+id/nicknameTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="임시 닉네임"
+        android:text="긴급 상황에 확인할 수 있도록 중요한 정보들을 모두 적어주세요. 작성한 정보는 노약자의 핸드폰에 표시 됩니다.\nex) 노약자 혈액형 : AB"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/nicknameChangeChip"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,7 @@
         android:id="@+id/nicknameChangeChip"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:text="닉네임 변경"
+        android:text="주요 정보 변경"
         android:textAlignment="center"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/signOutChip"
@@ -54,9 +54,10 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="닉네임 : "
-        app:layout_constraintBottom_toBottomOf="@+id/nicknameTextView"
-        app:layout_constraintEnd_toStartOf="@+id/nicknameTextView"
-        app:layout_constraintTop_toTopOf="@+id/nicknameTextView" />
+        android:text="주요 정보"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/nicknameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

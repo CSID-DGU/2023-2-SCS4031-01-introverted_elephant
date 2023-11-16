@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.capstonedesign.R;
@@ -18,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class OldSettingActivity extends AppCompatActivity {
 
@@ -38,6 +41,26 @@ public class OldSettingActivity extends AppCompatActivity {
         deleteID(view);
 
         notification(view);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
+        String who = preferences.getString("who", "");
+        TextView information = findViewById(R.id.informationTextView);
+        // who는 문서 ID로 가정
+        db.collection("Users").document(who).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        String nickname = documentSnapshot.getString("nickname");
+                        if (nickname != null) {
+                            // "nickname" 필드의 값이 존재하는 경우 처리
+                            information.setText(nickname.toString());
+                        } else {
+                            // "nickname" 필드의 값이 null인 경우 처리
+                            // 적절한 로직을 추가하세요.
+                        }
+                    }
+                });
 
     }
 
@@ -70,8 +93,10 @@ public class OldSettingActivity extends AppCompatActivity {
 
                 // 로그인 화면으로 이동
                 Intent intent = new Intent(OldSettingActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish(); // 현재 액티비티를 종료하여 뒤로 가기 버튼으로 돌아갈 수 없게 함
+
             }
         });
     }

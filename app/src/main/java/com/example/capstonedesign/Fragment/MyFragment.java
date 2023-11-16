@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.capstonedesign.R;
 import com.example.capstonedesign.login.LoginActivity;
+import com.example.capstonedesign.old_man.OldSettingActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -147,6 +148,7 @@ public class MyFragment extends Fragment {
 
                 // 로그인 화면으로 이동
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 getActivity().finish(); // 현재 액티비티를 종료하여 뒤로 가기 버튼으로 돌아갈 수 없게 함
             }

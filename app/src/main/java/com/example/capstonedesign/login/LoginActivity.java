@@ -177,14 +177,14 @@ public class LoginActivity extends AppCompatActivity {
                                 if (document.exists()) {
                                     // 이미 사용자 정보가 Firestore에 있음
                                     // MainActivity로 이동
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, LoadingActivity.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
                                     // Firestore에 사용자 정보가 없음
                                     // 정보를 저장하고 MainActivity로 이동
                                     Map<String, Object> userInfo = new HashMap<>();
-                                    userInfo.put("nickname", "임시 닉네임");
+                                    userInfo.put("nickname", "긴급 상황에 확인할 수 있도록 중요한 정보들을 모두 적어주세요. 작성한 정보는 노약자의 핸드폰에 표시 됩니다. ex) 노약자 혈액형 : AB");
                                     //userInfo.put("추가정보", "추가정보");
 
 
@@ -194,7 +194,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
                                                         // 사용자 정보 저장 성공
-                                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                        Intent intent = new Intent(LoginActivity.this, LoadingActivity.class);
                                                         startActivity(intent);
                                                         finish();
                                                     } else {

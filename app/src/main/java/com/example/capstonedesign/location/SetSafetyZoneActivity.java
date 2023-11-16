@@ -188,10 +188,10 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
 
     public void okbutton() {
         Intent resultIntent = new Intent(this, MapActivity.class);
-        if (last_latitude != null && last_longitude != null){
-            resultIntent.putExtra("safe_latitude", last_latitude);
-            resultIntent.putExtra("safe_longitude", last_longitude);
-        }
+//        if (last_latitude != null && last_longitude != null){
+//            resultIntent.putExtra("safe_latitude", last_latitude);
+//            resultIntent.putExtra("safe_longitude", last_longitude);
+//        }
         resultIntent.putExtra("distance", distance);
         setResult(Activity.RESULT_OK, resultIntent);
         mapViewContainer.removeView(mapView);

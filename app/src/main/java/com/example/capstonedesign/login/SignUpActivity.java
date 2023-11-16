@@ -66,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         DocumentReference userRef = db.collection("Users").document(currentUser.getUid());
 
                                         Map<String, Object> userInfo = new HashMap<>();
-                                        userInfo.put("nickname", "임시 닉네임");
+                                        userInfo.put("nickname", "긴급 상황에 확인할 수 있도록 중요한 정보들을 모두 적어주세요. 작성한 정보는 노약자의 핸드폰에 표시 됩니다. ex) 노약자 혈액형 : AB");
 
                                         userRef.set(userInfo, SetOptions.merge()); // SetOptions.merge()를 사용하여 문서를 덮어쓰지 않고 업데이트
                                     }
