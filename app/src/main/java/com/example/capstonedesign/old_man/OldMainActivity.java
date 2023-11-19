@@ -58,7 +58,6 @@ public class OldMainActivity extends AppCompatActivity {
         SettingListener(); //리스너 등록
         bottomNavigationView.setSelectedItemId(R.id.item_main_fragment);
 
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
         String uid = preferences.getString("uid", "");

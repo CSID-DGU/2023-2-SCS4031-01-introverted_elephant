@@ -44,7 +44,7 @@ public class MapActivity extends AppCompatActivity {
 
     private final String BASE_URL = "https://dapi.kakao.com/";
 
-    private String REST_API_KEY = "KakaoAK "+ BuildConfig.RESTAPIKEY; // REST API 키
+    private String REST_API_KEY = "KakaoAK "+ "0cf15acd27d8221047379b612be7c6ab"; // REST API 키
 
     private DatabaseReference mDatabase;
 

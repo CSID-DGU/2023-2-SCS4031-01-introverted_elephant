@@ -15,16 +15,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/old_menu" />
 
-
-    <TextView
-        android:id="@+id/nullTextView"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/memo_animation_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="도착한 알림이 없습니다 :)"
-        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/cardView1"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="centerCrop"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/no_memo" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView1"
@@ -48,7 +50,7 @@
                 android:id="@+id/backgroundTextView1"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#FFD073"
+                android:background="#B5FFD073"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -144,7 +146,7 @@
                 android:id="@+id/backgroundTextView2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#FFD073"
+                android:background="#6AFFEB3B"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -243,7 +245,7 @@
                 android:id="@+id/backgroundTextView3"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#FFD073"
+                android:background="#57FFFD73"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

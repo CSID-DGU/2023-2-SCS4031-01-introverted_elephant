@@ -97,7 +97,7 @@
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="@string/APPKEY" />
+            android:value="f227916708539dd4341f25bb32218f6f" />
 
         <service android:name=".service.FirestoreNotificationService" />
         <service android:name=".service.FirestoreNotificationService2" />
