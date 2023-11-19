@@ -199,15 +199,6 @@ public class MainFragment extends Fragment {
             }
         });
 
-        Button RecordButton = view.findViewById(R.id.RecordButton);
-        RecordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(getActivity(), RecordActivity.class);
-                startActivity(intent);
-            }
-        });
 
 
 

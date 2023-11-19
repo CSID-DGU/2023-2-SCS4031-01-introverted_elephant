@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.capstonedesign.R;
+import com.example.capstonedesign.RecordActivity;
 import com.example.capstonedesign.StepCounterActivity;
 import com.example.capstonedesign.location.LocationActivity;
 import com.example.capstonedesign.old_man.OldMainActivity;
@@ -23,6 +24,16 @@ public class CommunityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_community, container, false);
 
+
+        Button memoButton = view.findViewById(R.id.memoButton);
+        memoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getActivity(), RecordActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Button mapButton = view.findViewById(R.id.mapButton);
         mapButton.setOnClickListener(new View.OnClickListener() {
