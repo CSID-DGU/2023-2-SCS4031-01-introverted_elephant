@@ -19,6 +19,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,12 +35,13 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 0;
-    private EditText emailEditText;
-    private EditText passwordEditText;
+    private TextInputLayout emailEditText;
+    private TextInputLayout passwordEditText;
     private Button signUpButton;
     private Button signInButton;
 
@@ -95,8 +98,8 @@ public class LoginActivity extends AppCompatActivity {
             signInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String email = emailEditText.getText().toString();
-                    String password = passwordEditText.getText().toString();
+                    String email = Objects.requireNonNull(emailEditText.getEditText()).toString();
+                    String password = Objects.requireNonNull(passwordEditText.getEditText()).toString();
 
                     if (email.isEmpty() || password.isEmpty()) {
                         Toast.makeText(LoginActivity.this, "이메일 또는 패스워드가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
