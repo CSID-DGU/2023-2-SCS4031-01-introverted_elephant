@@ -6,46 +6,93 @@
     android:layout_height="match_parent"
     tools:context=".login.SignUpActivity">
 
-    <EditText
-        android:id="@+id/signUpEmailEditText"
+    <TextView
+        android:id="@+id/signUpTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
+        android:layout_marginBottom="20dp"
+        android:text="회원가입"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/signUpEmailEditText"
+        app:layout_constraintLeft_toLeftOf="@+id/signUpEmailEditText" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signUpEmailEditText"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:counterMaxLength="20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailText"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="사용하실 이메일을 입력해주세요"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/signUpPasswordEditText"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
+        android:layout_marginTop="10dp"
+        app:counterMaxLength="10"
         app:layout_constraintEnd_toEndOf="@+id/signUpEmailEditText"
         app:layout_constraintStart_toStartOf="@+id/signUpEmailEditText"
-        app:layout_constraintTop_toBottomOf="@+id/signUpEmailEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpEmailEditText">
 
-    <EditText
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/passwordText"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:hint="비밀번호를 입력해주세요"
+        android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/signUpPasswordCheckEditText"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Repeat Password"
-        android:inputType="textPassword"
+        android:layout_marginTop="10dp"
+        app:counterMaxLength="10"
         app:layout_constraintEnd_toEndOf="@+id/signUpPasswordEditText"
         app:layout_constraintStart_toStartOf="@+id/signUpPasswordEditText"
-        app:layout_constraintTop_toBottomOf="@+id/signUpPasswordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpPasswordEditText" >
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/repeatPasswordText"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호를 재입력해 확인해주세요"
+            android:inputType="textPassword"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/realSignUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="화원가입"
+        android:layout_marginTop="15dp"
+        android:ems="15"
+        android:background="@drawable/rect_orange"
+        android:text="회원가입"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/signUpPasswordCheckEditText"
         app:layout_constraintStart_toStartOf="@+id/signUpPasswordCheckEditText"
-        app:layout_constraintTop_toBottomOf="@+id/signUpPasswordCheckEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpPasswordCheckEditText"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
