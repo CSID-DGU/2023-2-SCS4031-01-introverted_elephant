@@ -6,23 +6,49 @@
     android:layout_height="match_parent"
     tools:context=".start.StartActivity">
 
-    <Button
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/oldButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/round_orange"
+        android:minWidth="100dp"
+        android:minHeight="40dp"
         android:text="어르신"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/adminButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/round_orange"
+        android:minWidth="100dp"
+        android:minHeight="40dp"
         android:text="보호자"
-        app:layout_constraintEnd_toEndOf="@+id/oldButton"
-        app:layout_constraintStart_toStartOf="@+id/oldButton"
-        app:layout_constraintTop_toBottomOf="@+id/oldButton" />
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/oldButton" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="50dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="50dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
