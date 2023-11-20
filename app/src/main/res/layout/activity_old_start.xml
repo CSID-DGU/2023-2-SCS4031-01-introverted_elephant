@@ -30,29 +30,46 @@
         app:layout_constraintBottom_toTopOf="@+id/numberCheckEditText"
         app:layout_constraintStart_toStartOf="@+id/numberCheckEditText" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/numberCheckEditText"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="13"
-        android:inputType="text"
-        android:hint="전화번호를 - 없이 입력해주세요"
+        app:counterMaxLength="30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/numberText"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="전화번호를 - 없이 입력해주세요"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordEditText"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="13"
-        android:hint="비밀번호를 입력해주세요"
-        android:inputType="textPassword"
+        android:layout_marginTop="10dp"
+        app:counterMaxLength="11"
         app:layout_constraintLeft_toLeftOf="@+id/numberCheckEditText"
-        app:layout_constraintTop_toBottomOf="@+id/numberCheckEditText"/>
+        app:layout_constraintTop_toBottomOf="@+id/numberCheckEditText">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordText"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호를 입력해주세요"
+            android:inputType="textPassword"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/numberCheckButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,6 +81,6 @@
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="@+id/numberCheckEditText"
         app:layout_constraintStart_toStartOf="@+id/numberCheckEditText"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
