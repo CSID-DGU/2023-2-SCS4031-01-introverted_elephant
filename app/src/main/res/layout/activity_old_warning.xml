@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6"/>
+        app:layout_constraintGuide_percent="0.65"/>
 
     <TextView
         android:id="@+id/textView5"
@@ -29,22 +29,27 @@
         android:layout_marginHorizontal="30dp"
         android:textSize="20sp"
         android:layout_height="wrap_content"
-        android:text="보호자께서 경고 알림을 보내셨습니다. 보호자께서 걱정하시지 않도록 확인 버튼을 눌러주세요! "
+        android:text="보호자께서 경고 알림을 보내셨습니다.\n확인 버튼을 눌러 경고음을 끄고\n보호자를 안심시켜주세요!"
+        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/checkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:background="@drawable/round_orange"
+        android:minHeight="60dp"
+        android:minWidth="150dp"
         android:text="확인"
+        android:textColor="@color/black"
         android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView5" />
+        app:layout_constraintTop_toTopOf="@+id/textView5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
