@@ -10,59 +10,75 @@
         android:id="@+id/matchingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:text="매칭"
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:layout_marginBottom="10dp"
         android:textStyle="bold"
-        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
-        app:layout_constraintLeft_toLeftOf="@+id/masterStartEditText"/>
+        app:layout_constraintLeft_toLeftOf="@+id/masterStartEditText" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="노약자의 전화번호를 입력하고\n매칭을 위한 비밀번호를 설정해주세요"
-        android:textSize="15dp"
-        android:textColor="@color/black"
         android:layout_marginBottom="10dp"
+        android:text="노약자의 전화번호를 입력하고\n매칭을 위한 비밀번호를 설정해주세요"
+        android:textColor="@color/black"
+        android:textSize="15dp"
         app:layout_constraintBottom_toTopOf="@+id/masterStartEditText"
         app:layout_constraintStart_toStartOf="@+id/masterStartEditText" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/masterStartEditText"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="13"
-        android:inputType="text"
-        android:hint="전화번호를 - 없이 입력해주세요"
+        app:counterMaxLength="30"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/masterStartText"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="전화번호를 - 없이 입력해주세요"
+            android:inputType="text"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordEditText"
+        style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="13"
-        android:hint="비밀번호를 입력해주세요"
-        android:inputType="textPassword"
+        android:layout_marginTop="10dp"
+        app:counterMaxLength="11"
         app:layout_constraintLeft_toLeftOf="@+id/masterStartEditText"
-        app:layout_constraintTop_toBottomOf="@+id/masterStartEditText"/>
+        app:layout_constraintTop_toBottomOf="@+id/masterStartEditText">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordText"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:hint="비밀번호를 입력해주세요"
+            android:inputType="textPassword" />
 
-    <Button
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/masterStartYesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rect_orange"
+        android:ems="12"
         android:text="확인"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:background="@drawable/rect_orange"
-        android:ems="12"
-        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="@+id/masterStartEditText"
         app:layout_constraintStart_toStartOf="@+id/masterStartEditText"
         app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
