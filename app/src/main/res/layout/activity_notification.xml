@@ -10,8 +10,9 @@
         android:id="@+id/memoTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:text="알림"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textTextInputLayout"
         app:layout_constraintStart_toStartOf="@+id/textTextInputLayout" />
 
@@ -37,21 +38,34 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/medicineYesButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="확인"
-        app:layout_constraintEnd_toEndOf="@+id/textTextInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/textTextInputLayout" />
-
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/timeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:background="@drawable/round_orange"
+        android:minWidth="180dp"
+        android:minHeight="40dp"
         android:text="오늘 12시 30분"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textTextInputLayout"
-        app:layout_constraintEnd_toEndOf="@+id/textTextInputLayout" />
+        app:layout_constraintEnd_toEndOf="@+id/textTextInputLayout"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/medicineYesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_orange"
+        android:minWidth="80dp"
+        android:minHeight="30dp"
+        android:text="확인"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/textTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textTextInputLayout" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
