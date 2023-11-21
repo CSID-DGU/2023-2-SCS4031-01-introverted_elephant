@@ -1,7 +1,4 @@
 package com.example.capstonedesign.location;
-
-import android.util.Log;
-
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;

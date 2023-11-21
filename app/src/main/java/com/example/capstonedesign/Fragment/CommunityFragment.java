@@ -14,6 +14,7 @@ import com.example.capstonedesign.R;
 import com.example.capstonedesign.RecordActivity;
 import com.example.capstonedesign.StepCounterActivity;
 import com.example.capstonedesign.location.LocationActivity;
+import com.example.capstonedesign.location.bglocationactivity;
 import com.example.capstonedesign.old_man.OldMainActivity;
 
 public class CommunityFragment extends Fragment {
@@ -39,7 +40,7 @@ public class CommunityFragment extends Fragment {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), LocationActivity.class);
+                Intent intent = new Intent(getActivity(), bglocationactivity.class);
                 startActivity(intent);
             }
         });
