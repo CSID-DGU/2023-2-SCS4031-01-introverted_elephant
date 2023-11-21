@@ -7,35 +7,54 @@
     tools:context=".start.StartActivity">
 
 
-    <androidx.appcompat.widget.AppCompatButton
+    <ImageButton
         android:id="@+id/oldButton"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/round_orange"
+        android:clickable="true"
+        android:src="@drawable/old_man_image"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_orange"
-        android:minWidth="100dp"
-        android:minHeight="40dp"
+        android:layout_marginTop="10dp"
         android:text="어르신"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/oldButton"
+        app:layout_constraintStart_toStartOf="@+id/oldButton"
+        app:layout_constraintEnd_toEndOf="@+id/oldButton"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <ImageButton
         android:id="@+id/adminButton"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/round_orange"
+        android:clickable="true"
+        android:src="@drawable/standing_man_image"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="@+id/guideline5"
+        app:layout_constraintTop_toTopOf="@+id/oldButton"/>
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/round_orange"
-        android:minWidth="100dp"
-        android:minHeight="40dp"
+        android:layout_marginTop="10dp"
         android:text="보호자"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/oldButton" />
+        app:layout_constraintTop_toBottomOf="@+id/adminButton"
+        app:layout_constraintStart_toStartOf="@+id/adminButton"
+        app:layout_constraintEnd_toEndOf="@+id/adminButton"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
