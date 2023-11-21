@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.capstonedesign.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -30,17 +32,17 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        EditText signUpEmailEditText = findViewById(R.id.signUpEmailEditText);
-        EditText signUpPasswordEditText = findViewById(R.id.signUpPasswordEditText);
-        EditText signUpPasswordCheckEditText = findViewById(R.id.signUpPasswordCheckEditText);
+        TextInputEditText signUpEmailEditText = findViewById(R.id.emailText);
+        TextInputEditText signUpPasswordEditText = findViewById(R.id.passwordText);
+        TextInputEditText signUpPasswordCheckEditText = findViewById(R.id.repeatPasswordText);
         Button realSignUpButton = findViewById(R.id.realSignUpButton);
 
         realSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = signUpEmailEditText.getText().toString();
-                String password = signUpPasswordEditText.getText().toString();
-                String passwordCheck = signUpPasswordCheckEditText.getText().toString();
+                String email = Objects.requireNonNull(signUpEmailEditText.getText()).toString();
+                String password = Objects.requireNonNull(signUpPasswordEditText.getText()).toString();
+                String passwordCheck = Objects.requireNonNull(signUpPasswordCheckEditText.getText()).toString();
 
                 if (email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(SignUpActivity.this, "이메일 또는 패스워드가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
