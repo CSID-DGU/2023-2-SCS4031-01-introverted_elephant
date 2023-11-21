@@ -40,8 +40,8 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 0;
-    private TextInputLayout emailEditText;
-    private TextInputLayout passwordEditText;
+    private TextInputEditText emailEditText;
+    private TextInputEditText passwordEditText;
     private Button signUpButton;
     private Button signInButton;
 
@@ -63,8 +63,8 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         } else {
 
-            emailEditText = findViewById(R.id.emailEditText);
-            passwordEditText = findViewById(R.id.passwordEditText);
+            emailEditText = findViewById(R.id.emailText);
+            passwordEditText = findViewById(R.id.passwordText);
             signUpButton = findViewById(R.id.signUpButton);
             signInButton = findViewById(R.id.signInButton);
 
@@ -98,8 +98,9 @@ public class LoginActivity extends AppCompatActivity {
             signInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String email = Objects.requireNonNull(emailEditText.getEditText()).toString();
-                    String password = Objects.requireNonNull(passwordEditText.getEditText()).toString();
+                    String email = Objects.requireNonNull(emailEditText.getText()).toString();
+                    String password = Objects.requireNonNull(passwordEditText.getText()).toString();
+
 
                     if (email.isEmpty() || password.isEmpty()) {
                         Toast.makeText(LoginActivity.this, "이메일 또는 패스워드가 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
