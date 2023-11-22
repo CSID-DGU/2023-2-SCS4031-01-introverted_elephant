@@ -188,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
                                     // Firestore에 사용자 정보가 없음
                                     // 정보를 저장하고 MainActivity로 이동
                                     Map<String, Object> userInfo = new HashMap<>();
-                                    userInfo.put("nickname", "긴급 상황에 확인할 수 있도록 중요한 정보들을 모두 적어주세요. 작성한 정보는 노약자의 핸드폰에 표시 됩니다. ex) 노약자 혈액형 : AB");
+                                    userInfo.put("nickname", "긴급 상황에 확인할 수 있도록 중요한 정보들을 모두 적어주세요. 작성한 정보는 어르신의 핸드폰에 표시 됩니다. ex) 어르신 혈액형 : AB");
                                     //userInfo.put("추가정보", "추가정보");
 
 

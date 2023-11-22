@@ -41,7 +41,7 @@ public class StepCounterService extends Service implements SensorEventListener {
     }
 
     private long lastStepTime = 0;
-    private static final long COOL_DOWN_TIME = 200; // 1초 동안은 센서 이벤트를 무시
+    private static final long COOL_DOWN_TIME = 200; // 0.2초 동안은 센서 이벤트를 무시
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -54,7 +54,7 @@ public class StepCounterService extends Service implements SensorEventListener {
                 float z = event.values[2];
 
                 float magnitude = (float) Math.sqrt(x * x + y * y + z * z);
-                float threshold = 30.0f;  // 임의의 임계값입니다. 조절이 필요할 수 있습니다. (민감도)
+                float threshold = 15.0f;  // 임의의 임계값입니다. 조절이 필요할 수 있습니다. (민감도)
 
                 if (magnitude > threshold) {
                     steps++;

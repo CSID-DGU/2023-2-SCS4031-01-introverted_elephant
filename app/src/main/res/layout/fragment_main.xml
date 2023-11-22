@@ -52,7 +52,7 @@
         app:srcCompat="@drawable/baseline_local_hospital_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/exerciseButton"
+        android:id="@+id/etcButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
@@ -60,7 +60,7 @@
         app:layout_constraintBottom_toTopOf="@+id/hospitalButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/foodButton"
-        app:srcCompat="@drawable/baseline_directions_run_24" />
+        app:srcCompat="@drawable/baseline_pending_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/workButton"
@@ -90,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/exerciseButton"
+        app:layout_constraintBottom_toTopOf="@+id/workButton"
         app:layout_constraintEnd_toStartOf="@+id/foodButton"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_family_restroom_24" />
@@ -101,21 +101,21 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/exerciseButton"
+        app:layout_constraintBottom_toTopOf="@+id/workButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/baseline_directions_car_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/etcButton"
+        android:id="@+id/exerciseButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/exerciseButton"
+        app:layout_constraintBottom_toTopOf="@+id/etcButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/workButton"
-        app:srcCompat="@drawable/baseline_pending_24" />
+        app:srcCompat="@drawable/baseline_directions_run_24" />
 
     <TextView
         android:id="@+id/textView2"
@@ -165,19 +165,20 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="운동 알림"
+        android:text="기타 알림"
         app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
         app:layout_constraintStart_toStartOf="@+id/hospitalButton"
-        app:layout_constraintTop_toBottomOf="@+id/exerciseButton" />
+        app:layout_constraintTop_toBottomOf="@+id/workButton" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="기타 알림"
+        android:text="운동 알림"
         app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
         app:layout_constraintStart_toStartOf="@+id/hospitalButton"
         app:layout_constraintTop_toBottomOf="@+id/familyButton" />
+
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
@@ -185,7 +186,7 @@
         android:text="할일 알림"
         app:layout_constraintEnd_toEndOf="@+id/workButton"
         app:layout_constraintStart_toStartOf="@+id/workButton"
-        app:layout_constraintTop_toBottomOf="@+id/exerciseButton" />
+        app:layout_constraintTop_toTopOf="@+id/textView7" />
 
     <TextView
         android:id="@+id/textView9"

@@ -39,6 +39,7 @@
         android:layout_marginBottom="5dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -135,6 +136,8 @@
         android:layout_marginBottom="5dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
+        android:visibility="invisible"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView1">
@@ -234,6 +237,8 @@
         android:layout_marginBottom="5dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp"
+        android:visibility="invisible"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2">
