@@ -194,9 +194,9 @@ public class OldStepCounterActivity extends AppCompatActivity {
 
                         // 평균값을 totalStepTextView에 설정
                         if (!Double.isNaN(average)) {
-                            totalStepTextView.setText("일주일 평균 걸음 수 : " + String.format("%.0f", average) + " 걸음");
+                            totalStepTextView.setText(String.format("%.0f", average) + " 걸음");
                         } else {
-                            totalStepTextView.setText("일주일 평균 걸음 수 : 0 걸음");
+                            totalStepTextView.setText("0 걸음");
                         }
 
                         // jsonList이 비어있지 않은 경우
@@ -204,13 +204,13 @@ public class OldStepCounterActivity extends AppCompatActivity {
                             int lastValue = jsonList.get(jsonList.size() - 1).intValue();
 
                             // 마지막 값이 10000 이상인 경우 "성공" 아니면 "미달성" 설정
-                            String goalResult = (lastValue >= 10000) ? "하루 만 보 걷기 : 달성" : "하루 만 보 걷기 : 미달성";
+                            String goalResult = (lastValue >= 10000) ? "달성" : "미달성";
 
                             // goalTextView에 결과 설정
                             goalTextView.setText(goalResult);
                         } else {
                             // jsonList가 비어있는 경우에 대한 처리
-                            goalTextView.setText("하루 만 보 걷기 : 미달성");
+                            goalTextView.setText("미달성");
                         }
 
 
