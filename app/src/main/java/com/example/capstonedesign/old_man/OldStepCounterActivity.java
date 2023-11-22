@@ -91,7 +91,7 @@ public class OldStepCounterActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             double steps = intent.getIntExtra("steps", 0);
-            tvSteps.setText("오늘 걸음 수 : " + String.format("%.0f", steps)+ " 걸음");
+            tvSteps.setText(String.format("%.0f", steps));
 
             SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
             String uid = preferences.getString("uid", "");
@@ -180,7 +180,7 @@ public class OldStepCounterActivity extends AppCompatActivity {
                             Long step = document.getLong("step");
                             double stepValue = (step != null) ? step.intValue() : 0;
                             jsonList.add((int) stepValue);
-                            tvSteps.setText("오늘 걸음 수 : " + String.format("%.0f", stepValue)+ " 걸음");
+                            tvSteps.setText(String.format("%.0f", stepValue));
                         }
 
                         TextView totalStepTextView = findViewById(R.id.totalStepTextView);
@@ -193,7 +193,11 @@ public class OldStepCounterActivity extends AppCompatActivity {
                         double average = sum / jsonList.size();
 
                         // 평균값을 totalStepTextView에 설정
-                        totalStepTextView.setText("일주일 평균 걸음 수 : " + String.format("%.0f", average) + " 걸음"); // 소수점 2자리까지 표시
+                        if (!Double.isNaN(average)) {
+                            totalStepTextView.setText("일주일 평균 걸음 수 : " + String.format("%.0f", average) + " 걸음");
+                        } else {
+                            totalStepTextView.setText("일주일 평균 걸음 수 : 0 걸음");
+                        }
 
                         // jsonList이 비어있지 않은 경우
                         if (!jsonList.isEmpty()) {
@@ -206,7 +210,7 @@ public class OldStepCounterActivity extends AppCompatActivity {
                             goalTextView.setText(goalResult);
                         } else {
                             // jsonList가 비어있는 경우에 대한 처리
-                            goalTextView.setText("데이터 없음");
+                            goalTextView.setText("하루 만 보 걷기 : 미달성");
                         }
 
 

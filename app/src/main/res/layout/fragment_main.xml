@@ -107,7 +107,7 @@
         app:srcCompat="@drawable/baseline_directions_car_24" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/exerciseButton1"
+        android:id="@+id/exerciseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="60dp"

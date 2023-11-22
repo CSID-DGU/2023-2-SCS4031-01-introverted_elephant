@@ -109,11 +109,16 @@ public class StepCounterService extends Service implements SensorEventListener {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
 
-        return new NotificationCompat.Builder(this, CHANNEL_ID)
+        // 소리를 비활성화하는 코드
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Capstone Design")
                 .setContentText("만보기 실행 중")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentIntent(pendingIntent)
-                .build();
+                .setContentIntent(pendingIntent);
+
+        // 소리 비활성화
+        builder.setSound(null);
+
+        return builder.build();
     }
 }
