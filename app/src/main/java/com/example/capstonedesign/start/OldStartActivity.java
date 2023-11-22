@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class OldStartActivity extends AppCompatActivity {
 
@@ -33,14 +35,14 @@ public class OldStartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_old_start);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        EditText numberCheckEditText = findViewById(R.id.numberCheckEditText);
+        TextInputEditText numberCheckEditText = findViewById(R.id.numberText);
         Button numberCheckButton = findViewById(R.id.numberCheckButton);
 
         // numberCheckButton 클릭 이벤트 핸들러
         numberCheckButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String masterNumber = numberCheckEditText.getText().toString();
+                final String masterNumber = Objects.requireNonNull(numberCheckEditText.getText()).toString();
 
                 // Firestore에서 "Users" 컬렉션에서 "who" 필드 값이 documentName과 일치하는 문서 검색
                 db.collection("Users")

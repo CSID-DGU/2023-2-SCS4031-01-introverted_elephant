@@ -17,11 +17,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class MasterStartActivity extends AppCompatActivity {
 
@@ -31,7 +36,9 @@ public class MasterStartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_master_start);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        EditText masterStartEditText = findViewById(R.id.masterStartEditText);
+        TextInputEditText masterStartEditText = findViewById(R.id.masterStartText);
+        TextInputEditText masterStartEditText2 = findViewById(R.id.passwordText);
+
         Button masterStartYesButton = findViewById(R.id.masterStartYesButton);
         masterStartYesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,40 +58,34 @@ public class MasterStartActivity extends AppCompatActivity {
                                 DocumentSnapshot document = task.getResult();
                                 if (document != null && document.exists()) {
 
-                                    String masterNumber = masterStartEditText.getText().toString();
+                                    String masterNumber =  Objects.requireNonNull(masterStartEditText.getText()).toString();
+                                    String masterNumber2 =  Objects.requireNonNull(masterStartEditText2.getText()).toString();
 
-                                    // 'who' 필드에 'admin' 값을 설정
-                                    userRef.update("who", "admin")
+
+                                    // 'who' 필드에 'admin', 'masterNumber' 필드에 randomString 값을 설정
+                                    Map<String, Object> updates = new HashMap<>();
+                                    updates.put("who", "admin");
+                                    updates.put("masterNumber", masterNumber);
+                                    updates.put("oldNumber", masterNumber2);
+
+                                    userRef.update(updates)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    // 'settingNumber' 필드에 randomString 값을 설정
-                                                    userRef.update("masterNumber", masterNumber)
-                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                                @Override
-                                                                public void onSuccess(Void aVoid) {
-                                                                    Toast.makeText(MasterStartActivity.this, "보호자로 설정되었습니다.", Toast.LENGTH_SHORT).show();
-                                                                    Intent intent = new Intent(MasterStartActivity.this, LoadingActivity.class);
-                                                                    startActivity(intent);
-                                                                    finish();
-                                                                }
-                                                            })
-                                                            .addOnFailureListener(new OnFailureListener() {
-                                                                @Override
-                                                                public void onFailure(@NonNull Exception e) {
-                                                                    // 'settingNumber' 필드 설정 실패 처리
-                                                                    Toast.makeText(MasterStartActivity.this, "settingNumber 값을 설정하지 못했습니다.", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                            });
+                                                    Toast.makeText(MasterStartActivity.this, "보호자로 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(MasterStartActivity.this, LoadingActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    // 'who' 필드 설정 실패 처리
-                                                    Toast.makeText(MasterStartActivity.this, "보호자 설정을 실패했습니다.", Toast.LENGTH_SHORT).show();
+                                                    // 업데이트 실패 처리
+                                                    Toast.makeText(MasterStartActivity.this, "업데이트를 실패했습니다.", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
+
 
                                 }
                             }

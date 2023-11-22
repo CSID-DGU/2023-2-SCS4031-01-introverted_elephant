@@ -40,8 +40,8 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 0;
-    private TextInputEditText emailEditText;
-    private TextInputEditText passwordEditText;
+    private TextInputEditText emailText;
+    private TextInputEditText passwordText;
     private Button signUpButton;
     private Button signInButton;
 
@@ -63,8 +63,8 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         } else {
 
-            emailEditText = findViewById(R.id.emailText);
-            passwordEditText = findViewById(R.id.passwordText);
+            emailText = findViewById(R.id.emailText);
+            passwordText = findViewById(R.id.passwordText);
             signUpButton = findViewById(R.id.signUpButton);
             signInButton = findViewById(R.id.signInButton);
 
@@ -98,8 +98,8 @@ public class LoginActivity extends AppCompatActivity {
             signInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String email = Objects.requireNonNull(emailEditText.getText()).toString();
-                    String password = Objects.requireNonNull(passwordEditText.getText()).toString();
+                    String email = Objects.requireNonNull(emailText.getText()).toString();
+                    String password = Objects.requireNonNull(passwordText.getText()).toString();
 
 
                     if (email.isEmpty() || password.isEmpty()) {

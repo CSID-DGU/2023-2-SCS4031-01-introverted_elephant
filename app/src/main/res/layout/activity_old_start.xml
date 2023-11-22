@@ -23,7 +23,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="보호자의 전화번호를 입력하고\n매칭을 위한 비밀번호를 설정해주세요"
+        android:text="안전한 매칭을 위해 보호자의 전화번호와\n어르신의 전화번호를 입력해주세요"
         android:textSize="15dp"
         android:textColor="@color/black"
         android:layout_marginBottom="10dp"
@@ -45,8 +45,8 @@
             android:id="@+id/numberText"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="전화번호를 - 없이 입력해주세요"/>
+            android:inputType="number"
+            android:hint="보호자의 전화번호를 입력해주세요"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,7 +64,7 @@
             android:id="@+id/passwordText"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:hint="비밀번호를 입력해주세요"
+            android:hint="어르신의 전화번호를 입력해주세요"
             android:inputType="textPassword"/>
 
     </com.google.android.material.textfield.TextInputLayout>

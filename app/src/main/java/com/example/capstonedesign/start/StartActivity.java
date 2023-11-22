@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.capstonedesign.R;
 
@@ -19,7 +20,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         //어르신 버튼을 눌렀을 때
-        Button oldButton = findViewById(R.id.oldButton);
+        ImageButton oldButton = findViewById(R.id.oldButton);
         oldButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +50,7 @@ public class StartActivity extends AppCompatActivity {
         });
 
         //보호자 버튼을 눌렀을 때
-        Button adminButton = findViewById(R.id.adminButton);
+        ImageButton adminButton = findViewById(R.id.adminButton);
         adminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
