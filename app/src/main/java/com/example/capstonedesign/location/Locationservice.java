@@ -24,7 +24,9 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +35,8 @@ import java.util.Map;
 
 public class Locationservice extends Service {
     private String uid;
+
+    private int MAX_DOCUMENTS = 30;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private LocationCallback mLocationCallback = new LocationCallback() {
         @Override
@@ -122,18 +126,49 @@ public class Locationservice extends Service {
         Map<String, Object> locationData = new HashMap<>();
         locationData.put("latitude", latitude);
         locationData.put("longitude", longitude);
-
+        locationData.put("timestamp", FieldValue.serverTimestamp());
         // Firestore에 데이터 쓰기
         db.collection("user_locations")  // 사용자 위치를 저장하는 컬렉션 이름
                 .document(uid)              // 사용자 ID를 문서 이름으로 사용
-                .set(locationData)
+                .collection("location_data") // "location_data"라는 하위 컬렉션 생성 또는 참조
+                .add(locationData)
                 .addOnSuccessListener(aVoid -> {
                     Log.d("Firestore", "Location data written successfully");
+                    // 추가 후 최대 개수를 유지하도록 호출
+                    maintainMaxDocumentCount(uid, "location_data", MAX_DOCUMENTS);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("Firestore", "Error writing location data: " + e.getMessage());
                 });
     }
+
+    // 최대 개수를 유지하도록 호출되는 메소드
+    private void maintainMaxDocumentCount(String userId, String subCollectionName, int maxDocuments) {
+        db.collection("user_locations")
+                .document(userId)
+                .collection(subCollectionName)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .limit(maxDocuments)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    int currentDocumentCount = queryDocumentSnapshots.size();
+                    if (currentDocumentCount > maxDocuments) {
+                        // 현재 개수가 최대 개수를 초과하면 초과된 문서를 삭제
+                        for (int i = maxDocuments; i < currentDocumentCount; i++) {
+                            String documentIdToDelete = queryDocumentSnapshots.getDocuments().get(i).getId();
+                             //deleteDocument(userId, subCollectionName, documentIdToDelete);
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error checking document count", e);
+                });
+    }
+
+
+
 }
+
+
 
 

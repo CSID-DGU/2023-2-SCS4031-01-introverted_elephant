@@ -42,7 +42,6 @@ public class MapActivity_Oldman extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
 
-
     public long RegionCode_B;
     public List<Institution> agencyList = new ArrayList<>();
     public List<Hospital> HPList = new ArrayList<>();
@@ -72,23 +71,16 @@ public class MapActivity_Oldman extends AppCompatActivity {
         MapPoint MARKER_POINT1 = MapPoint.mapPointWithGeoCoord(latitude, longitude);
         // 마커 아이콘 추가하는 함수
         MapPOIItem marker1 = new MapPOIItem();
-        // 클릭 했을 때 나오는 호출 값
-        marker1.setItemName("현재 위치");
-        // 마커 태그 : 태그로 구분하기 위한 거
-        marker1.setTag(0);
-        // 좌표를 입력받아 현 위치로 출력
-        marker1.setMapPoint(MARKER_POINT1);
-        //  (클릭 전) BluePin 마커 모양의 색.
-        marker1.setMarkerType(MapPOIItem.MarkerType.CustomImage);
-        marker1.setCustomImageResourceId(R.drawable.mapmarker_blue);
-        // (클릭 후) 마커를 클릭했을때, RedPin 마커 모양.
+        marker1.setItemName("현재 위치"); // 클릭 했을 때 나오는 호출 값
+        marker1.setTag(0); // 마커 태그 : 태그로 구분하기 위한 거
+        marker1.setMapPoint(MARKER_POINT1); // 좌표를 입력받아 현 위치로 출력
+        marker1.setMarkerType(MapPOIItem.MarkerType.CustomImage); //  (클릭 전) BluePin 마커 모양의 색.
+        marker1.setCustomImageResourceId(R.drawable.mapmarker_blue); // (클릭 후) 마커를 클릭했을때, RedPin 마커 모양.
         marker1.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
         marker1.setCustomSelectedImageResourceId(R.drawable.mapmarker_red);
         marker1.setCustomImageAutoscale(false);    // 커스텀 마커 이미지 크기 자동 조정
         marker1.setCustomImageAnchor(0.5f, 1.0f);    // 마커 이미지 기준점
-
-        // 지도화면 위에 추가되는 아이콘을 추가하기 위한 호출(말풍선 모양)
-        mapView.addPOIItem(marker1);
+        mapView.addPOIItem(marker1); // 지도화면 위에 추가되는 아이콘을 추가하기 위한 호출(말풍선 모양)
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         geoinfo(longitude,latitude);
