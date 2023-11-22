@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".location.MapActivity">
+
+    <com.kakao.vectormap.MapView
+        android:id="@+id/map_view"
+        android:layout_width="409dp"
+        android:layout_height="503dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/center_list"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="56dp"
+        android:text="기관리스트"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintStart_toEndOf="@+id/nearcenter"
+        app:layout_constraintTop_toBottomOf="@+id/switchLocationUpdates_inmap"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/nearcenter"
+        android:layout_width="153dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="112dp"
+        android:text="병원 및 기관찾기"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map_view" />
+
+    <Switch
+        android:id="@+id/switchLocationUpdates_inmap"
+        android:layout_width="157dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="524dp"
+        android:switchMinWidth="60dp"
+        android:text="위치공유"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

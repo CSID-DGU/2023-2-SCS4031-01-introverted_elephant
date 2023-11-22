@@ -201,25 +201,13 @@ public class LocationActivity_Oldman extends AppCompatActivity {
             }
         }
     }
-    private final LocationCallback locationCallback = new LocationCallback() {
+    private LocationCallback locationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             super.onLocationResult(locationResult);
             longitude = locationResult.getLastLocation().getLongitude();
             latitude = locationResult.getLastLocation().getLatitude();
             mFusedLocationClient.removeLocationUpdates(locationCallback);
-
-            // location 객체 생성
-            Map<String, Object> location = new HashMap<>();
-            location.put("latitude",latitude );
-            location.put("longitude", longitude);
-
-            //Location 콜렉션의 target 문서에 대입
-            db.collection("Users").document(uid)
-                    .set(location)
-                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
-                    .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
-
 
             Intent intent = new Intent(LocationActivity_Oldman.this, MapActivity.class);
             intent.putExtra("latitude", latitude);

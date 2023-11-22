@@ -23,6 +23,7 @@ import com.example.capstonedesign.Fragment.MyFragment;
 import com.example.capstonedesign.MainActivity;
 import com.example.capstonedesign.R;
 import com.example.capstonedesign.location.LocationActivity;
+import com.example.capstonedesign.location.bglocationactivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -228,7 +229,7 @@ public class OldMainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_item2) {
-                Intent intent = new Intent(getApplicationContext(), LocationActivity.class);
+                Intent intent = new Intent(getApplicationContext(), bglocationactivity.class);
                 startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_item3) {

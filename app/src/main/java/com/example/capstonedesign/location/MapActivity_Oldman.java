@@ -9,7 +9,6 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.capstonedesign.BuildConfig;
 import com.example.capstonedesign.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,22 +37,25 @@ public class MapActivity_Oldman extends AppCompatActivity {
 
     private final String BASE_URL = "https://dapi.kakao.com/";
 
-    private  String RESR_API_KEY = "KakaoAK "+ BuildConfig.RESTAPIKEY; // REST API 키
+    // private  String RESR_API_KEY = "KakaoAK "+ BuildConfig.RESTAPIKEY; // REST API 키
+    private final String REST_API_KEY = "KakaoAK "+ "0cf15acd27d8221047379b612be7c6ab"; // REST API 키
 
     private DatabaseReference mDatabase;
 
 
     public long RegionCode_B;
     public List<Institution> agencyList = new ArrayList<>();
+    public List<Hospital> HPList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_odlman_map);
 
         Intent intent = getIntent();
         double latitude = intent.getDoubleExtra("latitude", 0);
         double longitude = intent.getDoubleExtra("longitude", 0);
+
         mapView = new MapView(this);
         mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
@@ -76,20 +78,23 @@ public class MapActivity_Oldman extends AppCompatActivity {
         marker1.setTag(0);
         // 좌표를 입력받아 현 위치로 출력
         marker1.setMapPoint(MARKER_POINT1);
-
-        //  (클릭 전)기본으로 제공하는 BluePin 마커 모양의 색.
-        marker1.setMarkerType(MapPOIItem.MarkerType.BluePin);
-
-        // (클릭 후) 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-        marker1.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+        //  (클릭 전) BluePin 마커 모양의 색.
+        marker1.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+        marker1.setCustomImageResourceId(R.drawable.mapmarker_blue);
+        // (클릭 후) 마커를 클릭했을때, RedPin 마커 모양.
+        marker1.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
+        marker1.setCustomSelectedImageResourceId(R.drawable.mapmarker_red);
+        marker1.setCustomImageAutoscale(false);    // 커스텀 마커 이미지 크기 자동 조정
+        marker1.setCustomImageAnchor(0.5f, 1.0f);    // 마커 이미지 기준점
 
         // 지도화면 위에 추가되는 아이콘을 추가하기 위한 호출(말풍선 모양)
         mapView.addPOIItem(marker1);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         geoinfo(longitude,latitude);
+        hpinfo(longitude,latitude);
         Button nearcenter = findViewById(R.id.nearcenter);
-        nearcenter.setOnClickListener(view -> showcenter(agencyList));
+        nearcenter.setOnClickListener(view -> showcenter(agencyList,HPList));
 
     } // End of onCreate
 
@@ -99,86 +104,32 @@ public class MapActivity_Oldman extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        KakaoAPI api = retrofit.create(KakaoAPI.class); // 통신 인터페이스를 객체로 생성
-        Call<KakaoApiResponse> call = api.getRegionInfo(RESR_API_KEY, lng,lat); // 검색 조건 입력
+        KakaoAPI_geocoder api = retrofit.create(KakaoAPI_geocoder.class); // 통신 인터페이스를 객체로 생성
+        Call<KakaoApiResponse_geocoder> call = api.getRegionInfo(REST_API_KEY, lng,lat); // 검색 조건 입력
 
         // API 서버에 요청
-        call.enqueue(new Callback<KakaoApiResponse>() {
+        call.enqueue(new Callback<KakaoApiResponse_geocoder>() {
             @Override
-            public void onResponse(Call<KakaoApiResponse> call, Response<KakaoApiResponse> response) {
+            public void onResponse(Call<KakaoApiResponse_geocoder> call, Response<KakaoApiResponse_geocoder> response) {
                 // 통신 성공 (검색 결과는 response.body()에 담겨있음)
                 if (response.isSuccessful() && response.body() != null) {
-                    // 통신 성공 (검색 결과는 response.body()에 담겨있음)
-                    KakaoApiResponse kakaoApiResponse = response.body();
+                    KakaoApiResponse_geocoder kakaoApiResponseGeocoder = response.body();
+                    // 확인용 로그 출력
                     Log.d("Test", "Raw: " + response.raw());
-
-                    // 예시: 결과 데이터 출력
-                    List<KakaoApiResponse.Document> documents = kakaoApiResponse.getDocuments();
-                    StringBuilder resultText = new StringBuilder();
-                    for (KakaoApiResponse.Document document : documents) {
+                    // documents 에 내용이 담겨 있음
+                    List<KakaoApiResponse_geocoder.Document> documents = kakaoApiResponseGeocoder.getDocuments();
+                    for (KakaoApiResponse_geocoder.Document document : documents) {
                         if ("B".equals(document.getRegion_type())) {
-                            // Rest api 로그 출력 테스트용 코드
-//                            Log.d("Test", "Region Name: " + document.getAddress_name());
-//                            Log.d("Test", "Region Type: " + document.getRegion_type());
-//                            Log.d("Test", "Code: " + document.getCode());
-//                            Log.d("Test", "1depth Name: " + document.getRegion_1depth_name());
-//                            Log.d("Test", "2depth Name: " + document.getRegion_2depth_name());
-//                            Log.d("Test", "3depth Name: " + document.getRegion_3depth_name());
-//                            Log.d("Test", "4depth Name: " + document.getRegion_4depth_name());
-//                            Log.d("Test", "x : " + document.getX());
-//                            Log.d("Test", "y : " + document.getY());
-//                          resultText.append("Region Name: " + document.getAddress_name() + "\n");
-                            resultText.append("Code_5digits: " + document.getCode().substring(0,5) + "00000" + "\n");
                             RegionCode_B = Long.parseLong(document.getCode().substring(0,5) + "00000");
-                            Log.d("좌표test", "좌표 : " + RegionCode_B);
-                            Query locationquery = mDatabase.child("Comtcadministcode").orderByChild("Comtcadministcode").equalTo(RegionCode_B);
-                            locationquery.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot lawSnapshot : dataSnapshot.getChildren()) {
-                                        // "법정동" 아래의 데이터 가져오기
-                                        String lawName = lawSnapshot.child("Areaname").getValue(String.class);
-                                        long lawCode = lawSnapshot.child("district_code").getValue(long.class);
-
-                                        // 가져온 데이터 출력
-                                        Log.d("Firebase", "법정동명: " + lawName);
-                                        Log.d("Firebase", "법정동코드: " + lawCode);
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    DatabaseError databaseError = null;
-                                    Log.e("Firebase", "loadPost:onCancelled", databaseError.toException());
-                                }
-                            });
+                            // firedatabase query
                             Query centerfinder = mDatabase.child("WelfareAgency").orderByChild("district_code").equalTo(RegionCode_B);
                             centerfinder.addValueEventListener(new ValueEventListener() {
+                                // 쿼리로부터 값을 얻어오는 함수
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for (DataSnapshot lawSnapshot : snapshot.getChildren()) {
-                                        String name = lawSnapshot.child("name").getValue(String.class);
-                                        String address = lawSnapshot.child("address").getValue(String.class);
-                                        String phoneNumber = lawSnapshot.child("phonenumber").getValue(String.class);
-                                        double latitude = lawSnapshot.child("latitude").getValue(Double.class);
-                                        double longitude = lawSnapshot.child("longitude").getValue(Double.class);
-                                        long comtcAdministCode = lawSnapshot.child("district_code").getValue(long.class);
-
-                                        // 데이터 로그 출력 테스트용
-//                                        Log.d("Firebase", "Name: " + name);
-//                                        Log.d("Firebase", "Address: " + address);
-//                                        Log.d("Firebase", "Phone Number: " + phoneNumber);
-//                                        Log.d("Firebase", "Latitude: " + latitude);
-//                                        Log.d("Firebase", "Longitude: " + longitude);
-//                                        Log.d("Firebase", "ComtcAdministCode: " + comtcAdministCode);
                                         Institution agency = lawSnapshot.getValue(Institution.class);
-                                        if (agency != null) {
-                                            agencyList.add(agency);
-                                        }
-                                    }
-                                    // "복지기관" 아래의 데이터 가져오기
-                                    for (Institution agency : agencyList) {
-                                        Log.d("Firebase","복지기관 : " + agency .toString());
+                                        if (agency != null) agencyList.add(agency);
                                     }
                                 }
 
@@ -194,33 +145,92 @@ public class MapActivity_Oldman extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<KakaoApiResponse> call, Throwable t) {
+            public void onFailure(Call<KakaoApiResponse_geocoder> call, Throwable t) {
                 // 통신 실패
-                Log.w("MainActivity", "통신 실패: " + t.getMessage());
+                Log.w("MapActivity", "통신 실패: " + t.getMessage());
             }
         }); //  api 응답시 행동
 
     } // End of geoinfo
 
-    public void showcenter(@NonNull List<Institution> Agencylist){
-        for (Institution agency : Agencylist) {
-            if (Agencylist == null){
-                Log.i("buttonwork","데이터가 없습니다.");
+    private void hpinfo(double lng, double lat) {
+        Retrofit retrofit = new Retrofit.Builder() // Retrofit 구성
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        KaKaoAPI_Category api = retrofit.create(KaKaoAPI_Category.class); // 통신 인터페이스를 객체로 생성
+        Call<KakaoApiResponse_Category> call = api.getCategory(REST_API_KEY,"HP8",lng,lat,500); // 검색 조건 입력
+        call.enqueue(new Callback<KakaoApiResponse_Category>(){
+
+            @Override
+            public void onResponse(Call<KakaoApiResponse_Category> call, Response<KakaoApiResponse_Category> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    KakaoApiResponse_Category KakaoApiResponse_Category = response.body();
+                    Log.d("Test", "Raw: " + response.raw());
+                    List<KakaoApiResponse_Category.Document> documents = KakaoApiResponse_Category.getDocuments();
+                    for (KakaoApiResponse_Category.Document document : documents) {
+                        if (documents!=null){
+                            Hospital hp = new Hospital(document.getPlace_name(), document.getDistance(),
+                                    document.getPlace_url(),
+                                    document.getCategory_name(),
+                                    document.getAddress_name(),
+                                    document.getRoad_address_name(),
+                                    document.getId(),
+                                    document.getPhone(),
+                                    document.getCategory_group_code(),
+                                    document.getCategory_group_name(),
+                                    document.getX(),
+                                    document.getY() );
+                            HPList.add(hp);
+                        }
+                    }
+                }
             }
-            Log.d("buttonwork","복지기관 : " + agency.toString());
+
+            @Override
+            public void onFailure(Call<KakaoApiResponse_Category> call, Throwable t) {
+                Log.w("MapActivity", "통신 실패: " + t.getMessage());
+            }
+        });
+    }
+
+    public void showcenter(@NonNull List<Institution> Agencylist, List<Hospital> HPlist2){
+        for (Institution agency : Agencylist) {
+            if (Agencylist == null)
+                Log.i("buttonwork","데이터가 없습니다.");
+            else
+                Log.d("buttonwork","복지기관 : " + agency.toString());
         }
-        for(Institution data : Agencylist){
-            /*마커 추가*/
+        for(Institution data : Agencylist) {
             MapPOIItem marker = new MapPOIItem();
-            // 클릭 했을 때 나오는 호출 값
             marker.setItemName(data.name);
-            // 좌표를 입력받아 현 위치로 출력
             marker.setMapPoint(MapPoint.mapPointWithGeoCoord(data.latitude, data.longitude));
-            //  (클릭 전)기본으로 제공하는 BluePin 마커 모양의 색.
-            marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-            // (클릭 후) 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
-            // 지도화면 위에 추가되는 아이콘을 추가하기 위한 호출(말풍선 모양)
+            marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+            marker.setCustomImageResourceId(R.drawable.mapmarker_blue);
+            marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
+            marker.setCustomSelectedImageResourceId(R.drawable.mapmarker_red);
+            marker.setCustomImageAutoscale(false);
+            marker.setCustomImageAnchor(0.5f, 1.0f);
+            mapView.addPOIItem(marker);
+        }
+
+        for (Hospital hp : HPlist2) {
+            if (HPlist2 == null)
+                Log.i("buttonwork","데이터가 없습니다.");
+            else
+                Log.d("buttonwork","병원 : " + hp.toString());
+        }
+
+        for(Hospital data : HPlist2) {
+            MapPOIItem marker = new MapPOIItem();
+            marker.setItemName(data.getPlaceName());
+            marker.setMapPoint( MapPoint.mapPointWithGeoCoord( Double.parseDouble( data.getY() ), Double.parseDouble( data.getX() ) ) );
+            marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
+            marker.setCustomImageResourceId(R.drawable.mapmarker_blue);
+            marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
+            marker.setCustomSelectedImageResourceId(R.drawable.mapmarker_red);
+            marker.setCustomImageAutoscale(false);
+            marker.setCustomImageAnchor(0.5f, 1.0f);
             mapView.addPOIItem(marker);
         }
     }
