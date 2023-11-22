@@ -25,6 +25,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".MasterLoadingActivity"
+            android:exported="false" />
+        <activity
             android:name=".location.bglocationactivity"
             android:exported="false" />
         <activity
@@ -51,7 +54,6 @@
                 <action android:name="com.example.stepcountapp.START_FOREGROUND_SERVICE" />
             </intent-filter>
         </service>
-
         <service
             android:name=".location.Locationservice"
             android:enabled="true"
