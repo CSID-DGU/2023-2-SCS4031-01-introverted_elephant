@@ -40,7 +40,7 @@ public class CommunityFragment extends Fragment {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), bglocationactivity.class);
+                Intent intent = new Intent(getActivity(), LocationActivity.class);
                 startActivity(intent);
             }
         });

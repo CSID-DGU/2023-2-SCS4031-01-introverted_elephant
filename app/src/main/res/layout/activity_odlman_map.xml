@@ -27,10 +27,8 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.557"
-        app:layout_constraintStart_toEndOf="@+id/nearcenter"
-        app:layout_constraintTop_toBottomOf="@+id/switchLocationUpdates_inmap"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintStart_toEndOf="@+id/nearcenter" />
 
     <Button
         android:id="@+id/nearcenter"
