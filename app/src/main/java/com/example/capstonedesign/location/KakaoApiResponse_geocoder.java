@@ -2,7 +2,7 @@ package com.example.capstonedesign.location;
 
 import java.util.List;
 
-public class KakaoApiResponse {
+public class KakaoApiResponse_geocoder {
     private Meta meta;
     private List<Document> documents;
 

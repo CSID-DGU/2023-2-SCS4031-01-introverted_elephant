@@ -1,14 +1,10 @@
 package com.example.capstonedesign.location;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
-import com.example.capstonedesign.BuildConfig;
-import com.example.capstonedesign.R;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import com.example.capstonedesign.R;
 
 import android.content.Intent;
 import android.util.Log;
@@ -165,23 +161,23 @@ public class MapActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        KakaoAPI api = retrofit.create(KakaoAPI.class); // 통신 인터페이스를 객체로 생성
-        Call<KakaoApiResponse> call = api.getRegionInfo(REST_API_KEY, lng,lat); // 검색 조건 입력
+        KakaoAPI_geocoder api = retrofit.create(KakaoAPI_geocoder.class); // 통신 인터페이스를 객체로 생성
+        Call<KakaoApiResponse_geocoder> call = api.getRegionInfo(REST_API_KEY, lng,lat); // 검색 조건 입력
 
         // API 서버에 요청
-        call.enqueue(new Callback<KakaoApiResponse>() {
+        call.enqueue(new Callback<KakaoApiResponse_geocoder>() {
             @Override
-            public void onResponse(Call<KakaoApiResponse> call, Response<KakaoApiResponse> response) {
+            public void onResponse(Call<KakaoApiResponse_geocoder> call, Response<KakaoApiResponse_geocoder> response) {
                 // 통신 성공 (검색 결과는 response.body()에 담겨있음)
                 if (response.isSuccessful() && response.body() != null) {
                     // 통신 성공 (검색 결과는 response.body()에 담겨있음)
-                    KakaoApiResponse kakaoApiResponse = response.body();
+                    KakaoApiResponse_geocoder kakaoApiResponseGeocoder = response.body();
                     Log.d("Test", "Raw: " + response.raw());
 
                     // 예시: 결과 데이터 출력
-                    List<KakaoApiResponse.Document> documents = kakaoApiResponse.getDocuments();
+                    List<KakaoApiResponse_geocoder.Document> documents = kakaoApiResponseGeocoder.getDocuments();
                     StringBuilder resultText = new StringBuilder();
-                    for (KakaoApiResponse.Document document : documents) {
+                    for (KakaoApiResponse_geocoder.Document document : documents) {
                         if ("B".equals(document.getRegion_type())) {
                             // Rest api 로그 출력 테스트용 코드
                             resultText.append("Code_5digits: " + document.getCode().substring(0,5) + "00000" + "\n");
@@ -237,7 +233,7 @@ public class MapActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<KakaoApiResponse> call, Throwable t) {
+            public void onFailure(Call<KakaoApiResponse_geocoder> call, Throwable t) {
                 // 통신 실패
                 Log.w("MainActivity", "통신 실패: " + t.getMessage());
             }
