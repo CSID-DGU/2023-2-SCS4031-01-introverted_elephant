@@ -1,12 +1,16 @@
 package com.example.capstonedesign;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
@@ -20,7 +24,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 public class MasterLoadingActivity extends AppCompatActivity {
 
@@ -49,17 +55,24 @@ public class MasterLoadingActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String uid = currentUser.getUid();
 
-        // Firestore에서 문서 가져오기
-        db.collection("Users").document(uid).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        // Firestore 문서 감시
+        db.collection("Users").document(uid)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        // 문서가 존재하는 경우
-                        if (documentSnapshot.exists()) {
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+
+                        if (documentSnapshot != null && documentSnapshot.exists()) {
+                            Log.d(TAG, "Current data: " + documentSnapshot.getData());
+
                             // 'oldMan' 필드의 존재 여부 확인
                             if (documentSnapshot.contains("oldMan")) {
                                 // 'oldMan' 필드가 존재하는 경우
                                 // 특정 엑티비티로 이동
+                                Log.d(TAG, "oldMan 필드가 추가됨");
                                 Intent intent = new Intent(MasterLoadingActivity.this, LoadingActivity.class);
                                 startActivity(intent);
                                 finish(); // 현재 엑티비티를 종료하려면
@@ -68,17 +81,11 @@ public class MasterLoadingActivity extends AppCompatActivity {
                                 // 다른 작업 수행
                             }
                         } else {
-                            // 문서가 존재하지 않는 경우
-                            // 다른 작업 수행
+                            Log.d(TAG, "Current data: null");
                         }
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // 실패 처리
-                    }
                 });
+
 
     }
 
@@ -90,18 +97,27 @@ public class MasterLoadingActivity extends AppCompatActivity {
             int itemId = menuItem.getItemId(); // 선택한 메뉴 아이템의 ID를 가져옵니다.
 
             if (itemId == R.id.item_loading_fragment) {
-                setContentView(R.layout.fragment_master_loading);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_frame, new MasterLoadingFragment())
+                        .commit();
                 return true;
             } else if (itemId == R.id.item_main_fragment) {
-                setContentView(R.layout.fragment_master_alarm);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_frame, new MasterAlarmFragment())
+                        .commit();
                 return true;
             } else if (itemId == R.id.item_community_fragment) {
-                setContentView(R.layout.fragment_master_community);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_frame, new MasterCommunityFragment())
+                        .commit();
                 return true;
             } else if (itemId == R.id.item_my_fragment) {
-                setContentView(R.layout.fragment_master_setting);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main_frame, new MasterSettingFragment())
+                        .commit();
                 return true;
             }
+
             // 나머지 경우에 대한 처리를 여기에 추가합니다.
 
             return false;

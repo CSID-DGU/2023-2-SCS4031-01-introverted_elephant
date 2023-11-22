@@ -4,7 +4,7 @@
     <item
         android:id="@+id/item_loading_fragment"
         android:enabled="true"
-        android:icon="@drawable/baseline_person_24"
+        android:icon="@drawable/baseline_hourglass_top_24"
         android:title="로딩중"
         />
 
