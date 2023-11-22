@@ -26,7 +26,8 @@
         android:scaleType="centerCrop"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/no_memo" />
+        app:lottie_rawRes="@raw/no_memo"
+        tools:ignore="MissingClass" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView1"
