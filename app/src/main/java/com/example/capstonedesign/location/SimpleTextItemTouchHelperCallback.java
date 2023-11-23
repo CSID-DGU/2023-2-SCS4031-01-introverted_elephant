@@ -1,7 +1,4 @@
 package com.example.capstonedesign.location;
-
-
-
 import android.graphics.Color;
 
 import androidx.annotation.NonNull;

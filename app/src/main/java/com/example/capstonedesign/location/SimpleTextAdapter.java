@@ -101,7 +101,6 @@ public class SimpleTextAdapter extends RecyclerView.Adapter<SimpleTextAdapter.Si
 
         @Override
         public void onLongPress(MotionEvent e) {
-
         }
 
         @Override

@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import net.daum.mf.map.api.CameraUpdateFactory;
+import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPointBounds;
@@ -59,7 +60,7 @@ public class MapActivity extends AppCompatActivity {
     private MapView mapView;
     private ViewGroup mapViewContainer;
     private final String BASE_URL = "https://dapi.kakao.com/";
-    private final String REST_API_KEY = "KakaoAK "+ "0cf15acd27d8221047379b612be7c6ab"; // REST API 키
+    private final String REST_API_KEY = "KakaoAK 0cf15acd27d8221047379b612be7c6ab"; // REST API 키
     public long RegionCode_B;
     public List<Institution> agencyList = new ArrayList<>();
     public List<Hospital> HPList = new ArrayList<>();
@@ -93,6 +94,7 @@ public class MapActivity extends AppCompatActivity {
         getlatestlocation(() -> {
             // getlatestlocation() 함수가 완료된 후에 호출될 부분
             initMapView();
+            chksafetyzone();
             MapPoint MARKER_POINT1 = MapPoint.mapPointWithGeoCoord(latitude, longitude);
             MapPOIItem marker1 = new MapPOIItem(); // 마커 아이콘 추가하는 함수
             marker1.setItemName("현재 위치"); // 클릭 했을 때 나오는 호출 값
@@ -122,6 +124,7 @@ public class MapActivity extends AppCompatActivity {
         // 클릭 시 동작할 내용을 여기에 작성
         getlatestlocation(() -> {
             initMapView();
+            chksafetyzone();
             // getlatestlocation() 함수가 완료된 후에 호출될 부분
             MapPoint MARKER_POINT1 = MapPoint.mapPointWithGeoCoord(latitude, longitude);
             MapPOIItem marker1 = new MapPOIItem(); // 마커 아이콘 추가하는 함수
@@ -148,11 +151,15 @@ public class MapActivity extends AppCompatActivity {
             mapViewContainer.addView(mapView);
         } else if (mapViewContainer.getChildCount() == 0)
             mapViewContainer.addView(mapView);
+
         mapView.removeAllPOIItems();
+        mapView.removeAllPolylines();
+        mapView.removeAllCircles();
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true); // 카메라 이동
         mapView.setZoomLevel(1, true); // 춤 레벨 변경
         mapView.zoomIn(true); // 줌 인
         mapView.zoomOut(true); // 줌 아웃
+
     }
 
     interface OnLocationDataReadyListener {     // getlatestlocation() 함수의 결과를 기다리기 위한 인터페이스
@@ -198,17 +205,17 @@ public class MapActivity extends AppCompatActivity {
             if (mapViewContainer == null) {
                 mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
                 mapViewContainer.addView(mapView);
-            } else
-                mapViewContainer.addView(mapView);
+            } else mapViewContainer.addView(mapView);
 
     }
 
     private void updateMapView() {
         // 지도 업데이트 등의 작업을 수행
+        Log.d("MapActivity : updateMapView","호출됨");
     }
 
     private void handleCancelOperation() {
-        Log.d("handleCancelOperation","현재 handleCancelOperation호출");
+        Log.d("handleCancelOperation","현재 handleCancelOperation 호출");
         // 사용자가 뒤로가기로 돌아왔을 때 실행되는 코드
         // 예: 취소 메시지 표시, 아무 작업도 수행하지 않기 등
         if (mapView == null) mapView = new MapView(this);
@@ -430,13 +437,11 @@ public class MapActivity extends AppCompatActivity {
                 .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
                 .limit(1)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    // queryDocumentSnapshots에는 최신 문서 하나가 포함됩니다.
+                .addOnSuccessListener(queryDocumentSnapshots -> { // queryDocumentSnapshots에는 최신 문서 하나가 포함됩니다.
                     if (!queryDocumentSnapshots.isEmpty()) {
-                        // 최신 문서에 대한 작업 수행
-                        DocumentSnapshot latestDocument = queryDocumentSnapshots.getDocuments().get(0);
-                        Map<String, Object> data = latestDocument.getData();
+                        DocumentSnapshot latestDocument = queryDocumentSnapshots.getDocuments().get(0); // 최신 문서에 대한 작업 수행
 
+                        Map<String, Object> data = latestDocument.getData();
                         latitude = (double) data.get("latitude");
                         longitude = (double) data.get("longitude");
                         Timestamp firestoreTimestamp = (Timestamp) data.get("timestamp");
@@ -527,6 +532,26 @@ public class MapActivity extends AppCompatActivity {
         MapPointBounds mapPointBounds = new MapPointBounds(path.getMapPoints());
         int padding = 100; // px
         mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
+    }
+
+    private void chksafetyzone() {
+        // 안전구역을 설정했는지 검사하고 있으면 추가
+        firestore.collection("Users")
+                .document(oldman_uid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.contains("safe_latitude") && documentSnapshot.getDouble("safe_latitude") != 0){
+                        // 안전구역 필드가 있고 설정을 한 상태만 원 추가
+                        Long longValue = (Long) documentSnapshot.get("radius");
+                        int intValue = longValue.intValue();
+                        MapCircle safezone = new MapCircle(MapPoint.mapPointWithGeoCoord((Double) documentSnapshot.get("safe_latitude"), (Double) documentSnapshot.get("safe_longitude")),
+                                intValue,
+                                Color.argb(255, 255, 0, 0),
+                                Color.argb(16, 173, 255, 47)
+                        );
+                        mapView.addCircle(safezone);
+                    }
+                });
     }
 
 } // End of Activity
