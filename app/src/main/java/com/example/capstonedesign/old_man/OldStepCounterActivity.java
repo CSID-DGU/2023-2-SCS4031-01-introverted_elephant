@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -162,84 +163,111 @@ public class OldStepCounterActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
         String uid = preferences.getString("uid", "");
-        // Firestore 쿼리
+
         db.collection("Users")
                 .document(uid)
                 .collection("steps")
-                .limit(7)
                 .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            // 문서명에서 끝 두 글자를 labelList에 추가
-                            String documentName = document.getId();
-                            String label = documentName.substring(Math.max(0, documentName.length() - 2)) + "일";
-                            labelList.add(label);
+                .addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        int documentCount = task1.getResult().size();
+                        if (documentCount >= 8) {
+                            // 문서가 8개 이상인 경우, 첫 번째 문서 삭제
+                            List<DocumentSnapshot> documents = task1.getResult().getDocuments();
+                            DocumentSnapshot firstDocument = documents.get(0);
+                            firstDocument.getReference().delete()
+                                    .addOnSuccessListener(aVoid -> {
+                                        // 삭제 성공
+                                        Log.d("Firestore", "First document deleted successfully");
+                                        // Firestore 쿼리
+                                        db.collection("Users")
+                                                .document(uid)
+                                                .collection("steps")
+                                                .limit(7)
+                                                .get()
+                                                .addOnCompleteListener(task -> {
+                                                    if (task.isSuccessful()) {
+                                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                                            // 문서명에서 끝 두 글자를 labelList에 추가
+                                                            String documentName = document.getId();
+                                                            String label = documentName.substring(Math.max(0, documentName.length() - 2)) + "일";
+                                                            labelList.add(label);
 
-                            // step 필드의 값을 jsonList에 추가 (소수점 이하 제거하고 정수로 변경)
-                            Long step = document.getLong("step");
-                            double stepValue = (step != null) ? step.intValue() : 0;
-                            jsonList.add((int) stepValue);
-                            tvSteps.setText(String.format("%.0f", stepValue));
+                                                            // step 필드의 값을 jsonList에 추가 (소수점 이하 제거하고 정수로 변경)
+                                                            Long step = document.getLong("step");
+                                                            double stepValue = (step != null) ? step.intValue() : 0;
+                                                            jsonList.add((int) stepValue);
+                                                            tvSteps.setText(String.format("%.0f", stepValue));
+                                                        }
+
+                                                        TextView totalStepTextView = findViewById(R.id.totalStepTextView);
+                                                        TextView goalTextView = findViewById(R.id.goalTextView);
+                                                        // jsonList에 있는 값들의 평균 계산
+                                                        double sum = 0;
+                                                        for (Number value : jsonList) {
+                                                            sum += value.doubleValue();
+                                                        }
+                                                        double average = sum / jsonList.size();
+
+                                                        // 평균값을 totalStepTextView에 설정
+                                                        if (!Double.isNaN(average)) {
+                                                            totalStepTextView.setText(String.format("%.0f", average) + " 걸음");
+                                                        } else {
+                                                            totalStepTextView.setText("0 걸음");
+                                                        }
+
+                                                        // jsonList이 비어있지 않은 경우
+                                                        if (!jsonList.isEmpty()) {
+                                                            int lastValue = jsonList.get(jsonList.size() - 1).intValue();
+
+                                                            // 마지막 값이 10000 이상인 경우 "성공" 아니면 "미달성" 설정
+                                                            String goalResult = (lastValue >= 10000) ? "달성" : "미달성";
+
+                                                            // goalTextView에 결과 설정
+                                                            goalTextView.setText(goalResult);
+                                                        } else {
+                                                            // jsonList가 비어있는 경우에 대한 처리
+                                                            goalTextView.setText("미달성");
+                                                        }
+
+
+                                                        // 문서가 7개 미만이면 나머지 자리에 "x"와 0 추가
+                                                        int remaining = 7 - labelList.size();
+                                                        for (int i = 0; i < remaining; i++) {
+                                                            labelList.add("-");
+                                                            jsonList.add(0);
+                                                        }
+
+                                                        BarChartGraph(labelList, jsonList);
+                                                        barChart.setTouchEnabled(false); //확대하지못하게 막아버림! 별로 안좋은 기능인 것 같아~
+                                                        barChart.setAutoScaleMinMaxEnabled(true);
+
+                                                        // 여기에서 labelList와 jsonList를 사용할 수 있습니다.
+                                                        // 예를 들어, 그래프에 데이터를 설정하는 등의 용도로 활용할 수 있습니다.
+                                                    } else {
+                                                        // Firestore에서 문서 가져오기 실패
+                                                        Exception exception = task.getException();
+                                                        if (exception != null) {
+                                                            Log.e("Firestore", "Error getting documents: " + exception.getMessage());
+                                                        }
+                                                    }
+                                                });
+
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        // 삭제 실패
+                                        Log.e("Firestore", "Error deleting first document: " + e.getMessage());
+                                    });
                         }
-
-                        TextView totalStepTextView = findViewById(R.id.totalStepTextView);
-                        TextView goalTextView = findViewById(R.id.goalTextView);
-                        // jsonList에 있는 값들의 평균 계산
-                        double sum = 0;
-                        for (Number value : jsonList) {
-                            sum += value.doubleValue();
-                        }
-                        double average = sum / jsonList.size();
-
-                        // 평균값을 totalStepTextView에 설정
-                        if (!Double.isNaN(average)) {
-                            totalStepTextView.setText(String.format("%.0f", average) + " 걸음");
-                        } else {
-                            totalStepTextView.setText("0 걸음");
-                        }
-
-                        // jsonList이 비어있지 않은 경우
-                        if (!jsonList.isEmpty()) {
-                            int lastValue = jsonList.get(jsonList.size() - 1).intValue();
-
-                            // 마지막 값이 10000 이상인 경우 "성공" 아니면 "미달성" 설정
-                            String goalResult = (lastValue >= 10000) ? "달성" : "미달성";
-
-                            // goalTextView에 결과 설정
-                            goalTextView.setText(goalResult);
-                        } else {
-                            // jsonList가 비어있는 경우에 대한 처리
-                            goalTextView.setText("미달성");
-                        }
-
-
-
-
-
-                        // 문서가 7개 미만이면 나머지 자리에 "x"와 0 추가
-                        int remaining = 7 - labelList.size();
-                        for (int i = 0; i < remaining; i++) {
-                            labelList.add("-");
-                            jsonList.add(0);
-                        }
-
-
-
-                        BarChartGraph(labelList, jsonList);
-                        barChart.setTouchEnabled(false); //확대하지못하게 막아버림! 별로 안좋은 기능인 것 같아~
-                        barChart.setAutoScaleMinMaxEnabled(true);
-
-                        // 여기에서 labelList와 jsonList를 사용할 수 있습니다.
-                        // 예를 들어, 그래프에 데이터를 설정하는 등의 용도로 활용할 수 있습니다.
                     } else {
                         // Firestore에서 문서 가져오기 실패
-                        Exception exception = task.getException();
+                        Exception exception = task1.getException();
                         if (exception != null) {
                             Log.e("Firestore", "Error getting documents: " + exception.getMessage());
                         }
                     }
                 });
+
 
 
 

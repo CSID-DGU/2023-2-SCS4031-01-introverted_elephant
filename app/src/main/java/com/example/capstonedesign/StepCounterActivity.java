@@ -1,20 +1,27 @@
 package com.example.capstonedesign;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.capstonedesign.R;
 import com.example.capstonedesign.service.StepCounterService;
@@ -64,12 +71,73 @@ public class StepCounterActivity extends AppCompatActivity {
         barChart.setTouchEnabled(false); //확대하지못하게 막아버림! 별로 안좋은 기능인 것 같아~
 //        barChart.getAxisRight().setAxisMaxValue(500);
 //        barChart.getAxisLeft().setAxisMaxValue(500);
+
+        CardView stepGoal = findViewById(R.id.cardView5);
+        stepGoal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showStepGoalDialog();
+            }
+        });
+    }
+
+    private void showStepGoalDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("어르신의 일일 걸음 수 목표를 설정해주세요. 작성하신 내용은 어르신의 핸드폰에 표시됩니다.");
+
+        // EditText를 생성하고 AlertDialog에 추가
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        builder.setView(input);
+
+        // 확인 버튼 설정
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String stepGoal = input.getText().toString().trim();
+                updateStepGoal(stepGoal);
+            }
+        });
+
+        // 취소 버튼 설정
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void updateStepGoal(String stepGoal) {
+        SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
+        String uid = preferences.getString("uid", "");
+        // Firestore의 Users 컬렉션에서 현재 사용자의 문서를 가져오기
+        DocumentReference userRef = db.collection("Users").document(uid);
+
+        // stepGoal 필드를 업데이트
+        userRef
+                .update("stepGoal", stepGoal)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(StepCounterActivity.this, "설정되었습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(StepCounterActivity.this, "설정에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
     }
 
 
-
-
     public void graphInitSetting(){
+
+        Log.e("aaaaa", "문서 가져옴2");
 
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
         String oldMan = preferences.getString("oldMan", "");
@@ -80,19 +148,29 @@ public class StepCounterActivity extends AppCompatActivity {
                 .limit(7)
                 .get()
                 .addOnCompleteListener(task -> {
+                    Log.e("aaaaa", "문서 가져옴1");
+
                     if (task.isSuccessful()) {
+                        Log.e("aaaaa", "문서 가져옴4");
+
                         for (QueryDocumentSnapshot document : task.getResult()) {
+
                             // 문서명에서 끝 두 글자를 labelList에 추가
                             String documentName = document.getId();
                             String label = documentName.substring(Math.max(0, documentName.length() - 2)) + "일";
                             labelList.add(label);
 
+                            Log.e("aaaaa", "문서 가져옴");
+
+
                             // step 필드의 값을 jsonList에 추가 (소수점 이하 제거하고 정수로 변경)
                             Long step = document.getLong("step");
                             double stepValue = (step != null) ? step.intValue() : 0;
                             jsonList.add((int) stepValue);
-                            tvSteps.setText("오늘 걸음 수 : " + String.format("%.0f", stepValue)+ " 걸음");
+                            tvSteps.setText(String.format("%.0f", stepValue));
                         }
+
+                        Log.e("aaaaa", "문서 가져옴5");
 
                         TextView totalStepTextView = findViewById(R.id.totalStepTextView);
                         TextView goalTextView = findViewById(R.id.goalTextView);
@@ -104,14 +182,14 @@ public class StepCounterActivity extends AppCompatActivity {
                         double average = sum / jsonList.size();
 
                         // 평균값을 totalStepTextView에 설정
-                        totalStepTextView.setText("일주일 평균 걸음 수 : " + String.format("%.0f", average) + " 걸음"); // 소수점 2자리까지 표시
+                        totalStepTextView.setText(String.format("%.0f", average) + " 걸음"); // 소수점 2자리까지 표시
 
                         // jsonList이 비어있지 않은 경우
                         if (!jsonList.isEmpty()) {
                             int lastValue = jsonList.get(jsonList.size() - 1).intValue();
 
                             // 마지막 값이 10000 이상인 경우 "성공" 아니면 "미달성" 설정
-                            String goalResult = (lastValue >= 10000) ? "하루 만 보 걷기 : 달성" : "하루 만 보 걷기 : 미달성";
+                            String goalResult = (lastValue >= 10000) ? "달성" : "미달성";
 
                             // goalTextView에 결과 설정
                             goalTextView.setText(goalResult);
@@ -120,16 +198,12 @@ public class StepCounterActivity extends AppCompatActivity {
                             goalTextView.setText("데이터 없음");
                         }
 
-
-
                         // 문서가 7개 미만이면 나머지 자리에 "x"와 0 추가
                         int remaining = 7 - labelList.size();
                         for (int i = 0; i < remaining; i++) {
                             labelList.add("-");
                             jsonList.add(0);
                         }
-
-
 
                         BarChartGraph(labelList, jsonList);
                         barChart.setTouchEnabled(false); //확대하지못하게 막아버림! 별로 안좋은 기능인 것 같아~
@@ -159,7 +233,6 @@ public class StepCounterActivity extends AppCompatActivity {
 
     private void BarChartGraph(ArrayList<String> labelList, ArrayList<Integer> valList) {
         // BarChart 메소드
-
 
         ArrayList<BarEntry> entries = new ArrayList<>();
         for (int i = 0; i < valList.size(); i++) {

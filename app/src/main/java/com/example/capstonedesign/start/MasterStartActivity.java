@@ -68,6 +68,8 @@ public class MasterStartActivity extends AppCompatActivity {
                                     updates.put("who", "admin");
                                     updates.put("masterNumber", masterNumber);
                                     updates.put("oldNumber", masterNumber2);
+                                    updates.put("stepGoal", "10000 걸음 도전해봅시다ㅎㅎ");
+
 
                                     userRef.update(updates)
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
