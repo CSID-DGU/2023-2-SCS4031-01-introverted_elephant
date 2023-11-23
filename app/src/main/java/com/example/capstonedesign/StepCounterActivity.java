@@ -223,7 +223,7 @@ public class StepCounterActivity extends AppCompatActivity {
 
 
 
-        //barChart.setRendererLeftYAxis();
+//        barChart.setRendererLeftYAxis();
 //        barChart.setMaxVisibleValueCount(50);
 //        barChart.setTop(50);
 //        barChart.setBottom(0);
