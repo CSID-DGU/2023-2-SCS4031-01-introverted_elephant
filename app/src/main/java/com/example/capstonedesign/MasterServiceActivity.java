@@ -29,8 +29,8 @@ public class MasterServiceActivity extends AppCompatActivity {
                     Intent serviceIntent = new Intent(MasterServiceActivity.this, FirestoreNotificationService2.class);
                     startService(serviceIntent);
                 }
-                Toast.makeText(MasterServiceActivity.this, "보호자로 설정되었습니다.", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MasterServiceActivity.this, MasterLoadingActivity.class);
+                Toast.makeText(MasterServiceActivity.this, "어르신과 연결되었습니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MasterServiceActivity.this, LoadingActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -73,7 +73,8 @@ public class MasterLoadingActivity extends AppCompatActivity {
                                 // 'oldMan' 필드가 존재하는 경우
                                 // 특정 엑티비티로 이동
                                 Log.d(TAG, "oldMan 필드가 추가됨");
-                                Intent intent = new Intent(MasterLoadingActivity.this, LoadingActivity.class);
+                                Intent intent = new Intent(MasterLoadingActivity.this, MasterServiceActivity.class);
+                                intent.putExtra("key", "first");
                                 startActivity(intent);
                                 finish(); // 현재 엑티비티를 종료하려면
                             } else {

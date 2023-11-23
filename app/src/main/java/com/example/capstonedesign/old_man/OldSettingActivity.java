@@ -13,8 +13,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.capstonedesign.MasterLoadingActivity;
+import com.example.capstonedesign.OldServiceActivity;
 import com.example.capstonedesign.R;
 import com.example.capstonedesign.login.LoginActivity;
+import com.example.capstonedesign.start.MasterStartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
@@ -69,11 +72,10 @@ public class OldSettingActivity extends AppCompatActivity {
         finishChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
-                intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
+                Intent intent = new Intent(OldSettingActivity.this, OldServiceActivity.class);
+                intent.putExtra("key", "second");
                 startActivity(intent);
-
+                finish();
             }
         });
     }

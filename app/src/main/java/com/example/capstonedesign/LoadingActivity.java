@@ -64,9 +64,6 @@ public class LoadingActivity extends AppCompatActivity {
 
                                         //admin이 아니면 노약자 페이지로
                                         if (!who.equals("admin")) {
-                                            //알림 서비스 킴
-                                            Intent serviceIntent = new Intent(LoadingActivity.this, FirestoreNotificationService.class);
-                                            startService(serviceIntent);
 
                                             SharedPreferences.Editor editor = preferences.edit();
                                             editor.putString("uid", uid);

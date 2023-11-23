@@ -76,8 +76,8 @@ public class MasterStartActivity extends AppCompatActivity {
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    Intent intent = new Intent(MasterStartActivity.this, MasterServiceActivity.class);
-                                                    intent.putExtra("key", "first");
+                                                    Toast.makeText(MasterStartActivity.this, "보호자로 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(MasterStartActivity.this, MasterLoadingActivity.class);
                                                     startActivity(intent);
                                                     finish();
 

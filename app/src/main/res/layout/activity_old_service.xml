@@ -6,4 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".OldServiceActivity">
 
+    <Button
+        android:id="@+id/alarmOnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알람 백그라운드 켜기"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/alarmOffButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알람 백그라운드 끄기"
+        app:layout_constraintStart_toEndOf="@+id/alarmOnButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/alarmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알람 상태창 끄기"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stepOnButton" />
+
+    <Button
+        android:id="@+id/stepOnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="만보기 백그라운드 끄기"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alarmOnButton" />
+
+    <Button
+        android:id="@+id/stepOffButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="만보기 백그라운드 켜기"
+        app:layout_constraintStart_toEndOf="@+id/stepOnButton"
+        app:layout_constraintTop_toBottomOf="@+id/alarmOnButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
