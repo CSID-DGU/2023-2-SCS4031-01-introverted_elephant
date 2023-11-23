@@ -1,6 +1,5 @@
 package com.example.capstonedesign.location;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -198,4 +197,24 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapViewContainer.removeView(mapView);
+        finish();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mapViewContainer.removeView(mapView);
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapViewContainer.removeView(mapView);
+        finish();
+    }
 } // end of Activity

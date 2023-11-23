@@ -8,6 +8,7 @@ import java.lang.String;
 import java.util.List;
 
 public class KakaoApiResponse_Category implements Serializable {
+  // 카카오 로컬 API 카테고리로 주소검색 을 위해 필요한 클래스
   private List<Document> documents;
 
   private Meta meta;

@@ -67,15 +67,9 @@ public class LocationActivity extends AppCompatActivity {
     /**
      * Callback for Location events.
      */
-    private LocationCallback mLocationCallback;
 
     private LocationSettingsRequest mLocationSettingsRequest;
 
-    private Location mLastLocation;
-
-    private Button btnCheck;
-
-    private double longitude, latitude;
     private String uid;
 
     private static final String TAG = LocationActivity.class.getSimpleName();
@@ -86,10 +80,13 @@ public class LocationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+
+
         init();
 
-        btnCheck = findViewById(R.id.btnCheck);
+        Button btnCheck = findViewById(R.id.btnCheck);
         btnCheck.setOnClickListener(v -> checkLocation());
+
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
         uid = preferences.getString("uid", "");
     } // End of onCreate
@@ -160,9 +157,10 @@ public class LocationActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                 mFusedLocationClient = LocationServices.getFusedLocationProviderClient(LocationActivity.this);
-                if (ActivityCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(LocationActivity.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(LocationActivity.this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
                     return;
-                }
                 mFusedLocationClient.requestLocationUpdates(mLocationRequest, locationCallback, null);
             }
         }).addOnFailureListener(this, e -> {
@@ -211,25 +209,10 @@ public class LocationActivity extends AppCompatActivity {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             super.onLocationResult(locationResult);
-            longitude = locationResult.getLastLocation().getLongitude();
-            latitude = locationResult.getLastLocation().getLatitude();
             mFusedLocationClient.removeLocationUpdates(locationCallback);
-
-            // location 객체 생성
-            Map<String, Object> location = new HashMap<>();
-            location.put("latitude",latitude );
-            location.put("longitude", longitude);
-
-            //Location 콜렉션의 target 문서에 대입
-            db.collection("Users").document(uid)
-                    .update(location)
-                    .addOnSuccessListener(aVoid -> Log.d(TAG, "DocumentSnapshot successfully written!"))
-                    .addOnFailureListener(e -> Log.w(TAG, "Error writing document", e));
 
             // MapActivity 호출
             Intent intent = new Intent(LocationActivity.this, MapActivity.class);
-            intent.putExtra("latitude", latitude);
-            intent.putExtra("longitude", longitude);
             startActivity(intent);
             finish();
         }

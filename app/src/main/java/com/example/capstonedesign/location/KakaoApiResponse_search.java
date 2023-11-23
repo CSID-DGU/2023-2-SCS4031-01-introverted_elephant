@@ -3,6 +3,7 @@ package com.example.capstonedesign.location;
 import java.util.List;
 
 public class KakaoApiResponse_search {
+    // 카카오 로컬 API 좌표로 주소검색 을 위해 필요한 클래스
     private Meta meta;
     private List<Document> documents;
 

@@ -31,11 +31,8 @@ import com.google.firebase.firestore.Query;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 public class Locationservice extends Service {
     private String uid;
-
     private int MAX_DOCUMENTS = 30;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private LocationCallback mLocationCallback = new LocationCallback() {
@@ -48,7 +45,7 @@ public class Locationservice extends Service {
                 Log.v("LOCATION_UPDATE", latitude + ", " + longitude);
 
                 writeLocationToFirestore(latitude,longitude, uid);
-
+                maintainMaxDocumentCount(uid,"location_data",MAX_DOCUMENTS);
             }
         }
     };
@@ -85,9 +82,11 @@ public class Locationservice extends Service {
             }
         }
 
-        LocationRequest locationRequest = new LocationRequest.Builder(PRIORITY_BALANCED_POWER_ACCURACY,60000).build();
+        LocationRequest locationRequest = new LocationRequest.Builder(PRIORITY_BALANCED_POWER_ACCURACY,30*1000).build();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -96,7 +95,6 @@ public class Locationservice extends Service {
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             return;
-        }
         LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(locationRequest, mLocationCallback, Looper.getMainLooper());
         startForeground(location_Constants.LOCATION_SERVICE_ID, builder.build());
     }
@@ -127,15 +125,15 @@ public class Locationservice extends Service {
         locationData.put("latitude", latitude);
         locationData.put("longitude", longitude);
         locationData.put("timestamp", FieldValue.serverTimestamp());
+        // locationData.put("timestamp", FieldValue.serverTimestamp().toString());
         // Firestore에 데이터 쓰기
-        db.collection("user_locations")  // 사용자 위치를 저장하는 컬렉션 이름
+        db.collection("Users")  // 사용자 위치를 저장하는 컬렉션 이름
                 .document(uid)              // 사용자 ID를 문서 이름으로 사용
                 .collection("location_data") // "location_data"라는 하위 컬렉션 생성 또는 참조
                 .add(locationData)
                 .addOnSuccessListener(aVoid -> {
                     Log.d("Firestore", "Location data written successfully");
                     // 추가 후 최대 개수를 유지하도록 호출
-                    maintainMaxDocumentCount(uid, "location_data", MAX_DOCUMENTS);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("Firestore", "Error writing location data: " + e.getMessage());
@@ -144,29 +142,41 @@ public class Locationservice extends Service {
 
     // 최대 개수를 유지하도록 호출되는 메소드
     private void maintainMaxDocumentCount(String userId, String subCollectionName, int maxDocuments) {
-        db.collection("user_locations")
+        Log.d("Firestore", "Attempting to maintain max document count");
+        db.collection("Users")
                 .document(userId)
                 .collection(subCollectionName)
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .limit(maxDocuments)
+                .orderBy("timestamp", Query.Direction.ASCENDING)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     int currentDocumentCount = queryDocumentSnapshots.size();
                     if (currentDocumentCount > maxDocuments) {
-                        // 현재 개수가 최대 개수를 초과하면 초과된 문서를 삭제
-                        for (int i = maxDocuments; i < currentDocumentCount; i++) {
+                        for (int i = 0; i < currentDocumentCount - maxDocuments; i++) {
                             String documentIdToDelete = queryDocumentSnapshots.getDocuments().get(i).getId();
-                             //deleteDocument(userId, subCollectionName, documentIdToDelete);
+                            deleteDocument(userId, subCollectionName, documentIdToDelete);
                         }
                     }
+                    Log.d("Firestore", "Success to maintain max document count");
                 })
                 .addOnFailureListener(e -> {
                     Log.e("Firestore", "Error checking document count", e);
                 });
     }
 
-
-
+    // 문서를 삭제하는 메소드
+    private void deleteDocument(String userId, String subCollectionName, String documentId) {
+        db.collection("Users")
+                .document(userId)
+                .collection(subCollectionName)
+                .document(documentId)
+                .delete()
+                .addOnSuccessListener(aVoid -> {
+                    Log.d("Firestore", "Document deleted: " + documentId);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error deleting document", e);
+                });
+    }
 }
 
 
