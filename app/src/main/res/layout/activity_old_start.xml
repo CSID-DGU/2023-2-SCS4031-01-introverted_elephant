@@ -65,7 +65,7 @@
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:hint="어르신의 전화번호를 입력해주세요"
-            android:inputType="textPassword"/>
+            android:inputType="number"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

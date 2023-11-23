@@ -80,6 +80,9 @@ public class LoadingActivity extends AppCompatActivity {
 
                                             // 보호자 필드들 가져오기
                                             String userNickname = Objects.requireNonNull(document.getString("nickname"));
+                                            String masterNumber = Objects.requireNonNull(document.getString("masterNumber"));
+                                            String oldNumber = Objects.requireNonNull(document.getString("oldNumber"));
+
                                             String oldMan = document.getString("oldMan");
                                             if (oldMan == null) {
                                                 oldMan = "";
@@ -89,6 +92,8 @@ public class LoadingActivity extends AppCompatActivity {
                                             SharedPreferences.Editor editor = preferences.edit();
                                             editor.putString("nickName", userNickname);
                                             editor.putString("who", who);
+                                            editor.putString("masterNumber", masterNumber);
+                                            editor.putString("oldNumber", oldNumber);
                                             editor.putString("oldMan", oldMan);
                                             editor.putString("uid", uid);
                                             editor.apply();

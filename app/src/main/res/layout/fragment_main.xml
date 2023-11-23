@@ -24,6 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="36dp"
         android:clickable="true"
+        android:backgroundTint="#FFC107"
+
         app:layout_constraintBottom_toTopOf="@+id/horizonGuideline"
         app:layout_constraintEnd_toStartOf="@+id/foodButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="36dp"
         android:clickable="true"
+        android:backgroundTint="#FFC107"
+
         app:layout_constraintBottom_toTopOf="@+id/horizonGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="36dp"
         android:clickable="true"
+        android:backgroundTint="#FFC107"
+
         app:layout_constraintBottom_toTopOf="@+id/horizonGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/foodButton"
@@ -57,6 +63,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
+        android:backgroundTint="#FFC107"
+
         app:layout_constraintBottom_toTopOf="@+id/hospitalButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/foodButton"
@@ -68,6 +76,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
+        android:backgroundTint="#FFC107"
+
         app:layout_constraintBottom_toTopOf="@+id/hospitalButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +89,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
+        android:backgroundTint="#FFC107"
+
         app:layout_constraintBottom_toTopOf="@+id/hospitalButton"
         app:layout_constraintEnd_toStartOf="@+id/foodButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
+        android:backgroundTint="#FFC107"
         app:layout_constraintBottom_toTopOf="@+id/workButton"
         app:layout_constraintEnd_toStartOf="@+id/foodButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,6 +114,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
+        android:backgroundTint="#FFC107"
+
         app:layout_constraintBottom_toTopOf="@+id/workButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,6 +127,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
+        android:backgroundTint="#FFC107"
+
         app:layout_constraintBottom_toTopOf="@+id/etcButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/workButton"
@@ -197,9 +214,10 @@
         app:layout_constraintStart_toStartOf="@+id/workButton"
         app:layout_constraintTop_toBottomOf="@+id/familyButton" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/warningButton"
         android:layout_width="0dp"
+        android:background="@drawable/rect_orange"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="경고 알림 보내기"

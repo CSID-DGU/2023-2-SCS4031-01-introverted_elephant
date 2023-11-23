@@ -92,7 +92,13 @@ public class MyFragment extends Fragment {
         TextView nicknameTextView = view.findViewById(R.id.nicknameTextView);
         Context context = getActivity();
         SharedPreferences preferences = context.getSharedPreferences("user_preferences", MODE_PRIVATE);
-        String nickName = preferences.getString("nickName", "임시 닉네임");
+        String nickName = preferences.getString("nickName", "");
+        String masterNumber = preferences.getString("masterNumber", "");
+        String oldNumber = preferences.getString("oldNumber", "");
+        TextView masterNumberTextView = view.findViewById(R.id.masterNumberTextView);
+        TextView oldNumberTextView = view.findViewById(R.id.oldNumberTextView);
+        masterNumberTextView.setText(masterNumber);
+        oldNumberTextView.setText(oldNumber);
         nicknameTextView.setText(nickName);
 
         Chip nicknameChangeChip = view.findViewById(R.id.nicknameChangeChip);

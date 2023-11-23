@@ -22,8 +22,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView; //바텀 네비게이션 뷰
     FrameLayout main_frame;
     private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     private SharedPreferences preferences;
 
     @Override
@@ -46,6 +50,32 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.item_main_fragment);
         //맨 처음 시작할 탭 설정
 
+        SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
+        String uid = preferences.getString("uid", "");
+
+        // Users 컬렉션의 uid 문서의 message 컬렉션에 대한 참조
+        CollectionReference messageCollectionRef = db.collection("Users").document(uid).collection("message");
+
+// message 컬렉션에서 문서 가져오기
+        messageCollectionRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // 문서가 존재하는지 확인
+                if (!task.getResult().isEmpty()) {
+                    // 문서가 존재하면 모든 문서를 삭제
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        db.collection("Users").document(uid).collection("message").document(document.getId()).delete();
+                    }
+                }
+                // 문서가 없거나 message 컬렉션이 없는 경우
+                // 여기에 해당 경우에 대한 로직을 추가할 수 있습니다.
+            } else {
+                // Firestore에서 문서 가져오기 실패
+                Exception exception = task.getException();
+                if (exception != null) {
+                    // 오류 처리
+                }
+            }
+        });
 //onCreate
     }
 

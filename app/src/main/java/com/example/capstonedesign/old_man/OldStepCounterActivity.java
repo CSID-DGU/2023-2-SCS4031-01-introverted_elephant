@@ -62,9 +62,9 @@ public class OldStepCounterActivity extends AppCompatActivity {
 
         stepReceiver = new StepReceiver();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startStepCounterService();
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startStepCounterService();
+//        }
 
 
         barChart = (BarChart) findViewById(R.id.fragment_bluetooth_chat_barchart);
@@ -187,12 +187,12 @@ public class OldStepCounterActivity extends AppCompatActivity {
         }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void startStepCounterService() {
-        Intent serviceIntent = new Intent(this, StepCounterService.class);
-        startService(serviceIntent);
-        Log.d("StepCounterActivity", "Service started");
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.O)
+//    private void startStepCounterService() {
+//        Intent serviceIntent = new Intent(this, StepCounterService.class);
+//        startService(serviceIntent);
+//        Log.d("StepCounterActivity", "Service started");
+//    }
 
     private void stopStepCounterService() {
 

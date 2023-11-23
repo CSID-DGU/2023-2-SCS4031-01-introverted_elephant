@@ -50,20 +50,33 @@ public class OldSettingActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
         String who = preferences.getString("who", "");
         TextView information = findViewById(R.id.informationTextView);
+        TextView masterNumberTextView = findViewById(R.id.masterNumberTextView);
+        TextView oldNumberTextView = findViewById(R.id.oldNumberTextView);
+
         // who는 문서 ID로 가정
         db.collection("Users").document(who).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         String nickname = documentSnapshot.getString("nickname");
+                        String masterNumber = documentSnapshot.getString("masterNumber");
+                        String oldNumber = documentSnapshot.getString("oldNumber");
+
                         if (nickname != null) {
                             // "nickname" 필드의 값이 존재하는 경우 처리
                             information.setText(nickname.toString());
-                        } else {
-                            // "nickname" 필드의 값이 null인 경우 처리
-                            // 적절한 로직을 추가하세요.
+                        }
+                        if (masterNumber != null) {
+                            // "nickname" 필드의 값이 존재하는 경우 처리
+                            masterNumberTextView.setText(masterNumber.toString());
+                        }
+                        if (oldNumber != null) {
+                            // "nickname" 필드의 값이 존재하는 경우 처리
+                            oldNumberTextView.setText(oldNumber.toString());
                         }
                     }
                 });
+
+
 
     }
 

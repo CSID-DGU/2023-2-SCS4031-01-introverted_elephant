@@ -92,4 +92,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="어르신 전화번호"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/oldNumberTextView"
+        app:layout_constraintEnd_toEndOf="@+id/nicknameTextView"
+        app:layout_constraintStart_toStartOf="@+id/nicknameTextView" />
+
+    <TextView
+        android:id="@+id/oldNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="01012345678"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView20"
+        app:layout_constraintEnd_toEndOf="@+id/nicknameTextView"
+        app:layout_constraintStart_toStartOf="@+id/nicknameTextView" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="보호자 전화번호"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/masterNumberTextView"
+        app:layout_constraintEnd_toEndOf="@+id/nicknameTextView"
+        app:layout_constraintStart_toStartOf="@+id/nicknameTextView" />
+
+    <TextView
+        android:id="@+id/masterNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="01012345678"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="@+id/nicknameTextView"
+        app:layout_constraintStart_toStartOf="@+id/nicknameTextView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
