@@ -46,6 +46,7 @@ public class OldStepCounterActivity extends AppCompatActivity {
     ArrayList<Integer> jsonList = new ArrayList<>(); // ArrayList 선언
     ArrayList<String> labelList = new ArrayList<>(); // ArrayList 선언
     BarChart barChart;
+    int lastValue;
     TextView minuteTextview;
     private String currentDate = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(new Date());
 
@@ -69,7 +70,7 @@ public class OldStepCounterActivity extends AppCompatActivity {
         barChart = (BarChart) findViewById(R.id.fragment_bluetooth_chat_barchart);
         graphInitSetting();       //그래프 기본 세팅
 
-        BarChartGraph(labelList, jsonList);
+//        BarChartGraph(labelList, jsonList);
         barChart.setTouchEnabled(false); //확대하지못하게 막아버림! 별로 안좋은 기능인 것 같아~
 //        barChart.getAxisRight().setAxisMaxValue(500);
 //        barChart.getAxisLeft().setAxisMaxValue(500);
@@ -77,51 +78,8 @@ public class OldStepCounterActivity extends AppCompatActivity {
         masterGoal();
 
 
-        // count 변수에 있는 숫자
-        int count = 33; // count 변수를 적절히 초기화하세요
-        TextView rankTextView = findViewById(R.id.rankTextView);
 
-// Firestore에서 Users 컬렉션의 모든 문서를 가져옴
-        db.collection("Users")
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    AtomicInteger greaterCountDocuments = new AtomicInteger();
 
-                    for (QueryDocumentSnapshot userDocument : queryDocumentSnapshots) {
-                        // 각 유저 문서에서 steps 서브컬렉션의 가장 최근 문서를 가져옴
-                        db.collection("Users")
-                                .document(userDocument.getId())
-                                .collection("steps")
-                                .orderBy(FieldPath.documentId(), Query.Direction.DESCENDING)
-                                .limit(1)
-                                .get()
-                                .addOnSuccessListener(stepsSnapshots -> {
-                                    if (!stepsSnapshots.isEmpty()) {
-                                        // steps 서브컬렉션에 최근 문서가 존재하는 경우
-                                        QueryDocumentSnapshot stepDocument = (QueryDocumentSnapshot) stepsSnapshots.getDocuments().get(0);
-                                        Long stepValue = stepDocument.getLong("step");
-
-                                        if (stepValue != null && stepValue > count) {
-                                            // count보다 큰 값이 있는 경우
-                                            greaterCountDocuments.getAndIncrement();
-                                            Log.d("Firestore", "User " + userDocument.getId() + " has a step count greater than " + count);
-                                        }
-                                        rankTextView.setText(greaterCountDocuments.toString() + "등");
-                                    }
-                                })
-                                .addOnFailureListener(e -> {
-                                    // 실패 처리
-                                    Log.e("Firestore", "Error getting steps document: " + e.getMessage());
-                                });
-                    }
-
-                    // greaterCountDocuments에는 count보다 큰 값을 가진 문서의 개수가 저장됨
-                    Log.d("Firestore", "Total documents with steps greater than " + count + ": " + greaterCountDocuments);
-                })
-                .addOnFailureListener(e -> {
-                    // 실패 처리
-                    Log.e("Firestore", "Error getting user documents: " + e.getMessage());
-                });
 
     }
 
@@ -299,7 +257,7 @@ public class OldStepCounterActivity extends AppCompatActivity {
 
                                                         // jsonList이 비어있지 않은 경우
                                                         if (!jsonList.isEmpty()) {
-                                                            int lastValue = jsonList.get(jsonList.size() - 1).intValue();
+                                                            lastValue = jsonList.get(jsonList.size() - 1).intValue();
 
                                                             // 마지막 값이 10000 이상인 경우 "성공" 아니면 "미달성" 설정
                                                             String goalResult = (lastValue >= 10000) ? "달성" : "미달성";
@@ -379,7 +337,7 @@ public class OldStepCounterActivity extends AppCompatActivity {
 
                                             // jsonList이 비어있지 않은 경우
                                             if (!jsonList.isEmpty()) {
-                                                int lastValue = jsonList.get(jsonList.size() - 1).intValue();
+                                                lastValue = jsonList.get(jsonList.size() - 1).intValue();
 
                                                 // 마지막 값이 10000 이상인 경우 "성공" 아니면 "미달성" 설정
                                                 String goalResult = (lastValue >= 10000) ? "달성" : "미달성";
@@ -460,6 +418,54 @@ public class OldStepCounterActivity extends AppCompatActivity {
         barChart.setData(data);
         barChart.animateXY(1000, 1000);
         barChart.invalidate();
+
+        TextView rankTextView = findViewById(R.id.rankTextView);
+
+        // count 변수에 있는 숫자
+        int count = lastValue; // count 변수를 적절히 초기화하세요
+        // Firestore에서 Users 컬렉션의 모든 문서를 가져옴
+        db.collection("Users")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    AtomicInteger greaterCountDocuments = new AtomicInteger();
+                    greaterCountDocuments.getAndIncrement();
+
+                    for (QueryDocumentSnapshot userDocument : queryDocumentSnapshots) {
+                        // 각 유저 문서에서 steps 서브컬렉션의 가장 최근 문서를 가져옴
+                        db.collection("Users")
+                                .document(userDocument.getId())
+                                .collection("steps")
+                                .orderBy(FieldPath.documentId(), Query.Direction.DESCENDING)
+                                .limit(1)
+                                .get()
+                                .addOnSuccessListener(stepsSnapshots -> {
+                                    if (!stepsSnapshots.isEmpty()) {
+                                        // steps 서브컬렉션에 최근 문서가 존재하는 경우
+                                        QueryDocumentSnapshot stepDocument = (QueryDocumentSnapshot) stepsSnapshots.getDocuments().get(0);
+                                        Long stepValue = stepDocument.getLong("step");
+
+                                        if (stepValue != null && stepValue > count) {
+                                            // count보다 큰 값이 있는 경우
+                                            greaterCountDocuments.getAndIncrement();
+                                            Log.d("Firestore", "User " + userDocument.getId() + " has a step count greater than " + count);
+                                        }
+                                        rankTextView.setText(greaterCountDocuments.toString() + "등");
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    // 실패 처리
+                                    Log.e("Firestore", "Error getting steps document: " + e.getMessage());
+                                });
+                    }
+
+                    // greaterCountDocuments에는 count보다 큰 값을 가진 문서의 개수가 저장됨
+                    Log.d("Firestore", "Total documents with steps greater than " + count + ": " + greaterCountDocuments);
+                })
+                .addOnFailureListener(e -> {
+                    // 실패 처리
+                    Log.e("Firestore", "Error getting user documents: " + e.getMessage());
+                });
+
     }
 
 }
