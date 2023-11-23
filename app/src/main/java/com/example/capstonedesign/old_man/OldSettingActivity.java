@@ -69,7 +69,6 @@ public class OldSettingActivity extends AppCompatActivity {
         finishChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 앱 종료
                 Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
                 intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());

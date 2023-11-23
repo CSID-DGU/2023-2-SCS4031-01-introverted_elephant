@@ -78,8 +78,8 @@ public class LoadingActivity extends AppCompatActivity {
                                             finish();
                                         } else {
                                             //알림 서비스 킴
-                                            Intent serviceIntent = new Intent(LoadingActivity.this, FirestoreNotificationService2.class);
-                                            startService(serviceIntent);
+//                                            Intent serviceIntent = new Intent(LoadingActivity.this, FirestoreNotificationService2.class);
+//                                            startService(serviceIntent);
 
                                             // 보호자 필드들 가져오기
                                             String userNickname = Objects.requireNonNull(document.getString("nickname"));

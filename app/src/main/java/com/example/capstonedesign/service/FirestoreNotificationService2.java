@@ -50,8 +50,7 @@ public class FirestoreNotificationService2 extends Service {
 
         // 서비스를 Foreground Service로 시작
 //        startForeground(2, getNotification2("앱이 백그라운드에서 실행 중입니다2."));
-        startForeground(1, getNotification1("앱이 백그라운드에서 실행 중입니다1."));
-
+        startForeground(1, getNotification1("앱이 백그라운드에서 실행 중입니다."));
         // 서비스가 종료되지 않도록 START_STICKY 반환
         return START_STICKY;
     }
@@ -60,8 +59,8 @@ public class FirestoreNotificationService2 extends Service {
         // Foreground Service를 나타내는 알림 생성
         // 이거 지워도 잘 되는지 확인!!!!!!!!!
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, DEFAULT_NOTIFICATION_CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.baseline_chat_24);
-        builder.setContentTitle("앱 이름");
+        builder.setSmallIcon(R.drawable.old_person);
+        builder.setContentTitle("어르신을 부탁해");
         builder.setContentText(contentText);
         // 다른 액티비티로 이동할 수 있는 PendingIntent 설정
 
@@ -73,7 +72,7 @@ public class FirestoreNotificationService2 extends Service {
         // Foreground Service를 나타내는 알림 생성
         // 이거 지워도 잘 되는지 확인!!!!!!!!!
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CUSTOM_NOTIFICATION_CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.baseline_chat_24);
+        builder.setSmallIcon(R.drawable.old_person);
         builder.setContentTitle("앱 이름");
         builder.setContentText(contentText);
         // 다른 액티비티로 이동할 수 있는 PendingIntent 설정
@@ -119,7 +118,7 @@ public class FirestoreNotificationService2 extends Service {
 
                             if (titleValue != null) {
                                 if (titleValue.equals("경고")) {
-                                    sendCustomLocalNotification("경고 알림이 도착했습니다. 보호자께서 걱정하고 있으니 꼭 확인해주세요.");
+//                                    sendCustomLocalNotification("경고 알림이 도착했습니다. 보호자께서 걱정하고 있으니 꼭 확인해주세요.");
                                     Log.d("121212", "경고알림도착");
                                 } else {
                                     Log.d("121212", "일반알림도착");
@@ -154,20 +153,20 @@ public class FirestoreNotificationService2 extends Service {
     }
 
     // 사용자 지정 알림 채널 생성
-    private void createCustomNotificationChannel() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            CharSequence channelName = "Custom Channel";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-
-            NotificationChannel channel = new NotificationChannel(CUSTOM_NOTIFICATION_CHANNEL_ID, channelName, importance);
-            // 알림음 설정 (res/raw 디렉토리에 있는 galaxy.mp3 사용)
-            Uri soundUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.galaxy);
-            channel.setSound(soundUri, null);
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
+//    private void createCustomNotificationChannel() {
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            CharSequence channelName = "Custom Channel";
+//            int importance = NotificationManager.IMPORTANCE_HIGH;
+//
+//            NotificationChannel channel = new NotificationChannel(CUSTOM_NOTIFICATION_CHANNEL_ID, channelName, importance);
+//            // 알림음 설정 (res/raw 디렉토리에 있는 galaxy.mp3 사용)
+//            Uri soundUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.galaxy);
+//            channel.setSound(soundUri, null);
+//
+//            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+//            notificationManager.createNotificationChannel(channel);
+//        }
+//    }
 
     // 기본 알림 보내기
     private void sendDefaultLocalNotification(String message) {
@@ -180,8 +179,8 @@ public class FirestoreNotificationService2 extends Service {
         Intent intent = new Intent(this, LoginActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        notificationBuilder.setSmallIcon(R.drawable.baseline_chat_24);
-        notificationBuilder.setContentTitle("안전 확인 완료");
+        notificationBuilder.setSmallIcon(R.drawable.old_person);
+        notificationBuilder.setContentTitle("안전 확인");
         notificationBuilder.setContentText(message);
         notificationBuilder.setContentIntent(pendingIntent);
 
@@ -190,22 +189,22 @@ public class FirestoreNotificationService2 extends Service {
     }
 
     // 사용자 지정 알림 보내기
-    private void sendCustomLocalNotification(String message) {
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CUSTOM_NOTIFICATION_CHANNEL_ID);
-
-        // 진동 패턴 설정
-        long[] pattern = {0, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000};
-        notificationBuilder.setVibrate(pattern);
-
-        Intent intent = new Intent(this, OldWarningActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        notificationBuilder.setSmallIcon(R.drawable.baseline_chat_24);
-        notificationBuilder.setContentTitle("경고 알림 도착");
-        notificationBuilder.setContentText(message);
-        notificationBuilder.setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(2, notificationBuilder.build());
-    }
+//    private void sendCustomLocalNotification(String message) {
+//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CUSTOM_NOTIFICATION_CHANNEL_ID);
+//
+//        // 진동 패턴 설정
+//        long[] pattern = {0, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000};
+//        notificationBuilder.setVibrate(pattern);
+//
+//        Intent intent = new Intent(this, OldWarningActivity.class);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+//
+//        notificationBuilder.setSmallIcon(R.drawable.baseline_chat_24);
+//        notificationBuilder.setContentTitle("경고 알림 도착");
+//        notificationBuilder.setContentText(message);
+//        notificationBuilder.setContentIntent(pendingIntent);
+//
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        notificationManager.notify(2, notificationBuilder.build());
+//    }
 }

@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.capstonedesign.MasterServiceActivity;
 import com.example.capstonedesign.R;
 import com.example.capstonedesign.login.LoginActivity;
 import com.example.capstonedesign.old_man.OldSettingActivity;
@@ -59,6 +60,28 @@ public class MyFragment extends Fragment {
         //닉네임 관련 함수
         nicknameEvent(view);
 
+
+        //이용 약관
+        Chip signOutChip = view.findViewById(R.id.warningChip);
+        signOutChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //백그라운드 설정
+        Chip stopServiceChip = view.findViewById(R.id.stopServiceChip);
+        stopServiceChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MasterServiceActivity.class);
+                intent.putExtra("key", "second");
+                startActivity(intent);
+            }
+        });
+
+
         return view;
         //여기까지 oncreateview
     }
@@ -77,11 +100,11 @@ public class MyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 final EditText editText = new EditText(getActivity());
-                editText.setHint("변경하실 닉네임을 입력해주세요.");
+                editText.setHint("혈액형과 같이 중요한 정보를 작성해주세요. 어르신의 핸드폰에 표시됩니다.");
 
                 // AlertDialog 생성
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("닉네임 변경");
+                builder.setTitle("어르신 정보 변경");
                 builder.setView(editText);
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
@@ -113,7 +136,7 @@ public class MyFragment extends Fragment {
                                             editor.putString("nickName", enteredText);
                                             editor.apply();
 
-                                            Toast.makeText(getActivity(), "닉네임이 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "어르신 정보가 변경되었습니다.", Toast.LENGTH_SHORT).show();
 
                                             nicknameTextView.setText(enteredText);
                                         }

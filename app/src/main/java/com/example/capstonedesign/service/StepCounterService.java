@@ -111,8 +111,8 @@ public class StepCounterService extends Service implements SensorEventListener {
 
         // 소리를 비활성화하는 코드
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Capstone Design")
-                .setContentText("만보기 실행 중")
+                .setContentTitle("어르신을 부탁해")
+                .setContentText("만보기 기능이 실행중입니다.")
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentIntent(pendingIntent);
 

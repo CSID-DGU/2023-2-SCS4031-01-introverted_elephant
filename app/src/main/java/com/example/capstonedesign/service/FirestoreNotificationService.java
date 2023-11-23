@@ -49,8 +49,8 @@ public class FirestoreNotificationService extends Service {
         startListeningToFirestoreChanges();
 
         // 서비스를 Foreground Service로 시작
-        startForeground(2, getNotification2("앱이 백그라운드에서 실행 중입니다2."));
-        startForeground(1, getNotification1("앱이 백그라운드에서 실행 중입니다1."));
+        startForeground(2, getNotification2("앱이 백그라운드에서 실행 중입니다."));
+        startForeground(1, getNotification1("앱이 백그라운드에서 실행 중입니다."));
 
         // 서비스가 종료되지 않도록 START_STICKY 반환
         return START_STICKY;
@@ -60,8 +60,8 @@ public class FirestoreNotificationService extends Service {
         // Foreground Service를 나타내는 알림 생성
         // 이거 지워도 잘 되는지 확인!!!!!!!!!
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, DEFAULT_NOTIFICATION_CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.baseline_chat_24);
-        builder.setContentTitle("앱 이름");
+        builder.setSmallIcon(R.drawable.old_person);
+        builder.setContentTitle("어르신을 부탁해");
         builder.setContentText(contentText);
         // 다른 액티비티로 이동할 수 있는 PendingIntent 설정
 
@@ -73,8 +73,8 @@ public class FirestoreNotificationService extends Service {
         // Foreground Service를 나타내는 알림 생성
         // 이거 지워도 잘 되는지 확인!!!!!!!!!
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CUSTOM_NOTIFICATION_CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.baseline_chat_24);
-        builder.setContentTitle("앱 이름");
+        builder.setSmallIcon(R.drawable.old_person);
+        builder.setContentTitle("어르신을 부탁해");
         builder.setContentText(contentText);
         // 다른 액티비티로 이동할 수 있는 PendingIntent 설정
 
@@ -119,7 +119,7 @@ public class FirestoreNotificationService extends Service {
 
                             if (titleValue != null) {
                                 if (titleValue.equals("경고")) {
-                                    sendCustomLocalNotification("경고 알림이 도착했습니다. 보호자께서 걱정하고 있으니 꼭 확인해주세요.");
+                                    sendCustomLocalNotification("보호자께서 경고 알림을 전송하였습니다. 알림을 클릭해주세요.");
                                     Log.d("121212", "경고알림도착");
                                 } else {
                                     Log.d("121212", "일반알림도착");

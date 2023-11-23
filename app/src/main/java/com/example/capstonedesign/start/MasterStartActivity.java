@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.capstonedesign.LoadingActivity;
 import com.example.capstonedesign.MainActivity;
 import com.example.capstonedesign.MasterLoadingActivity;
+import com.example.capstonedesign.MasterServiceActivity;
 import com.example.capstonedesign.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -75,10 +76,11 @@ public class MasterStartActivity extends AppCompatActivity {
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(MasterStartActivity.this, "보호자로 설정되었습니다.", Toast.LENGTH_SHORT).show();
-                                                    Intent intent = new Intent(MasterStartActivity.this, MasterLoadingActivity.class);
+                                                    Intent intent = new Intent(MasterStartActivity.this, MasterServiceActivity.class);
+                                                    intent.putExtra("key", "first");
                                                     startActivity(intent);
                                                     finish();
+
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
