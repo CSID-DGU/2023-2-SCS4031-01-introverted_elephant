@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.capstonedesign.BuildConfig;
 import com.example.capstonedesign.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 import net.daum.mf.map.api.MapCircle;
@@ -21,7 +23,9 @@ import net.daum.mf.map.api.MapView;
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,13 +34,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SetSafetyZoneActivity extends AppCompatActivity {
+    private FirebaseFirestore firestore;
+    private String oldman_uid;
     private MapView mapView;
     private ViewGroup mapViewContainer;
     private final String BASE_URL = "https://dapi.kakao.com/";
-    private String REST_API_KEY = "KakaoAK " + BuildConfig.RESTAPIKEY; // REST API 키
-
+    private final String REST_API_KEY = "KakaoAK 0cf15acd27d8221047379b612be7c6ab"; // REST API 키
     private List<KakaoApiResponse_search.Document> documents;
-
     private MyPOIItemEventListener poiItemEventListener;
     private double last_latitude;
     private double last_longitude;
@@ -47,7 +51,9 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_safety_zone);
-
+        firestore = FirebaseFirestore.getInstance();
+        SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
+        oldman_uid = preferences.getString("oldMan", "");
         initMapView();
         poiItemEventListener = new MyPOIItemEventListener();
         mapView.setPOIItemEventListener(poiItemEventListener);
@@ -91,18 +97,20 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
     }
 
     private void initMapView() {
-        mapView = new MapView(this);
-        mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
-        mapViewContainer.addView(mapView);
-        // 춤 레벨 변경
-        mapView.setZoomLevel(1, true);
-        // 줌 인
-        mapView.zoomIn(true);
-        // 줌 아웃
-        mapView.zoomOut(true);
-        // mapView.setMapCenterPoint();
+        Log.d("SetSafetyZoneActivity : initmapView","현재initMapView호출");
+        if (mapView == null) mapView = new MapView(this);
+        if (mapViewContainer == null) {
+            mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
+            mapViewContainer.addView(mapView);
+        } else if (mapViewContainer.getChildCount() == 0)
+            mapViewContainer.addView(mapView);
+        mapView.removeAllPOIItems();
+        mapView.removeAllPolylines();
+        mapView.removeAllCircles();
+        mapView.setZoomLevel(1, true); // 춤 레벨 변경
+        mapView.zoomIn(true); // 줌 인
+        mapView.zoomOut(true); // 줌 아웃
     }
-
 
     @Override
     public void finish() {
@@ -133,26 +141,22 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
                     for (KakaoApiResponse_search.Document document : documents) {
                         // 첫 검색결과의 좌표로 지도 화면을 바꾸고
                         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(documents.get(0).getY(),documents.get(0).getX()),true);
-                        // 검색결과 들 마커표시
-                        MapPOIItem marker = new MapPOIItem();
-                        // 클릭 했을 때 나오는 호출 값
-                        if (document.getRoadAddress() != null){
+                        MapPOIItem marker = new MapPOIItem(); // 검색결과 들 마커표시
+                        if (document.getRoadAddress() != null){ // 클릭 했을 때 나오는 호출 값
                             marker.setItemName(document.getRoadAddress().getAddressName());
                         } else {
                             marker.setItemName(document.getAddress().getAddressName());
                         }
-                        // 좌표를 입력받아 출력
-                        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(document.getY(),document.getX()));
-                        // (클릭 전) 기본으로 제공하는 BluePin 마커 모양의 색.
-                        marker.setMarkerType(MapPOIItem.MarkerType.BluePin);
-                        // (클릭 후) 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
+                        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(document.getY(),document.getX())); // 좌표를 입력받아 출력
+                        marker.setMarkerType(MapPOIItem.MarkerType.CustomImage); //  (클릭 전) 모양 색.
+                        marker.setCustomImageResourceId(R.drawable.mapmarker_blue);
+                        marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // (마커 클릭 후) 모양.
+                        marker.setCustomSelectedImageResourceId(R.drawable.mapmarker_red);
                         // 지도화면 위에 추가되는 아이콘을 추가하기 위한 호출(말풍선 모양)
                         mapView.addPOIItem(marker);
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<KakaoApiResponse_search> call, Throwable t) {
                 // 통신 실패
@@ -169,10 +173,8 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
             last_latitude = point.latitude;
             last_longitude = point.longitude;
         }
-
         int defaultRadius = 100;
         int finalRadius = (radius > 0) ? radius : defaultRadius;
-
         safezone = new MapCircle(clickedPOIItem.getMapPoint(),
                 finalRadius,
                 Color.argb(255, 255, 0, 0),
@@ -187,10 +189,17 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
 
     public void okbutton() {
         Intent resultIntent = new Intent(this, MapActivity.class);
-//        if (last_latitude != null && last_longitude != null){
-//            resultIntent.putExtra("safe_latitude", last_latitude);
-//            resultIntent.putExtra("safe_longitude", last_longitude);
-//        }
+        if (last_latitude != 0 && last_longitude != 0){
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("safe_latitude", last_latitude);
+            updates.put("safe_longitude", last_longitude);
+            updates.put("radius", distance);
+            resultIntent.putExtra("safe_latitude", last_latitude);
+            resultIntent.putExtra("safe_longitude", last_longitude);
+            firestore.collection("Users")
+                    .document(oldman_uid)
+                    .update(updates);
+        }
         resultIntent.putExtra("distance", distance);
         setResult(Activity.RESULT_OK, resultIntent);
         mapViewContainer.removeView(mapView);

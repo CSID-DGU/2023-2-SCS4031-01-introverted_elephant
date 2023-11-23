@@ -45,7 +45,6 @@ public class CenterActivity extends AppCompatActivity implements SimpleTextAdapt
             }
         }
 
-
         RecyclerView centerListView = findViewById(R.id.center_list);
         centerListView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         centerListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));

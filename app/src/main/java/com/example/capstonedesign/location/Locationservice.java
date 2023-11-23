@@ -28,6 +28,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,10 +46,13 @@ public class Locationservice extends Service {
                 Log.v("LOCATION_UPDATE", latitude + ", " + longitude);
 
                 writeLocationToFirestore(latitude,longitude, uid);
+                CheckOutOfSafetyZone(latitude,longitude);
                 maintainMaxDocumentCount(uid,"location_data",MAX_DOCUMENTS);
             }
         }
     };
+    private Double safe_latitude;
+    private Double safe_longitude;
 
     @Nullable
     @Override
@@ -125,7 +129,30 @@ public class Locationservice extends Service {
         locationData.put("latitude", latitude);
         locationData.put("longitude", longitude);
         locationData.put("timestamp", FieldValue.serverTimestamp());
-        // locationData.put("timestamp", FieldValue.serverTimestamp().toString());
+
+        db.collection("Users")  // 안전구역 필드 초기화
+                .document(uid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                        if (!documentSnapshot.contains("safe_latitude")) {
+                            db.collection("Users")
+                                    .document(uid)
+                                    .update("safe_latitude",0);
+                        }
+                        if (!documentSnapshot.contains("safe_longitude")) {
+                            db.collection("Users")
+                                    .document(uid)
+                                    .update("safe_longitude",0);
+                        }
+                        if (!documentSnapshot.contains("radius")) {
+                            db.collection("Users")
+                                    .document(uid)
+                                    .update("radius",-1);
+                        }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error writing field" + e.getMessage());
+                });
         // Firestore에 데이터 쓰기
         db.collection("Users")  // 사용자 위치를 저장하는 컬렉션 이름
                 .document(uid)              // 사용자 ID를 문서 이름으로 사용
@@ -138,6 +165,7 @@ public class Locationservice extends Service {
                 .addOnFailureListener(e -> {
                     Log.e("Firestore", "Error writing location data: " + e.getMessage());
                 });
+        // 안전구역을 벗어났는지 검사
     }
 
     // 최대 개수를 유지하도록 호출되는 메소드
@@ -177,6 +205,31 @@ public class Locationservice extends Service {
                     Log.e("Firestore", "Error deleting document", e);
                 });
     }
+
+    private void CheckOutOfSafetyZone(double lat , double lng) {
+        db.collection("Users")  // 안전구역 필드값 접근
+                .document(uid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.contains("safe_latitude") && documentSnapshot.getDouble("safe_latitude") != 0) {
+                        // 필드가 존재해야하고, 그 값이 초기값이 아닐 때,
+                        safe_latitude = documentSnapshot.getDouble("safe_latitude");
+                        safe_longitude = documentSnapshot.getDouble("safe_longitude");
+                    }
+                    if (documentSnapshot.getLong("radius") < Util.getDistance(safe_latitude,safe_longitude,lat,lng)) {
+                        // 안전구역과의 거리가 안전구역의 반지름보다 클 경우 : 위험상황
+                        // 알림을 보내는 동작을 수행 (노약자 핸드폰 >> 보호자 핸드폰)
+                        double outrange = Util.getDistance(safe_latitude,safe_longitude,lat,lng) - documentSnapshot.getLong("radius");
+                        Log.d("LocationService","안전구역을 "+outrange+"M 벗어났습니다");
+                    } else
+                        Log.d("LocationService","안전구역 안에 있습니다.");
+
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error find fields", e);
+                });
+    }
+
 }
 
 
