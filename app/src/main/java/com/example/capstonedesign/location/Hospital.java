@@ -1,18 +1,20 @@
 package com.example.capstonedesign.location;
 
-public class Hospital {
-    private String placeName;
-    private String distance;
-    private String placeUrl;
-    private String categoryName;
-    private String addressName;
-    private String roadAddressName;
-    private String id;
-    private String phone;
-    private String categoryGroupCode;
-    private String categoryGroupName;
-    private String x;
-    private String y;
+import java.io.Serializable;
+
+public class Hospital implements Serializable {
+    String placeName;
+    String distance;
+    String placeUrl;
+    String categoryName;
+    String addressName;
+    String roadAddressName;
+    String id;
+    String phone;
+    String categoryGroupCode;
+    String categoryGroupName;
+    String x;
+    String y;
 
     // 생성자, getter, setter 등을 필요에 따라 추가
 
@@ -133,5 +135,23 @@ public class Hospital {
 
     public void setY(String y) {
         this.y = y;
+    }
+
+    @Override
+    public String toString() {
+        return "Hospital{" +
+                "placeName='" + placeName + '\'' +
+                ", distance='" + distance + '\'' +
+                ", placeUrl='" + placeUrl + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                ", addressName='" + addressName + '\'' +
+                ", roadAddressName='" + roadAddressName + '\'' +
+                ", id='" + id + '\'' +
+                ", phone='" + phone + '\'' +
+                ", categoryGroupCode='" + categoryGroupCode + '\'' +
+                ", categoryGroupName='" + categoryGroupName + '\'' +
+                ", x='" + x + '\'' +
+                ", y='" + y + '\'' +
+                '}';
     }
 }

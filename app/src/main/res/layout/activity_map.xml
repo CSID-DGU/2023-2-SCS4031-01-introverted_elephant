@@ -13,58 +13,70 @@
         android:layout_marginBottom="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.303" />
+        app:layout_constraintTop_toBottomOf="@+id/locationtext"
+        app:layout_constraintVertical_bias="0.0">
 
-    <Button
-        android:id="@+id/setsafetyzone"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="28dp"
-        android:text="안전구역 설정"
-        app:layout_constraintEnd_toStartOf="@+id/nearcenter"
-        app:layout_constraintHorizontal_bias="0.512"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_view" />
+    </com.kakao.vectormap.MapView>
 
     <Button
         android:id="@+id/center_list"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="28dp"
         android:text="기관리스트"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/nearcenter"
-        app:layout_constraintHorizontal_bias="0.536"
-        app:layout_constraintStart_toStartOf="@+id/nearcenter"
-        app:layout_constraintTop_toBottomOf="@+id/nearcenter"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map_view" />
 
     <Button
-        android:id="@+id/nearcenter"
-        android:layout_width="153dp"
+        android:id="@+id/check_path"
+        android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_marginTop="28dp"
-        android:text="근처기관찾기"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:text="경로 확인"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.829"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setsafetyzone" />
+
+    <Button
+        android:id="@+id/setsafetyzone"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:text="안전구역 설정"
+        app:layout_constraintEnd_toStartOf="@+id/center_list"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map_view" />
 
     <Button
-        android:id="@+id/send_notification"
+        android:id="@+id/nearcenter"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:text="알림 전송"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/setsafetyzone"
-        app:layout_constraintStart_toStartOf="@+id/setsafetyzone"
-        app:layout_constraintTop_toBottomOf="@+id/setsafetyzone"
-        app:layout_constraintVertical_bias="0.365" />
+        android:layout_marginTop="24dp"
+        android:text="근처기관찾기"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.605"
+        app:layout_constraintStart_toEndOf="@+id/check_path"
+        app:layout_constraintTop_toBottomOf="@+id/center_list" />
+
+    <TextView
+        android:id="@+id/locationtext"
+        android:layout_width="411dp"
+        android:layout_height="62dp"
+        android:background="#ED924C"
+        android:gravity="center"
+        android:text="현재위치 표시구역"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

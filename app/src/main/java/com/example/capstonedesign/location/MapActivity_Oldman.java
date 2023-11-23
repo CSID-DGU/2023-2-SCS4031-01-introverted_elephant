@@ -21,6 +21,7 @@ import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,15 +34,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MapActivity_Oldman extends AppCompatActivity {
 
     private MapView mapView;
-    private ViewGroup mapViewContainer;
-
+    private double latitude,longitude;
     private final String BASE_URL = "https://dapi.kakao.com/";
-
-    // private  String RESR_API_KEY = "KakaoAK "+ BuildConfig.RESTAPIKEY; // REST API 키
-    private final String REST_API_KEY = "KakaoAK "+ "0cf15acd27d8221047379b612be7c6ab"; // REST API 키
-
     private DatabaseReference mDatabase;
-
+    private final String REST_API_KEY = "KakaoAK "+ "0cf15acd27d8221047379b612be7c6ab"; // REST API 키
+    // private  String RESR_API_KEY = "KakaoAK "+ BuildConfig.RESTAPIKEY; API키 숨기는 코드 잦은 오류로 임시 주석처리
     public long RegionCode_B;
     public List<Institution> agencyList = new ArrayList<>();
     public List<Hospital> HPList = new ArrayList<>();
@@ -52,12 +49,13 @@ public class MapActivity_Oldman extends AppCompatActivity {
         setContentView(R.layout.activity_odlman_map);
 
         Intent intent = getIntent();
-        double latitude = intent.getDoubleExtra("latitude", 0);
-        double longitude = intent.getDoubleExtra("longitude", 0);
+        latitude = intent.getDoubleExtra("latitude", 0);
+        longitude = intent.getDoubleExtra("longitude", 0);
 
         mapView = new MapView(this);
-        mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
+        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
+
         // 중심점 설정
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(latitude, longitude), true);
         // 줌 레벨 변경
@@ -72,11 +70,10 @@ public class MapActivity_Oldman extends AppCompatActivity {
         // 마커 아이콘 추가하는 함수
         MapPOIItem marker1 = new MapPOIItem();
         marker1.setItemName("현재 위치"); // 클릭 했을 때 나오는 호출 값
-        marker1.setTag(0); // 마커 태그 : 태그로 구분하기 위한 거
         marker1.setMapPoint(MARKER_POINT1); // 좌표를 입력받아 현 위치로 출력
-        marker1.setMarkerType(MapPOIItem.MarkerType.CustomImage); //  (클릭 전) BluePin 마커 모양의 색.
-        marker1.setCustomImageResourceId(R.drawable.mapmarker_blue); // (클릭 후) 마커를 클릭했을때, RedPin 마커 모양.
-        marker1.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
+        marker1.setMarkerType(MapPOIItem.MarkerType.CustomImage); //  (클릭 전) 모양 색.
+        marker1.setCustomImageResourceId(R.drawable.mapmarker_blue);
+        marker1.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // (마커 클릭 후) 모양.
         marker1.setCustomSelectedImageResourceId(R.drawable.mapmarker_red);
         marker1.setCustomImageAutoscale(false);    // 커스텀 마커 이미지 크기 자동 조정
         marker1.setCustomImageAnchor(0.5f, 1.0f);    // 마커 이미지 기준점
@@ -85,8 +82,12 @@ public class MapActivity_Oldman extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         geoinfo(longitude,latitude);
         hpinfo(longitude,latitude);
+
         Button nearcenter = findViewById(R.id.nearcenter);
         nearcenter.setOnClickListener(view -> showcenter(agencyList,HPList));
+
+        Button centerlist = findViewById(R.id.center_list);
+        centerlist.setOnClickListener(view -> movecenterlist(agencyList,HPList));
 
     } // End of onCreate
 
@@ -102,7 +103,7 @@ public class MapActivity_Oldman extends AppCompatActivity {
         // API 서버에 요청
         call.enqueue(new Callback<KakaoApiResponse_geocoder>() {
             @Override
-            public void onResponse(Call<KakaoApiResponse_geocoder> call, Response<KakaoApiResponse_geocoder> response) {
+            public void onResponse(@NonNull Call<KakaoApiResponse_geocoder> call, @NonNull Response<KakaoApiResponse_geocoder> response) {
                 // 통신 성공 (검색 결과는 response.body()에 담겨있음)
                 if (response.isSuccessful() && response.body() != null) {
                     KakaoApiResponse_geocoder kakaoApiResponseGeocoder = response.body();
@@ -137,7 +138,7 @@ public class MapActivity_Oldman extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<KakaoApiResponse_geocoder> call, Throwable t) {
+            public void onFailure(@NonNull Call<KakaoApiResponse_geocoder> call, @NonNull Throwable t) {
                 // 통신 실패
                 Log.w("MapActivity", "통신 실패: " + t.getMessage());
             }
@@ -155,7 +156,7 @@ public class MapActivity_Oldman extends AppCompatActivity {
         call.enqueue(new Callback<KakaoApiResponse_Category>(){
 
             @Override
-            public void onResponse(Call<KakaoApiResponse_Category> call, Response<KakaoApiResponse_Category> response) {
+            public void onResponse(@NonNull Call<KakaoApiResponse_Category> call, @NonNull Response<KakaoApiResponse_Category> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     KakaoApiResponse_Category KakaoApiResponse_Category = response.body();
                     Log.d("Test", "Raw: " + response.raw());
@@ -225,6 +226,14 @@ public class MapActivity_Oldman extends AppCompatActivity {
             marker.setCustomImageAnchor(0.5f, 1.0f);
             mapView.addPOIItem(marker);
         }
+    }
+
+    public void movecenterlist(List<Institution> Agencylist, List<Hospital> HPList){
+        // centeractivity 호출
+        Intent intent = new Intent(MapActivity_Oldman.this, CenterActivity.class);
+        intent.putExtra("centers", (Serializable) Agencylist);
+        intent.putExtra("hospitals", (Serializable) HPList);
+        startActivity(intent);
     }
 
 } // End of Activity
