@@ -70,9 +70,13 @@ public class LoadingActivity extends AppCompatActivity {
 
                                             Intent intent1 = getIntent();
                                             String receivedVariable = intent1.getStringExtra("key");
-
-                                            Intent intent = new Intent(LoadingActivity.this, OldServiceActivity.class);
-                                            intent.putExtra("key", receivedVariable);
+                                            if(intent1 != null) {
+                                                Intent intent = new Intent(LoadingActivity.this, OldServiceActivity.class);
+                                                intent.putExtra("key", receivedVariable);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                            Intent intent = new Intent(LoadingActivity.this, OldMainActivity.class);
                                             startActivity(intent);
                                             finish();
 
@@ -103,9 +107,13 @@ public class LoadingActivity extends AppCompatActivity {
 
                                             Intent intent1 = getIntent();
                                             String receivedVariable = intent1.getStringExtra("key");
-
-                                            Intent intent = new Intent(LoadingActivity.this, MasterServiceActivity.class);
-                                            intent.putExtra("key", receivedVariable);
+                                            if(intent1 != null) {
+                                                Intent intent = new Intent(LoadingActivity.this, MasterServiceActivity.class);
+                                                intent.putExtra("key", receivedVariable);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                            Intent intent = new Intent(LoadingActivity.this, MainActivity.class);
                                             startActivity(intent);
                                             finish();
                                         }
