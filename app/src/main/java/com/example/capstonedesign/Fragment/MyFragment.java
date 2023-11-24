@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.capstonedesign.MasterServiceActivity;
 import com.example.capstonedesign.R;
+import com.example.capstonedesign.WarningActivity;
 import com.example.capstonedesign.login.LoginActivity;
 import com.example.capstonedesign.old_man.OldSettingActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,11 +63,12 @@ public class MyFragment extends Fragment {
 
 
         //이용 약관
-        Chip signOutChip = view.findViewById(R.id.warningChip);
-        signOutChip.setOnClickListener(new View.OnClickListener() {
+        Chip warningChip = view.findViewById(R.id.warningChip);
+        warningChip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getActivity(), WarningActivity.class);
+                startActivity(intent);
             }
         });
 

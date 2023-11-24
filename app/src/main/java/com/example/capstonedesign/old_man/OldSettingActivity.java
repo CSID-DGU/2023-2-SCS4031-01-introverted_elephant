@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.capstonedesign.MasterLoadingActivity;
 import com.example.capstonedesign.OldServiceActivity;
 import com.example.capstonedesign.R;
+import com.example.capstonedesign.WarningActivity;
 import com.example.capstonedesign.login.LoginActivity;
 import com.example.capstonedesign.start.MasterStartActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -76,6 +77,17 @@ public class OldSettingActivity extends AppCompatActivity {
                     }
                 });
 
+
+
+        //이용 약관
+        Chip warningChip = view.findViewById(R.id.oldWarningChip);
+        warningChip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(OldSettingActivity.this, WarningActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
