@@ -10,13 +10,13 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 
 
 android {
-    namespace 'com.example.capstonedesign'
+    namespace 'com.oldcare.capstonedesign'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.capstonedesign"
+        applicationId "com.oldcare.capstonedesign"
         minSdk 24
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -34,6 +34,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {

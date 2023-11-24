@@ -64,7 +64,7 @@
             android:exported="false"
             android:foregroundServiceType="dataSync">
             <intent-filter>
-                <action android:name="com.example.stepcountapp.START_FOREGROUND_SERVICE" />
+                <action android:name="com.oldcare.stepcountapp.START_FOREGROUND_SERVICE" />
             </intent-filter>
         </service>
         <service

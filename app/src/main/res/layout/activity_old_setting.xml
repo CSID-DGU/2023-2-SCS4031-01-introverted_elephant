@@ -20,27 +20,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="50dp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/oldId"
-        android:layout_width="150dp"
-        android:layout_height="120dp"
-        android:background="@drawable/round_orange"
-        android:text="프로필"
-        android:textColor="@color/black"
-        android:textSize="14dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineTop" />
-
     <TextView
         android:id="@+id/oldText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
         android:text="어르신 전화번호"
         android:textSize="20sp"
-        app:layout_constraintLeft_toRightOf="@+id/oldId"
-        app:layout_constraintTop_toTopOf="@+id/oldId" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop" />
 
     <TextView
         android:id="@+id/oldNumberTextView"
@@ -81,21 +69,10 @@
         android:id="@+id/KeyInfoTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="주요 정보"
+        android:text="어르신 정보"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guidelineCenter"
         app:layout_constraintLeft_toRightOf="@+id/guidelineLeft"/>
-
-    <TextView
-        android:id="@+id/informationTextView"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
-        android:text="주요 정보를 입력해주세요.\n\nex) 노약자 혈액형 : AB\n"
-        android:textSize="18sp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineCenter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/Management"
@@ -159,7 +136,16 @@
         app:layout_constraintBottom_toTopOf="@+id/finishChip"
         app:layout_constraintLeft_toRightOf="@+id/guidelineLeft"/>
 
-
+    <TextView
+        android:id="@+id/informationTextView"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:text="어르신의 주요 정보를 입력해주세요.\n\nex) 노약자 혈액형 : AB\n"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/guidelineCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

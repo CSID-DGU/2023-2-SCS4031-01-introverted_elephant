@@ -1,4 +1,4 @@
-package com.example.capstonedesign;
+package com.oldcare.capstonedesign;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.capstonedesign", appContext.getPackageName());
+        assertEquals("com.oldcare.capstonedesign", appContext.getPackageName());
     }
 }
