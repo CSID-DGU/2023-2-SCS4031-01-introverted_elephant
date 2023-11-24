@@ -27,6 +27,8 @@
         android:layout_marginEnd="28dp"
         android:text="기관리스트"
         android:textSize="16sp"
+        android:backgroundTint="#FFC107"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/map_view" />
 
@@ -38,6 +40,8 @@
         android:layout_marginTop="24dp"
         android:text="경로 확인"
         android:textSize="16sp"
+        android:backgroundTint="#FFC107"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setsafetyzone" />
 
@@ -50,6 +54,7 @@
         app:layout_constraintEnd_toStartOf="@+id/center_list"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="#FFC107"
         app:layout_constraintTop_toBottomOf="@+id/map_view" />
 
     <Button
@@ -58,6 +63,8 @@
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
         android:text="근처기관찾기"
+        android:backgroundTint="#FFC107"
+
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.605"
