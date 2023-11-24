@@ -54,7 +54,7 @@
         android:background="@drawable/round_orange"
         android:minWidth="120dp"
         android:minHeight="45dp"
-        android:text="지도 보기"
+        android:text="위치 서비스"
         android:textColor="@color/black"
         android:textSize="14dp"
         android:textStyle="bold"
