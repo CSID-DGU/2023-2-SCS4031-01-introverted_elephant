@@ -130,29 +130,30 @@ public class Locationservice extends Service {
         locationData.put("longitude", longitude);
         locationData.put("timestamp", FieldValue.serverTimestamp());
 
-        db.collection("Users")  // 안전구역 필드 초기화
-                .document(uid)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                        if (!documentSnapshot.contains("safe_latitude")) {
-                            db.collection("Users")
-                                    .document(uid)
-                                    .update("safe_latitude",0);
-                        }
-                        if (!documentSnapshot.contains("safe_longitude")) {
-                            db.collection("Users")
-                                    .document(uid)
-                                    .update("safe_longitude",0);
-                        }
-                        if (!documentSnapshot.contains("radius")) {
-                            db.collection("Users")
-                                    .document(uid)
-                                    .update("radius",-1);
-                        }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("Firestore", "Error writing field" + e.getMessage());
-                });
+//        db.collection("Users")  // 안전구역 필드 초기화
+//                .document(uid)
+//                .get()
+//                .addOnSuccessListener(documentSnapshot -> {
+//                        if (!documentSnapshot.contains("safe_latitude")) {
+//                            db.collection("Users")
+//                                    .document(uid)
+//                                    .update("safe_latitude",0);
+//                        }
+//                        if (!documentSnapshot.contains("safe_longitude")) {
+//                            db.collection("Users")
+//                                    .document(uid)
+//                                    .update("safe_longitude",0);
+//                        }
+//                        if (!documentSnapshot.contains("radius")) {
+//                            db.collection("Users")
+//                                    .document(uid)
+//                                    .update("radius",-1);
+//                        }
+//                })
+//                .addOnFailureListener(e -> {
+//                    Log.e("Firestore", "Error writing field" + e.getMessage());
+//                });
+
         // Firestore에 데이터 쓰기
         db.collection("Users")  // 사용자 위치를 저장하는 컬렉션 이름
                 .document(uid)              // 사용자 ID를 문서 이름으로 사용

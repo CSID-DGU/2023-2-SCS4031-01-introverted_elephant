@@ -1,5 +1,7 @@
 package com.oldcare.capstonedesign.old_man;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -18,6 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oldcare.capstonedesign.R;
+import com.oldcare.capstonedesign.location.LocationActivity;
+import com.oldcare.capstonedesign.location.TermsofUseofLocationbasedServicesnActivity;
+import com.oldcare.capstonedesign.location.TermsofUseofLocationbasedServicesnActivity_oldman;
 import com.oldcare.capstonedesign.location.bglocationactivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,12 +39,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 public class OldMainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView; //바텀 네비게이션 뷰
     FrameLayout main_frame;
     private Handler handler = new Handler();
     private Runnable periodicTask;
+
+    private FirebaseFirestore db;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +62,9 @@ public class OldMainActivity extends AppCompatActivity {
         SettingListener(); //리스너 등록
         bottomNavigationView.setSelectedItemId(R.id.item_main_fragment);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
-        String uid = preferences.getString("uid", "");
+        uid = preferences.getString("uid", "");
         CollectionReference collectionReference = db.collection("Users").document(uid).collection("message");
 
 
@@ -223,8 +232,31 @@ public class OldMainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             } else if (itemId == R.id.navigation_item2) {
-                Intent intent = new Intent(getApplicationContext(), bglocationactivity.class);
-                startActivity(intent);
+                db.collection("Users")
+                        .document(uid)
+                        .get()
+                        .addOnSuccessListener(documentSnapshot -> {
+                            if (documentSnapshot.exists()) {
+                                // documentSnapshot이 존재할 때 (사용자 데이터가 존재할 때)
+
+                                // "agree" 필드의 값을 가져옴
+                                int agreeValue = documentSnapshot.getLong("agree") != null ?
+                                        documentSnapshot.getLong("agree").intValue() : 0;
+
+                                // "agree" 필드의 값이 1인지 확인
+                                if (agreeValue == 1) {
+                                    // 동의한 경우의 처리
+                                    // 여기에 동의한 경우의 로직 추가
+                                    Intent intent = new Intent(OldMainActivity.this, bglocationactivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    // 동의하지 않은 경우의 처리
+                                    // 여기에 동의하지 않은 경우의 로직 추가
+                                    Intent intent = new Intent(OldMainActivity.this, TermsofUseofLocationbasedServicesnActivity_oldman.class);
+                                    startActivity(intent);
+                                }
+                            }
+                        });
                 return true;
             } else if (itemId == R.id.navigation_item3) {
                 Intent intent = new Intent(getApplicationContext(), OldSettingActivity.class);
