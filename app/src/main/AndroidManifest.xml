@@ -25,6 +25,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".location.TermsofUseofLocationbasedServicesnActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".location.TermsofUseofLocationbasedServicesnActivity_oldman"
+            android:exported="false" />
+
+        <activity
             android:name=".WarningActivity"
             android:exported="false" />
         <activity
