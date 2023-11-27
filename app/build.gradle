@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
+
     id 'com.google.gms.google-services'
+
 }
 
 Properties properties = new Properties()
@@ -17,12 +19,12 @@ android {
         applicationId "com.oldcare.capstonedesign"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
-;
+        versionCode 3
+        versionName "1.2"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        // resValue "string", "APPKEY", properties.APP_KEY
-        // buildConfigField "String", "RESTAPIKEY", properties.REST_API_KEY
+//         resValue "string", "APPKEY", properties.APP_KEY
+//         buildConfigField "String", "RESTAPIKEY", properties.REST_API_KEY
     }
 
     buildFeatures {
