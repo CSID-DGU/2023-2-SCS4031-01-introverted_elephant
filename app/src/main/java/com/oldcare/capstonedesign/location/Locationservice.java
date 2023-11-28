@@ -10,15 +10,20 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.oldcare.capstonedesign.NotificationActivity;
 import com.oldcare.capstonedesign.R;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -208,29 +213,44 @@ public class Locationservice extends Service {
     }
 
     private void CheckOutOfSafetyZone(double lat , double lng) {
-        db.collection("Users")  // 안전구역 필드값 접근
-                .document(uid)
-                .get()
+        db.collection("Users").document(uid).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.contains("safe_latitude") && documentSnapshot.getDouble("safe_latitude") != 0) {
                         // 필드가 존재해야하고, 그 값이 초기값이 아닐 때,
                         safe_latitude = documentSnapshot.getDouble("safe_latitude");
                         safe_longitude = documentSnapshot.getDouble("safe_longitude");
                     }
-                    if (documentSnapshot.getLong("radius") < Util.getDistance(safe_latitude,safe_longitude,lat,lng)) {
-                        // 안전구역과의 거리가 안전구역의 반지름보다 클 경우 : 위험상황
-                        // 알림을 보내는 동작을 수행 (노약자 핸드폰 >> 보호자 핸드폰)
-                        double outrange = Util.getDistance(safe_latitude,safe_longitude,lat,lng) - documentSnapshot.getLong("radius");
-                        Log.d("LocationService","안전구역을 "+outrange+"M 벗어났습니다");
-                    } else
-                        Log.d("LocationService","안전구역 안에 있습니다.");
+                    if (documentSnapshot.getLong("radius") < Util.getDistance(safe_latitude, safe_longitude, lat, lng)) {
+                        // 안전구역과의 거리가 안전구역의 반지름보다 클 경우 : 알림보내기
+                        // 알림을 보내는 동작을 수행 (노약자 핸드폰의 Message 문서에 위치 정보 넣기)
+                        double outrange = Util.getDistance(safe_latitude, safe_longitude, lat, lng) - documentSnapshot.getLong("radius");
+                        Log.d("LocationService", "안전구역을 " + outrange + "M 벗어났습니다");
 
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("Firestore", "Error find fields", e);
+                        //message 문서 내용
+                        Map<String, Object> newUser = new HashMap<>();
+                        // 현재 시간을 얻어오기
+                        Calendar calendar = Calendar.getInstance();
+                        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                        int minute = calendar.get(Calendar.MINUTE);
+
+                        newUser.put("check", "0");
+                        newUser.put("content", "안전구역을 " + outrange + "M 벗어났습니다");
+                        int month = calendar.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+                        int day = calendar.get(Calendar.DAY_OF_MONTH);
+                        newUser.put("month", month);
+                        newUser.put("day", day);
+                        newUser.put("hour", hour);
+                        newUser.put("minute", minute);
+                        newUser.put("title", "위치 알림");
+
+                        // 컬렉션("users")에 문서 추가
+                        db.collection("Users").document(uid).collection("message")
+                                .add(newUser)
+                                .addOnSuccessListener(documentReference -> Log.d("LocationService", "알림이 전송되었습니다."));
+                    } else
+                        Log.d("LocationService", "안전구역 안에 있습니다.");
                 });
     }
-
 }
 
 
