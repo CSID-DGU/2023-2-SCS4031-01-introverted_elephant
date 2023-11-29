@@ -119,7 +119,11 @@ public class FirestoreNotificationService2 extends Service {
 //                                    sendCustomLocalNotification("경고 알림이 도착했습니다. 보호자께서 걱정하고 있으니 꼭 확인해주세요.");
                                     Log.d("121212", "경고알림도착");
                                 } else if(titleValue.equals("위치 알림")) {
-                                    sendDefaultLocalNotification("어르신이 안전구역을 벗어났습니다.");
+                                    String hour = dc.getDocument().getString("hour");
+                                    String minute = dc.getDocument().getString("minute");
+                                    String content = dc.getDocument().getString("content");
+
+                                    sendDefaultLocalNotification("어르신이 " + hour + "시 " + minute + "분에 " + content);
                                 } else {
                                     Log.d("121212", "일반알림도착");
                                     sendDefaultLocalNotification("어르신의 안전이 확인되었습니다.");
@@ -180,7 +184,7 @@ public class FirestoreNotificationService2 extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         notificationBuilder.setSmallIcon(R.drawable.old_person);
-        notificationBuilder.setContentTitle("안전 확인");
+        notificationBuilder.setContentTitle("어르신을 부탁해");
         notificationBuilder.setContentText(message);
         notificationBuilder.setContentIntent(pendingIntent);
 

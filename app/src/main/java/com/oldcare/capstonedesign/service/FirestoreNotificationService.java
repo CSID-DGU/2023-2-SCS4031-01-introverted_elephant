@@ -180,7 +180,7 @@ public class FirestoreNotificationService extends Service {
         Intent intent = new Intent(this, LoginActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        notificationBuilder.setSmallIcon(R.drawable.baseline_chat_24);
+        notificationBuilder.setSmallIcon(R.drawable.old_person);
         notificationBuilder.setContentTitle("알림 도착");
         notificationBuilder.setContentText(message);
         notificationBuilder.setContentIntent(pendingIntent);
@@ -200,7 +200,7 @@ public class FirestoreNotificationService extends Service {
         Intent intent = new Intent(this, OldWarningActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        notificationBuilder.setSmallIcon(R.drawable.baseline_chat_24);
+        notificationBuilder.setSmallIcon(R.drawable.old_person);
         notificationBuilder.setContentTitle("경고 알림 도착");
         notificationBuilder.setContentText(message);
         notificationBuilder.setContentIntent(pendingIntent);
