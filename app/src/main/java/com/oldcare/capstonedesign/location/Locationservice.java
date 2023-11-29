@@ -9,6 +9,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.icu.util.Calendar;
 import android.os.Build;
@@ -135,29 +136,6 @@ public class Locationservice extends Service {
         locationData.put("longitude", longitude);
         locationData.put("timestamp", FieldValue.serverTimestamp());
 
-//        db.collection("Users")  // 안전구역 필드 초기화
-//                .document(uid)
-//                .get()
-//                .addOnSuccessListener(documentSnapshot -> {
-//                        if (!documentSnapshot.contains("safe_latitude")) {
-//                            db.collection("Users")
-//                                    .document(uid)
-//                                    .update("safe_latitude",0);
-//                        }
-//                        if (!documentSnapshot.contains("safe_longitude")) {
-//                            db.collection("Users")
-//                                    .document(uid)
-//                                    .update("safe_longitude",0);
-//                        }
-//                        if (!documentSnapshot.contains("radius")) {
-//                            db.collection("Users")
-//                                    .document(uid)
-//                                    .update("radius",-1);
-//                        }
-//                })
-//                .addOnFailureListener(e -> {
-//                    Log.e("Firestore", "Error writing field" + e.getMessage());
-//                });
 
         // Firestore에 데이터 쓰기
         db.collection("Users")  // 사용자 위치를 저장하는 컬렉션 이름
@@ -244,7 +222,10 @@ public class Locationservice extends Service {
                         newUser.put("title", "위치 알림");
 
                         // 컬렉션("users")에 문서 추가
-                        db.collection("Users").document(uid).collection("message")
+                        SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
+                        String who = preferences.getString("who", "");
+
+                        db.collection("Users").document(who).collection("message")
                                 .add(newUser)
                                 .addOnSuccessListener(documentReference -> Log.d("LocationService", "알림이 전송되었습니다."));
                     } else
