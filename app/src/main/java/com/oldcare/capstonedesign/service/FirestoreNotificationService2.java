@@ -118,6 +118,8 @@ public class FirestoreNotificationService2 extends Service {
                                 if (titleValue.equals("경고")) {
 //                                    sendCustomLocalNotification("경고 알림이 도착했습니다. 보호자께서 걱정하고 있으니 꼭 확인해주세요.");
                                     Log.d("121212", "경고알림도착");
+                                } else if(titleValue.equals("위치 알림")) {
+                                    sendDefaultLocalNotification("어르신이 안전구역을 벗어났습니다.");
                                 } else {
                                     Log.d("121212", "일반알림도착");
                                     sendDefaultLocalNotification("어르신의 안전이 확인되었습니다.");
