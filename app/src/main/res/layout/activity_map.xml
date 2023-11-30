@@ -15,67 +15,80 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationtext"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"></com.kakao.vectormap.MapView>
 
-    </com.kakao.vectormap.MapView>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.8" />
 
-    <Button
-        android:id="@+id/center_list"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="28dp"
-        android:text="기관리스트"
-        android:textSize="16sp"
-        android:backgroundTint="#FFC107"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_view" />
-
-    <Button
-        android:id="@+id/check_path"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="24dp"
-        android:text="경로 확인"
-        android:textSize="16sp"
-        android:backgroundTint="#FFC107"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setsafetyzone" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
 
     <Button
         android:id="@+id/setsafetyzone"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF8A00"
         android:text="안전구역 설정"
-        app:layout_constraintEnd_toStartOf="@+id/center_list"
-        app:layout_constraintHorizontal_bias="0.481"
-        app:layout_constraintStart_toStartOf="parent"
-        android:backgroundTint="#FFC107"
-        app:layout_constraintTop_toBottomOf="@+id/map_view" />
+        app:layout_constraintTop_toTopOf="@+id/guideline1"
+        app:layout_constraintLeft_toRightOf="@+id/guideline3"/>
+
+    <Button
+        android:id="@+id/center_list"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FF8A00"
+        android:text="기관리스트"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="@+id/guideline1"
+        app:layout_constraintRight_toLeftOf="@+id/guideline4"/>
+
+    <Button
+        android:id="@+id/check_path"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FF8A00"
+        android:text="경로 확인"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintLeft_toRightOf="@+id/guideline3"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
 
     <Button
         android:id="@+id/nearcenter"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_marginTop="24dp"
+        android:backgroundTint="#FF8A00"
         android:text="근처기관찾기"
-        android:backgroundTint="#FFC107"
-
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.605"
-        app:layout_constraintStart_toEndOf="@+id/check_path"
-        app:layout_constraintTop_toBottomOf="@+id/center_list" />
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintRight_toLeftOf="@+id/guideline4"/>
 
     <TextView
         android:id="@+id/locationtext"
         android:layout_width="411dp"
         android:layout_height="62dp"
-        android:background="#ED924C"
+        android:background="#FFA63D"
         android:gravity="center"
         android:text="현재위치 표시구역"
         android:textAlignment="center"
@@ -84,6 +97,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
