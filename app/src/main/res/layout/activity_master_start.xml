@@ -73,7 +73,7 @@
         android:id="@+id/masterStartYesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/rect_orange"
         android:ems="12"
         android:text="확인"

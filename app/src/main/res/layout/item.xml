@@ -17,13 +17,15 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="84dp"
             android:padding="3dp">
 
             <TextView
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
                 android:text="타이틀"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +35,9 @@
                 android:id="@+id/contentTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:text="내용"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +47,7 @@
                 android:id="@+id/timeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:text="시간"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +56,7 @@
                 android:id="@+id/timeTextView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="수행 시간 : "
+                android:text="어르신의 알림 확인 시간 : "
                 app:layout_constraintEnd_toStartOf="@+id/timeTextView"
                 app:layout_constraintTop_toTopOf="parent" />
 
