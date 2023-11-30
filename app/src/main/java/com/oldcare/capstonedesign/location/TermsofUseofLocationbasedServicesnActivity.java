@@ -63,6 +63,7 @@ public class TermsofUseofLocationbasedServicesnActivity extends AppCompatActivit
                         });
                 Intent intent = new Intent(this, LocationActivity.class);
                 startActivity(intent);
+                finish();
             } else {
                 // 사용자가 거부한 경우의 처리
                 // 특별한 조치나 위치 데이터 사용을 중지하는 등의 처리

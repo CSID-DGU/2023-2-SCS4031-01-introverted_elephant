@@ -11,6 +11,7 @@ import com.oldcare.capstonedesign.R;
 
 import android.content.Intent;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.CameraUpdateFactory;
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapPOIItem;
@@ -66,6 +68,8 @@ public class MapActivity extends AppCompatActivity {
     public List<Hospital> HPList = new ArrayList<>();
     public List<LocationData> locationDataList = new ArrayList<>();
     private static final int REQUEST_CODE_OTHER_ACTIVITY = 1;
+    private MyPOIItemEventListener poiItemEventListener = new MyPOIItemEventListener();
+    private MyMapViewEventListener MyMapViewEventListener = new MyMapViewEventListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,15 +110,15 @@ public class MapActivity extends AppCompatActivity {
             marker1.setCustomImageResourceId(R.drawable.mapmarker_blue);
             marker1.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // (마커 클릭 후) 모양.
             marker1.setCustomSelectedImageResourceId(R.drawable.mapmarker_red);
+            marker1.setCustomImageAutoscale(false);
+            marker1.setCustomImageAnchor(0.5f, 1.0f);
             mapView.addPOIItem(marker1); // 지도화면 위에 추가되는 아이콘을 추가하기 위한 호출(말풍선 모양)
             textView = findViewById(R.id.locationtext);
             geoinfo(longitude, latitude);
             hpinfo(longitude, latitude);
             getAdress(longitude,latitude);
 
-            textView.setOnClickListener(v -> {
-                onTextViewClick(v);
-            });
+            textView.setOnClickListener(v -> onTextViewClick(v));
         });
 
     } // End of onCreate
@@ -137,6 +141,8 @@ public class MapActivity extends AppCompatActivity {
             marker1.setCustomImageResourceId(R.drawable.mapmarker_blue);
             marker1.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // (마커 클릭 후) 모양.
             marker1.setCustomSelectedImageResourceId(R.drawable.mapmarker_red);
+            marker1.setCustomImageAutoscale(false);
+            marker1.setCustomImageAnchor(0.5f, 1.0f);
             mapView.addPOIItem(marker1); // 지도화면 위에 추가되는 아이콘을 추가하기 위한 호출(말풍선 모양)
             geoinfo(longitude, latitude);
             hpinfo(longitude, latitude);
@@ -159,6 +165,9 @@ public class MapActivity extends AppCompatActivity {
         mapView.setZoomLevel(1, true); // 춤 레벨 변경
         mapView.zoomIn(true); // 줌 인
         mapView.zoomOut(true); // 줌 아웃
+        mapView.setPOIItemEventListener(poiItemEventListener);
+        mapView.setMapViewEventListener(MyMapViewEventListener);
+        mapView.setCalloutBalloonAdapter(new CustomBalloonAdapter(getLayoutInflater()));  // 커스텀 말풍선 등록
 
     }
 
@@ -206,7 +215,32 @@ public class MapActivity extends AppCompatActivity {
                 mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
                 mapViewContainer.addView(mapView);
             } else mapViewContainer.addView(mapView);
+        // getlatestlocation() 함수의 결과를 기다리고 완료 후에 다음 함수들을 호출
+        getlatestlocation(() -> {
+            // getlatestlocation() 함수가 완료된 후에 호출될 부분
+            initMapView();
+            chksafetyzone();
+            MapPoint MARKER_POINT1 = MapPoint.mapPointWithGeoCoord(latitude, longitude);
+            MapPOIItem marker1 = new MapPOIItem(); // 마커 아이콘 추가하는 함수
+            marker1.setItemName("현재 위치"); // 클릭 했을 때 나오는 호출 값
+            if (mapView.findCircleByTag(0) != null)
+                mapView.removePOIItem(mapView.findPOIItemByTag(0));
+            marker1.setTag(0); // 마커 태그 : 태그로 구분하기 위한 거
+            marker1.setMapPoint(MARKER_POINT1); // 좌표를 입력받아 현 위치로 출력
+            marker1.setMarkerType(MapPOIItem.MarkerType.CustomImage); //  (클릭 전) 모양 색.
+            marker1.setCustomImageResourceId(R.drawable.mapmarker_blue);
+            marker1.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // (마커 클릭 후) 모양.
+            marker1.setCustomSelectedImageResourceId(R.drawable.mapmarker_red);
+            marker1.setCustomImageAutoscale(false);
+            marker1.setCustomImageAnchor(0.5f, 1.0f);
+            mapView.addPOIItem(marker1); // 지도화면 위에 추가되는 아이콘을 추가하기 위한 호출(말풍선 모양)
+            textView = findViewById(R.id.locationtext);
+            geoinfo(longitude, latitude);
+            hpinfo(longitude, latitude);
+            getAdress(longitude,latitude);
 
+            textView.setOnClickListener(v -> onTextViewClick(v));
+        });
     }
 
     private void updateMapView() {
@@ -386,6 +420,7 @@ public class MapActivity extends AppCompatActivity {
             MapPOIItem marker = new MapPOIItem();
             marker.setItemName(data.name);
             marker.setMapPoint(MapPoint.mapPointWithGeoCoord(data.latitude, data.longitude));
+            marker.setUserObject(data);
             marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
             marker.setCustomImageResourceId(R.drawable.mapmarker_blue);
             marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
@@ -399,6 +434,7 @@ public class MapActivity extends AppCompatActivity {
             MapPOIItem marker = new MapPOIItem();
             marker.setItemName(data.getPlaceName());
             marker.setMapPoint( MapPoint.mapPointWithGeoCoord( Double.parseDouble( data.getY() ), Double.parseDouble( data.getX() ) ) );
+            marker.setUserObject(data);
             marker.setMarkerType(MapPOIItem.MarkerType.CustomImage);
             marker.setCustomImageResourceId(R.drawable.mapmarker_blue);
             marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage);
@@ -406,13 +442,6 @@ public class MapActivity extends AppCompatActivity {
             marker.setCustomImageAutoscale(false);
             marker.setCustomImageAnchor(0.5f, 1.0f);
             mapView.addPOIItem(marker);
-
-            for (Hospital hp : HPlist2) {
-                if (HPlist2 == null)
-                    Log.i("buttonwork","데이터가 없습니다.");
-                else
-                    Log.d("buttonwork","병원 : " + hp.toString());
-            }
         }
     }
 
@@ -541,7 +570,7 @@ public class MapActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.contains("safe_latitude") && documentSnapshot.getDouble("safe_latitude") != 0){
-                        // 안전구역 필드가 있고 설정을 한 상태만 원 추가
+                        // 문서에 안전구역 필드가 있고 설정을 한 상태만 원 추가
                         Long longValue = (Long) documentSnapshot.get("radius");
                         int intValue = longValue.intValue();
                         MapCircle safezone = new MapCircle(MapPoint.mapPointWithGeoCoord((Double) documentSnapshot.get("safe_latitude"), (Double) documentSnapshot.get("safe_longitude")),
@@ -552,6 +581,37 @@ public class MapActivity extends AppCompatActivity {
                         mapView.addCircle(safezone);
                     }
                 });
+    }
+    public class CustomBalloonAdapter implements CalloutBalloonAdapter {
+
+        private View mCalloutBalloon;
+        private TextView name;
+        private TextView phone;
+
+        public CustomBalloonAdapter(LayoutInflater inflater) {
+            mCalloutBalloon = inflater.inflate(R.layout.balloon_layout, null);
+            name = mCalloutBalloon.findViewById(R.id.ball_tv_name);
+            phone = mCalloutBalloon.findViewById(R.id.ball_tv_phone);
+        }
+
+        @Override
+        public View getCalloutBalloon(MapPOIItem poiItem) {
+            // 마커 클릭 시 나오는 말풍선
+            name.setText(poiItem.getItemName());   // 해당 마커의 정보 이용 가능
+            if (poiItem.getUserObject() instanceof Institution )
+                phone.setText(((Institution) poiItem.getUserObject()).phonenumber);
+            else if (poiItem.getUserObject() instanceof Hospital )
+                phone.setText(((Hospital) poiItem.getUserObject()).phone);
+            else phone.setText("getCalloutBalloon");
+            return mCalloutBalloon;
+        }
+
+        @Override
+        public View getPressedCalloutBalloon(MapPOIItem poiItem) {
+            // 말풍선 클릭 시
+            phone.setText("getPressedCalloutBalloon");
+            return mCalloutBalloon;
+        }
     }
 
 } // End of Activity

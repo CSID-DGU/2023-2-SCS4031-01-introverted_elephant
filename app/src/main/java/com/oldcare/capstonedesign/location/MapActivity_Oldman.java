@@ -46,7 +46,7 @@ public class MapActivity_Oldman extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_odlman_map);
+        setContentView(R.layout.activity_old_map);
 
         Intent intent = getIntent();
         latitude = intent.getDoubleExtra("latitude", 0);
