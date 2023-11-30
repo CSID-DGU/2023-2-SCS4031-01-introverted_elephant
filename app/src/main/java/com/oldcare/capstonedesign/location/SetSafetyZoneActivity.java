@@ -85,8 +85,8 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
         Button okbutton = findViewById(R.id.okbutton);
         okbutton.setOnClickListener(view -> okbutton());
 
-        Button resetbutton = findViewById(R.id.resetzone);
-        resetbutton.setOnClickListener(view -> resetzone());
+//        Button resetbutton = findViewById(R.id.resetzone);
+//        resetbutton.setOnClickListener(view -> resetzone());
 
 
 
