@@ -13,6 +13,8 @@
         android:textSize="30sp"
         android:text="알림"
         android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/textTextInputLayout"
         app:layout_constraintStart_toStartOf="@+id/textTextInputLayout" />
 
@@ -49,6 +51,7 @@
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toTopOf="@+id/textTextInputLayout"
         app:layout_constraintEnd_toEndOf="@+id/textTextInputLayout"/>
 
