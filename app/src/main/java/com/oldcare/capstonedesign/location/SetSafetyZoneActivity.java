@@ -1,5 +1,6 @@
 package com.oldcare.capstonedesign.location;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -37,14 +38,12 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
     private String oldman_uid;
     private MapView mapView;
     private ViewGroup mapViewContainer;
-    private final String BASE_URL = "https://dapi.kakao.com/";
-    private final String REST_API_KEY = "KakaoAK 0cf15acd27d8221047379b612be7c6ab"; // REST API 키
     private List<KakaoApiResponse_search.Document> documents;
-    private MyPOIItemEventListener poiItemEventListener;
+    private MyPOIItemEventListener poiItemEventListener = new MyPOIItemEventListener();
+    private MyMapViewEventListener MyMapViewEventListener = new MyMapViewEventListener();
     private double last_latitude;
     private double last_longitude;
     private int distance = -1;
-    private MapCircle safezone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +53,18 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
         oldman_uid = preferences.getString("oldMan", "");
         initMapView();
-        poiItemEventListener = new MyPOIItemEventListener();
         mapView.setPOIItemEventListener(poiItemEventListener);
+        mapView.setMapViewEventListener(MyMapViewEventListener);
 
         Button searchbutton = findViewById(R.id.searchbutton);
         EditText editText = findViewById(R.id.editTextText);
 
+
+
         searchbutton.setOnClickListener(view -> {
             String searchText = editText.getText().toString();
-            if (searchText != null) {
-                doSearch(searchText);
-            } else {
-                // searchText가 null인 경우
-                showToast("주소를 입력하세요");
-            }
+            if (searchText == null) showToast("주소를 입력하세요");
+            else doSearch(searchText);
         });
 
         Button dist_insert = findViewById(R.id.dist_insert);
@@ -87,6 +84,10 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
 
         Button okbutton = findViewById(R.id.okbutton);
         okbutton.setOnClickListener(view -> okbutton());
+
+        Button resetbutton = findViewById(R.id.resetzone);
+        resetbutton.setOnClickListener(view -> resetzone());
+
 
 
     } // end of oncreate
@@ -118,19 +119,21 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
     }
 
     public void doSearch(String query) {
+        String BASE_URL = "https://dapi.kakao.com/";
         Retrofit retrofit = new Retrofit.Builder() // Retrofit 구성
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         KakaoAPI_search api = retrofit.create(KakaoAPI_search.class); // 통신 인터페이스를 객체로 생성
+        // REST API 키
+        String REST_API_KEY = "KakaoAK 0cf15acd27d8221047379b612be7c6ab";
         Call<KakaoApiResponse_search> call = api.getKakaoAddress(REST_API_KEY,query); // 검색 조건 입력
 
         // API 서버에 요청
         call.enqueue(new Callback<KakaoApiResponse_search>(){
-
             @Override
-            public void onResponse(Call<KakaoApiResponse_search> call, Response<KakaoApiResponse_search> response) {
+            public void onResponse(@NonNull Call<KakaoApiResponse_search> call, @NonNull Response<KakaoApiResponse_search> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     // 통신 성공 (검색 결과는 response.body()에 담겨있음)
                     KakaoApiResponse_search KakaoApiResponse_search = response.body();
@@ -157,7 +160,7 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<KakaoApiResponse_search> call, Throwable t) {
+            public void onFailure(@NonNull Call<KakaoApiResponse_search> call, @NonNull Throwable t) {
                 // 통신 실패
                 Log.w("SetSafetyZoneActivity", "통신 실패: " + t.getMessage());
             }
@@ -171,15 +174,20 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
             MapPoint.GeoCoordinate point = clickedPOIItem.getMapPoint().getMapPointGeoCoord();
             last_latitude = point.latitude;
             last_longitude = point.longitude;
+            int defaultRadius = 100;
+            int finalRadius = (radius > 0) ? radius : defaultRadius;
+            MapCircle safezone = new MapCircle(clickedPOIItem.getMapPoint(),
+                    finalRadius,
+                    Color.argb(255, 255, 0, 0),
+                    Color.argb(16, 173, 255, 47)
+            );
+            if (mapView.findCircleByTag(2) != null)
+                mapView.removeCircle(mapView.findCircleByTag(2));
+            safezone.setTag(2);
+            mapView.addCircle(safezone);
+        } else {
+            showToast("마커를 클릭한 뒤 눌러주세요");
         }
-        int defaultRadius = 100;
-        int finalRadius = (radius > 0) ? radius : defaultRadius;
-        safezone = new MapCircle(clickedPOIItem.getMapPoint(),
-                finalRadius,
-                Color.argb(255, 255, 0, 0),
-                Color.argb(16, 173, 255, 47)
-        );
-        mapView.addCircle(safezone);
     }
 
     public void getnumber(int num){
@@ -203,6 +211,16 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
         setResult(Activity.RESULT_OK, resultIntent);
         mapViewContainer.removeView(mapView);
         finish();
+    }
+
+    public void resetzone() {
+        firestore.collection("Users")
+                .document(oldman_uid)
+                .update(
+                        "radius", 0,
+                        "safe_latitude", 0,
+                        "safe_longitude", 0
+                );
     }
 
     @Override

@@ -29,19 +29,17 @@ public class CenterActivity extends AppCompatActivity implements SimpleTextAdapt
         if (receivedAgencyList != null) {
             for (Institution institution : receivedAgencyList) {
                 // Institution 객체의 각 속성에 접근하는 예제
-                StringBuilder sb = new StringBuilder();
-                sb.append("기관명 :"+institution.name+"\n");
-                sb.append("전화번호 :"+institution.phonenumber+"\n");
-                sb.append("주소 :"+institution.address);
-                centerList.add(sb.toString());
+                String sb = "기관명 :" + institution.name + "\n" +
+                        "전화번호 :" + institution.phonenumber + "\n" +
+                        "주소 :" + institution.address;
+                centerList.add(sb);
             }
             for (Hospital Hospital : receivedHospitalList) {
                 // Institution 객체의 각 속성에 접근하는 예제
-                StringBuilder sb = new StringBuilder();
-                sb.append("기관명 :"+ Hospital.placeName+"\n");
-                sb.append("전화번호 :"+Hospital.phone+"\n");
-                sb.append("주소 :"+Hospital.roadAddressName);
-                centerList.add(sb.toString());
+                String sb = "기관명 :" + Hospital.placeName + "\n" +
+                        "전화번호 :" + Hospital.phone + "\n" +
+                        "주소 :" + Hospital.roadAddressName;
+                centerList.add(sb);
             }
         }
 

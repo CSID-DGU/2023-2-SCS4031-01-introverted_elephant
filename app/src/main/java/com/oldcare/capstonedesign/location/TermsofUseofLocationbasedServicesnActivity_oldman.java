@@ -61,7 +61,7 @@ public class TermsofUseofLocationbasedServicesnActivity_oldman extends AppCompat
                         });
                 Intent intent = new Intent(this, bglocationactivity.class);
                 startActivity(intent);
-
+                finish();
             } else {
                 finish(); // 현재 액티비티 종료
                 // onBackPressed();

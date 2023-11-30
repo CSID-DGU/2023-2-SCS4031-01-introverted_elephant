@@ -15,133 +15,84 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
+
     </com.kakao.vectormap.MapView>
 
-    <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="290dp"
-        android:layout_height="45dp"
-        android:ems="10"
-        android:hint="주소를 입력해주세요"
-        android:inputType="text"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/map_view" />
-
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/searchbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_orange"
-        android:minWidth="80dp"
-        android:minHeight="40dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="14dp"
         android:text="검색"
-        app:layout_constraintLeft_toRightOf="@+id/editTextText"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextText"/>
-
-    <EditText
-        android:id="@+id/editTextNumber"
-        android:layout_width="290dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="거리 숫자로 입력해주세요. (meter)"
-        android:inputType="number"
-        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintStart_toEndOf="@+id/editTextText"
+        app:layout_constraintTop_toBottomOf="@+id/map_view" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/dist_insert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/round_orange"
-        android:minWidth="80dp"
-        android:minHeight="40dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="10dp"
-        android:text="입력"
-        app:layout_constraintLeft_toRightOf="@+id/editTextNumber"
-        app:layout_constraintTop_toTopOf="@+id/editTextNumber"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.2" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.6" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="주소"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/guideline1"
-        app:layout_constraintBottom_toTopOf="@+id/okbutton"/>
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="좌표"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
-        app:layout_constraintBottom_toTopOf="@+id/setzone"/>
-
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/okbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_orange"
-        android:minWidth="80dp"
-        android:minHeight="40dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
         android:text="확인"
-        app:layout_constraintLeft_toRightOf="@+id/guideline1"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+        app:layout_constraintVertical_bias="0.623" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="15dp"
+        android:ems="10"
+        android:hint="주소입력"
+        android:inputType="text"
+        app:layout_constraintEnd_toStartOf="@+id/searchbutton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/map_view" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="293dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="거리"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+
+    <Button
+        android:id="@+id/dist_insert"
+        android:layout_width="87dp"
+        android:layout_height="52dp"
+        android:text="입력"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.484"
+        app:layout_constraintStart_toEndOf="@+id/editTextNumber"
+        app:layout_constraintTop_toBottomOf="@+id/searchbutton" />
+
+    <Button
         android:id="@+id/setzone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/round_orange"
-        android:minWidth="90dp"
-        android:minHeight="40dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:layout_marginStart="24dp"
         android:text="구역설정"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/okbutton"
+        app:layout_constraintTop_toBottomOf="@+id/dist_insert"
+        app:layout_constraintVertical_bias="0.637" />
+
+    <Button
+        android:id="@+id/resetzone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="구역초기화"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/setzone"
+        app:layout_constraintTop_toBottomOf="@+id/dist_insert"
+        app:layout_constraintVertical_bias="0.637" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
