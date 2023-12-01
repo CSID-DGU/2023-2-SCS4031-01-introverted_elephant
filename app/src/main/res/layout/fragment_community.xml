@@ -30,10 +30,11 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/alarmIcon"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="230dp"
+        android:layout_height="230dp"
         android:scaleType="centerCrop"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="-35dp"
         app:layout_constraintBottom_toTopOf="@+id/memoButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,9 +66,10 @@
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/mapIcon"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:scaleType="centerCrop"
+        android:layout_marginBottom="-15dp"
         app:layout_constraintBottom_toTopOf="@+id/mapButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
