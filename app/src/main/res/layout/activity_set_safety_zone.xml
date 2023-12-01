@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/resetzone"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".location.SetSafetyZoneActivity">
@@ -35,16 +36,16 @@
         android:id="@+id/searchbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:background="@drawable/round_orange"
         android:minWidth="80dp"
         android:minHeight="40dp"
+        android:text="검색"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_marginLeft="10dp"
-        android:text="검색"
-        app:layout_constraintLeft_toRightOf="@+id/editTextText"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextText"/>
+        app:layout_constraintBottom_toBottomOf="@+id/editTextText"
+        app:layout_constraintLeft_toRightOf="@+id/editTextText" />
 
     <EditText
         android:id="@+id/editTextNumber"
@@ -64,16 +65,16 @@
         android:id="@+id/dist_insert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:background="@drawable/round_orange"
         android:minWidth="80dp"
         android:minHeight="40dp"
+        android:text="입력"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_marginLeft="10dp"
-        android:text="입력"
         app:layout_constraintLeft_toRightOf="@+id/editTextNumber"
-        app:layout_constraintTop_toTopOf="@+id/editTextNumber"/>
+        app:layout_constraintTop_toTopOf="@+id/editTextNumber" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
@@ -103,12 +104,12 @@
         android:background="@drawable/round_orange"
         android:minWidth="80dp"
         android:minHeight="40dp"
+        android:text="확인"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="확인"
-        app:layout_constraintLeft_toRightOf="@+id/guideline1"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"/>
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintLeft_toRightOf="@+id/guideline1" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/setzone"
@@ -117,11 +118,19 @@
         android:background="@drawable/round_orange"
         android:minWidth="90dp"
         android:minHeight="40dp"
+        android:text="구역설정"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="구역설정"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline2"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"/>
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintLeft_toLeftOf="@+id/guideline2" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
