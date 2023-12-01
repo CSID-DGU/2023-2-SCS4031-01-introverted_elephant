@@ -20,13 +20,17 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="50dp" />
 
-    <ImageView
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/youngImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/baseline_directions_run_24"
+        android:scaleType="centerCrop"
         android:layout_marginTop="10dp"
         app:layout_constraintLeft_toRightOf="@+id/guidelineLeft"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineTop"/>
+        app:layout_constraintTop_toBottomOf="@+id/guidelineTop"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/youngman"/>
 
     <TextView
         android:id="@+id/oldText"

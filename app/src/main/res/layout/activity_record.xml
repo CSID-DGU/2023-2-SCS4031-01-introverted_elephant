@@ -11,12 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/exitButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/exitButton"
+        android:background="@drawable/round_orange"
+        android:minHeight="40dp"
+        android:minWidth="100dp"
         android:text="확인"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
