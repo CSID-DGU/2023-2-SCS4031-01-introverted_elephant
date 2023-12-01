@@ -64,8 +64,10 @@
                 android:id="@+id/titleTextView1"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_marginTop="5dp"
                 android:text=""
                 android:textSize="23sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/verticalGuideline1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -74,6 +76,7 @@
                 android:id="@+id/contentTextView1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
@@ -94,26 +97,39 @@
                 app:layout_constraintStart_toStartOf="@id/verticalGuideline1"
                 app:layout_constraintTop_toTopOf="@id/titleTextView1" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/yesButton1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_orange"
+                android:minWidth="90dp"
+                android:minHeight="40dp"
                 android:text="확인"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ttsButton1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="읽기"
-                android:textSize="20sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_orange"
+                android:minWidth="90dp"
+                android:minHeight="40dp"
+                android:text="알림 내용 읽기"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/verticalGuideline1"
@@ -127,7 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:background="#1B1E16"
                 android:text=""
@@ -172,7 +188,9 @@
                 android:id="@+id/titleTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_marginTop="5dp"
                 android:text=""
+                android:textStyle="bold"
                 android:textSize="23sp"
                 app:layout_constraintEnd_toEndOf="@id/verticalGuideline2"
                 app:layout_constraintStart_toStartOf="parent"
@@ -182,6 +200,7 @@
                 android:id="@+id/contentTextView2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
@@ -202,22 +221,36 @@
                 app:layout_constraintStart_toStartOf="@id/verticalGuideline2"
                 app:layout_constraintTop_toTopOf="@id/titleTextView2" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/yesButton2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_orange"
+                android:minWidth="90dp"
+                android:minHeight="40dp"
                 android:text="확인"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ttsButton2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="읽기"
-                android:textSize="20sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_orange"
+                android:minWidth="90dp"
+                android:minHeight="40dp"
+                android:text="알림 내용 읽기"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -234,7 +267,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginStart="5dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:background="#1B1E16"
                 android:text=""
@@ -282,7 +315,9 @@
                 android:id="@+id/titleTextView3"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_marginTop="5dp"
                 android:text=""
+                android:textStyle="bold"
                 android:textSize="23sp"
                 app:layout_constraintEnd_toEndOf="@id/verticalGuideline3"
                 app:layout_constraintStart_toStartOf="parent"
@@ -292,6 +327,7 @@
                 android:id="@+id/contentTextView3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
@@ -312,22 +348,36 @@
                 app:layout_constraintStart_toStartOf="@id/verticalGuideline3"
                 app:layout_constraintTop_toTopOf="@id/titleTextView3" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/yesButton3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_orange"
+                android:minWidth="90dp"
+                android:minHeight="40dp"
                 android:text="확인"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="20sp"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ttsButton3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="읽기"
-                android:textSize="20sp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/round_orange"
+                android:minWidth="90dp"
+                android:minHeight="40dp"
+                android:text="알림 내용 읽기"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
