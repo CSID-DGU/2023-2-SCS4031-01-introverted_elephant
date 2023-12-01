@@ -104,6 +104,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <Button
+                android:id="@+id/ttsButton1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="읽기"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/verticalGuideline1"
@@ -202,6 +212,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <Button
+                android:id="@+id/ttsButton2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="읽기"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/verticalGuideline2"
@@ -303,6 +322,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <Button
+                android:id="@+id/ttsButton3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="읽기"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/verticalGuideline3"
