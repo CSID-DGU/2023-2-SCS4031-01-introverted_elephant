@@ -1,5 +1,6 @@
 package com.oldcare.capstonedesign.old_man;
 
+import static android.speech.tts.TextToSpeech.ERROR;
 import static androidx.core.content.ContentProviderCompat.requireContext;
 
 import androidx.annotation.NonNull;
@@ -11,10 +12,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,10 +49,12 @@ public class OldMainActivity extends AppCompatActivity {
     FrameLayout main_frame;
     private Handler handler = new Handler();
     private Runnable periodicTask;
-
+    private TextToSpeech tts;
     private FirebaseFirestore db;
     private String uid;
-
+    private String ttsString1 = "";
+    private String ttsString2 = "";
+    private String ttsString3 = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +95,17 @@ public class OldMainActivity extends AppCompatActivity {
 
         // 처음에 한 번 호출하고, 그 후 3초마다 실행
         handler.post(periodicTask);
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if (i != ERROR) {
+                    tts.setLanguage(Locale.KOREAN);
+                    tts.setSpeechRate(0.8f);
+                }
+            }
+        });
+
 
         Button yesButton1 =  findViewById(R.id.yesButton1);
         yesButton1.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +149,14 @@ public class OldMainActivity extends AppCompatActivity {
               }
         );
 
+        Button ttsButton1 = findViewById(R.id.ttsButton1);
+        ttsButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tts.speak(ttsString1, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
+
         Button yesButton2 =  findViewById(R.id.yesButton2);
         yesButton2.setOnClickListener(new View.OnClickListener() {
                                           @Override
@@ -173,6 +197,14 @@ public class OldMainActivity extends AppCompatActivity {
                                           }
                                       }
         );
+
+        Button ttsButton2 = findViewById(R.id.ttsButton2);
+        ttsButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tts.speak(ttsString2, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
 
         Button yesButton3 =  findViewById(R.id.yesButton3);
         yesButton3.setOnClickListener(new View.OnClickListener() {
@@ -215,7 +247,13 @@ public class OldMainActivity extends AppCompatActivity {
                                       }
         );
 
-
+        Button ttsButton3 = findViewById(R.id.ttsButton3);
+        ttsButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tts.speak(ttsString3, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
 
 //여기까지 onCreate
     }
@@ -331,12 +369,20 @@ public class OldMainActivity extends AppCompatActivity {
                                 }  else if (dayString.equals("2")) {
                                     daytime = "모래";
                                 } else if (dayString.equals("3")) {
-                                    daytime = "사흘";
+                                    daytime = "사흘 뒤";
                                 } else if (dayString.equals("4")) {
-                                    daytime = "나흘";
+                                    daytime = "나흘 뒤";
                                 }
 
                                 String time = daytime + " " + hourString + "시 " + minuteString + "분";
+
+                                if (i == 1) {
+                                    ttsString1 = "보호자께서 보내신 메모를 읽어드리겠습니다. " + contentString + "이며. 시간은 " + time + " 입니다.";
+                                } else if (i == 2) {
+                                    ttsString2 = "보호자께서 보내신 메모를 읽어드리겠습니다. " + contentString + "이며. 시간은 " + time + " 입니다.";
+                                } else {
+                                    ttsString3 = "보호자께서 보내신 메모를 읽어드리겠습니다. " + contentString + "이며. 시간은 " + time + " 입니다.";
+                                }
 
                                 // 해당 순서의 TextView를 업데이트
                                 int titleTextViewId = getResources().getIdentifier("titleTextView" + i, "id", getPackageName());
@@ -366,6 +412,13 @@ public class OldMainActivity extends AppCompatActivity {
                                     yesButton.setVisibility(View.INVISIBLE);
                                 }else {
                                     yesButton.setVisibility(View.VISIBLE);
+                                }
+                                int ttsButtonId = getResources().getIdentifier("ttsButton" + i, "id", getPackageName());
+                                Button ttsButton = findViewById(ttsButtonId);
+                                if (hourString.equals("")) {
+                                    ttsButton.setVisibility(View.INVISIBLE);
+                                }else {
+                                    ttsButton.setVisibility(View.VISIBLE);
                                 }
                                 int backgroundTextViewId = getResources().getIdentifier("backgroundTextView" + i, "id", getPackageName());
                                 TextView backgroundTextView = findViewById(backgroundTextViewId);
@@ -444,6 +497,13 @@ public class OldMainActivity extends AppCompatActivity {
                                 }else {
                                     yesButton.setVisibility(View.INVISIBLE);
                                 }
+                                int ttsButtonId = getResources().getIdentifier("ttsButton" + i, "id", getPackageName());
+                                Button ttsButton = findViewById(ttsButtonId);
+                                if (hourString.equals("")) {
+                                    ttsButton.setVisibility(View.INVISIBLE);
+                                }else {
+                                    ttsButton.setVisibility(View.INVISIBLE);
+                                }
                                 int backgroundTextViewId = getResources().getIdentifier("backgroundTextView" + i, "id", getPackageName());
                                 TextView backgroundTextView = findViewById(backgroundTextViewId);
                                 if (hourString.equals("")) {
@@ -475,6 +535,13 @@ public class OldMainActivity extends AppCompatActivity {
     }
 
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(tts != null){
+            tts.stop();
+            tts.shutdown();
+            tts = null;
+        }
+    }
 }
