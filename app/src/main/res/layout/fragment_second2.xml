@@ -11,11 +11,17 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_second"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_orange"
+            android:minWidth="110dp"
+            android:minHeight="40dp"
             android:text="@string/previous"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/textview_second"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
