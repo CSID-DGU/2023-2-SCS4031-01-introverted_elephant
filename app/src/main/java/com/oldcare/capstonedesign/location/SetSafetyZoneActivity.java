@@ -69,7 +69,23 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
 
         Button dist_insert = findViewById(R.id.dist_insert);
         EditText dist = findViewById(R.id.editTextNumber);
-        dist_insert.setOnClickListener(view -> getnumber(Integer.parseInt(dist.getText().toString())));
+        dist_insert.setOnClickListener(view -> {
+            String distString = dist.getText().toString().trim(); // 문자열 앞뒤 공백 제거
+
+            if (!distString.isEmpty()) {
+                try {
+                    int distValue = Integer.parseInt(distString);
+                    // distValue를 사용한 작업 수행
+                    getnumber(distValue);
+                } catch (NumberFormatException e) {
+                    // 정수로 변환할 수 없는 경우에 대한 예외 처리
+                    e.printStackTrace(); // 또는 적절한 오류 처리를 추가
+                }
+            } else {
+                // 빈 문자열에 대한 처리 또는 오류 메시지 출력
+                Toast.makeText(getApplicationContext(), "숫자를 입력해주세요", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Button setzone = findViewById(R.id.setzone);
         setzone.setOnClickListener(view -> {
