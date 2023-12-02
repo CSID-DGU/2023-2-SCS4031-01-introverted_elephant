@@ -43,7 +43,7 @@ public class TermsofUseofLocationbasedServicesnActivity extends AppCompatActivit
     private void showConfirmationDialog(final boolean consent) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("동의 여부 확인");
-        builder.setMessage("위치 데이터를 사용하여 어르신 경로 확인 및 복지 서비스 제공에 동의하십니까?");
+        builder.setMessage("[어르신을 부탁해] 는 위치 데이터를 [노약자 경로확인], 어르신 주변 [복지기관 및 병원 조회], [어르신 안전구역 설정] 기능에 필요합니다. 앱을 사용하지 않을 때도 앱에서 내 위치에 항상 엑세스하려고 합니다. 동의하십니까?");
         builder.setPositiveButton("동의", (dialog, which) -> {
             if (consent) {
                 // 사용자가 동의한 경우의 처리
