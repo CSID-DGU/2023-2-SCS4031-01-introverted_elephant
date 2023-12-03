@@ -44,6 +44,7 @@
         android:layout_height="60dp"
         android:backgroundTint="#FF8A00"
         android:text="안전구역 설정"
+        android:textSize="16sp"
         app:layout_constraintTop_toTopOf="@+id/guideline1"
         app:layout_constraintLeft_toRightOf="@+id/guideline3"/>
 

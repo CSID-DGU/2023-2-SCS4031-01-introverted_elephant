@@ -115,7 +115,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintLeft_toRightOf="@+id/guideline1" />
+        app:layout_constraintLeft_toLeftOf="@+id/guideline3"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/setzone"
@@ -143,6 +143,6 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline4"
-        app:layout_constraintLeft_toLeftOf="@+id/guideline3" />
+        app:layout_constraintLeft_toRightOf="@+id/guideline1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

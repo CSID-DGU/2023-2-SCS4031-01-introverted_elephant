@@ -13,7 +13,7 @@
         android:layout_marginBottom="20dp"
         android:text="회원 로그인"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/emailEditText"
         app:layout_constraintLeft_toLeftOf="@+id/emailEditText" />
@@ -66,7 +66,7 @@
         android:ems="12"
         android:text="로그인"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
         app:layout_constraintStart_toStartOf="@+id/passwordEditText"
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:text="* 회원가입 후 이용 가능한 서비스입니다."
-        android:textSize="10dp"
+        android:textSize="10sp"
         app:layout_constraintLeft_toLeftOf="@+id/signInButton"
         app:layout_constraintTop_toBottomOf="@+id/signInButton" />
 
@@ -93,7 +93,7 @@
         android:minHeight="25dp"
         android:text="회원가입"
         android:textColor="@color/black"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@+id/signUpdescript"
         app:layout_constraintTop_toBottomOf="@+id/signInButton" />

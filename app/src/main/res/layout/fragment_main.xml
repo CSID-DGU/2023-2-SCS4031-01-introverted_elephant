@@ -141,7 +141,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="투약 알림"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/medicineButton"
         app:layout_constraintStart_toStartOf="@+id/medicineButton"
         app:layout_constraintTop_toBottomOf="@+id/medicineButton" />
@@ -151,7 +151,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="기관 알림"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/medicineButton"
         app:layout_constraintStart_toStartOf="@+id/medicineButton"
         app:layout_constraintTop_toBottomOf="@+id/institutionButton" />
@@ -161,7 +161,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="가족 알림"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/medicineButton"
         app:layout_constraintStart_toStartOf="@+id/medicineButton"
         app:layout_constraintTop_toBottomOf="@+id/familyButton" />
@@ -170,7 +170,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="식사 알림"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/foodButton"
         app:layout_constraintStart_toStartOf="@+id/foodButton"
         app:layout_constraintTop_toBottomOf="@+id/foodButton" />
@@ -180,7 +180,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="병원 알림"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
         app:layout_constraintStart_toStartOf="@+id/hospitalButton"
         app:layout_constraintTop_toBottomOf="@+id/hospitalButton" />
@@ -190,7 +190,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="기타 알림"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
         app:layout_constraintStart_toStartOf="@+id/hospitalButton"
         app:layout_constraintTop_toBottomOf="@+id/workButton" />
@@ -200,7 +200,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="운동 알림"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
         app:layout_constraintStart_toStartOf="@+id/hospitalButton"
         app:layout_constraintTop_toBottomOf="@+id/familyButton" />
@@ -210,7 +210,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="할일 알림"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/workButton"
         app:layout_constraintStart_toStartOf="@+id/workButton"
         app:layout_constraintTop_toTopOf="@+id/textView7" />
@@ -220,7 +220,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="이동 알림"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/workButton"
         app:layout_constraintStart_toStartOf="@+id/workButton"
         app:layout_constraintTop_toBottomOf="@+id/familyButton" />
@@ -232,7 +232,7 @@
         android:layout_marginTop="90dp"
         android:background="@drawable/rect_orange"
         android:text="경고 알림 보내기"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/hospitalButton"
         app:layout_constraintHorizontal_bias="0.0"
