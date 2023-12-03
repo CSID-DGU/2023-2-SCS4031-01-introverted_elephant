@@ -70,7 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         userInfo.put("nickname", "긴급 상황에 확인할 수 있도록 중요한 정보들을 모두 적어주세요. 작성한 정보는 어르신의 핸드폰에 표시 됩니다. ex) 어르신 혈액형 : AB");
                                         userInfo.put("safe_latitude", 0);
                                         userInfo.put("safe_longitude", 0);
-                                        userInfo.put("radius", -1);
+                                        userInfo.put("radius", 0);
                                         userInfo.put("agree", 0);
 
                                         userRef.set(userInfo, SetOptions.merge()); // SetOptions.merge()를 사용하여 문서를 덮어쓰지 않고 업데이트

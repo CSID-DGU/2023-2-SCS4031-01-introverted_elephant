@@ -582,7 +582,7 @@ public class MapActivity extends AppCompatActivity {
                     }
                 });
     }
-    public class CustomBalloonAdapter implements CalloutBalloonAdapter {
+    public static class CustomBalloonAdapter implements CalloutBalloonAdapter {
 
         private View mCalloutBalloon;
         private TextView name;
@@ -596,20 +596,23 @@ public class MapActivity extends AppCompatActivity {
 
         @Override
         public View getCalloutBalloon(MapPOIItem poiItem) {
+            double latitude = poiItem.getMapPoint().getMapPointGeoCoord().latitude;
+            double longitude = poiItem.getMapPoint().getMapPointGeoCoord().longitude;
+            String formattedLatitude = String.format("%.5f", latitude);
+            String formattedLongitude = String.format("%.5f", longitude);
             // 마커 클릭 시 나오는 말풍선
             name.setText(poiItem.getItemName());   // 해당 마커의 정보 이용 가능
             if (poiItem.getUserObject() instanceof Institution )
                 phone.setText(((Institution) poiItem.getUserObject()).phonenumber);
             else if (poiItem.getUserObject() instanceof Hospital )
                 phone.setText(((Hospital) poiItem.getUserObject()).phone);
-            else phone.setText("getCalloutBalloon");
+            else phone.setText("위도: "+ formattedLatitude + "  경도 : "+ formattedLongitude);
             return mCalloutBalloon;
         }
 
         @Override
         public View getPressedCalloutBalloon(MapPOIItem poiItem) {
             // 말풍선 클릭 시
-            phone.setText("getPressedCalloutBalloon");
             return mCalloutBalloon;
         }
     }

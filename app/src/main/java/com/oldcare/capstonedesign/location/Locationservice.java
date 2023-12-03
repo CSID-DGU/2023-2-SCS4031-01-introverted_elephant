@@ -92,7 +92,7 @@ public class Locationservice extends Service {
             }
         }
 
-        LocationRequest locationRequest = new LocationRequest.Builder(PRIORITY_BALANCED_POWER_ACCURACY,30*1000).build();
+        LocationRequest locationRequest = new LocationRequest.Builder(PRIORITY_BALANCED_POWER_ACCURACY,60*1000).build(); // 1분마다
 
         if (ActivityCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -193,7 +193,7 @@ public class Locationservice extends Service {
     private void CheckOutOfSafetyZone(double lat , double lng) {
         db.collection("Users").document(uid).get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.contains("safe_latitude") && documentSnapshot.getDouble("safe_latitude") != 0) {
+                    if (documentSnapshot.contains("safe_latitude") && documentSnapshot.getDouble("safe_latitude") != 0 && documentSnapshot.getLong("radius") != 0 ) {
                         // 필드가 존재해야하고, 그 값이 초기값이 아닐 때,
                         safe_latitude = documentSnapshot.getDouble("safe_latitude");
                         safe_longitude = documentSnapshot.getDouble("safe_longitude");

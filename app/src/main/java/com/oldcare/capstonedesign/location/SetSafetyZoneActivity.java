@@ -8,16 +8,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oldcare.capstonedesign.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapView;
 import net.daum.mf.map.api.MapPOIItem;
@@ -43,7 +48,7 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
     private MyMapViewEventListener MyMapViewEventListener = new MyMapViewEventListener();
     private double last_latitude;
     private double last_longitude;
-    private int distance = -1;
+    private int distance = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,7 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
         initMapView();
         mapView.setPOIItemEventListener(poiItemEventListener);
         mapView.setMapViewEventListener(MyMapViewEventListener);
+        mapView.setCalloutBalloonAdapter(new MapActivity.CustomBalloonAdapter(getLayoutInflater()));  // 커스텀 말풍선 등록
 
         Button searchbutton = findViewById(R.id.searchbutton);
         EditText editText = findViewById(R.id.editTextText);
@@ -63,7 +69,7 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
 
         searchbutton.setOnClickListener(view -> {
             String searchText = editText.getText().toString();
-            if (searchText == null) showToast("주소를 입력하세요");
+            if (TextUtils.isEmpty(searchText)) showToast("도로명 주소를 입력해주세요");
             else doSearch(searchText);
         });
 
@@ -230,6 +236,8 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
     }
 
     public void resetzone() {
+        mapView.removeAllCircles();
+        mapView.removeAllPOIItems();
         firestore.collection("Users")
                 .document(oldman_uid)
                 .update(

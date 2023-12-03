@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/resetzone"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".location.SetSafetyZoneActivity">
@@ -133,13 +132,13 @@
         app:layout_constraintLeft_toLeftOf="@+id/guideline2" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button2"
+        android:id="@+id/resetzone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/round_orange"
         android:minWidth="90dp"
         android:minHeight="40dp"
-        android:text="Button"
+        android:text="해제"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
