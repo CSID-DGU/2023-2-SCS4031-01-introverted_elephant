@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
         android:clickable="true"
-        android:backgroundTint="#FFDEB7"
+        android:backgroundTint="#FFA63D"
 
         app:layout_constraintBottom_toTopOf="@+id/horizonGuideline"
         app:layout_constraintEnd_toStartOf="@+id/foodButton"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
         android:clickable="true"
-        android:backgroundTint="#FFDEB7"
+        android:backgroundTint="#FFA63D"
 
         app:layout_constraintBottom_toTopOf="@+id/horizonGuideline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="40dp"
         android:clickable="true"
-        android:backgroundTint="#FFDEB7"
+        android:backgroundTint="#FFA63D"
 
         app:layout_constraintBottom_toTopOf="@+id/horizonGuideline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
-        android:backgroundTint="#FFDEB7"
+        android:backgroundTint="#FFA63D"
 
         app:layout_constraintBottom_toTopOf="@+id/hospitalButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
-        android:backgroundTint="#FFDEB7"
+        android:backgroundTint="#FFA63D"
 
         app:layout_constraintBottom_toTopOf="@+id/hospitalButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
-        android:backgroundTint="#FFDEB7"
+        android:backgroundTint="#FFA63D"
 
         app:layout_constraintBottom_toTopOf="@+id/hospitalButton"
         app:layout_constraintEnd_toStartOf="@+id/foodButton"
@@ -104,7 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
-        android:backgroundTint="#FFDEB7"
+        android:backgroundTint="#FFA63D"
         app:layout_constraintBottom_toTopOf="@+id/workButton"
         app:layout_constraintEnd_toStartOf="@+id/foodButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
-        android:backgroundTint="#FFDEB7"
+        android:backgroundTint="#FFA63D"
 
         app:layout_constraintBottom_toTopOf="@+id/workButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -129,7 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="60dp"
         android:clickable="true"
-        android:backgroundTint="#FFDEB7"
+        android:backgroundTint="#FFA63D"
 
         app:layout_constraintBottom_toTopOf="@+id/etcButton"
         app:layout_constraintEnd_toEndOf="parent"
