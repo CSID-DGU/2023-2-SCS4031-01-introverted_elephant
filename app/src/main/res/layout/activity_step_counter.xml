@@ -161,7 +161,7 @@
         android:id="@+id/cardView6"
         android:layout_width="185dp"
         android:layout_height="102dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true"
@@ -205,7 +205,7 @@
         android:id="@+id/cardView8"
         android:layout_width="185dp"
         android:layout_height="100dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true"
@@ -244,6 +244,29 @@
 
     </androidx.cardview.widget.CardView>
 
+    <TextView
+        android:id="@+id/walkAverage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:text="하루 6000 ~ 8000보만 걸어도 증상 완화 효과가 크다"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView6" />
+
+    <TextView
+        android:id="@+id/walkAdvantage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="-하버드대 공중보건대학 연구-"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/walkAverage" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
@@ -272,14 +295,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3"/>
+        app:layout_constraintGuide_percent="0.28"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineTop2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.68"/>
+        app:layout_constraintGuide_percent="0.7"/>
 
 
 
