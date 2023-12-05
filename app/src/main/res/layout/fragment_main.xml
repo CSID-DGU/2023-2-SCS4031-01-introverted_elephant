@@ -7,18 +7,31 @@
     tools:context=".Fragment.MainFragment">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView33"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:text="어르신에게 보낼 알림의 카테고리를\n선택해주세요."
+        android:text="일상 돌봄 서비스"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/carButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.586" />
+        app:layout_constraintVertical_bias="0.2"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="어르신의 일정을 관리할 수 있습니다.\n카테고리를 선택하고 정보를 입력해주세요."
+        android:textAlignment="center"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toTopOf="@+id/carButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView33" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/medicineButton"

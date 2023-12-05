@@ -5,7 +5,7 @@
         android:id="@+id/item_main_fragment"
         android:enabled="true"
         android:icon="@drawable/baseline_add_alert_24"
-        android:title="알림"
+        android:title="일상돌봄"
         />
 
     <item

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.oldcare.capstonedesign.R;
@@ -19,7 +20,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
 
         //어르신 버튼을 눌렀을 때
-        ImageButton oldButton = findViewById(R.id.oldButton);
+        Button oldButton = findViewById(R.id.oldButton);
         oldButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +50,7 @@ public class StartActivity extends AppCompatActivity {
         });
 
         //보호자 버튼을 눌렀을 때
-        ImageButton adminButton = findViewById(R.id.adminButton);
+        Button adminButton = findViewById(R.id.adminButton);
         adminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +65,6 @@ public class StartActivity extends AppCompatActivity {
                                 Intent intent = new Intent(StartActivity.this, MasterStartActivity.class);
                                 startActivity(intent);
                                 finish();
-
                             }
                         })
                         .setNegativeButton("취소", new DialogInterface.OnClickListener() {
