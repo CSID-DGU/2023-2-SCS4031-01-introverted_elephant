@@ -197,6 +197,8 @@ public class Locationservice extends Service {
                         // 필드가 존재해야하고, 그 값이 초기값이 아닐 때,
                         safe_latitude = documentSnapshot.getDouble("safe_latitude");
                         safe_longitude = documentSnapshot.getDouble("safe_longitude");
+                    }
+                    if (documentSnapshot.contains("safe_latitude") && documentSnapshot.getDouble("safe_latitude") != 0 && documentSnapshot.getLong("radius") != 0 ) {
                         if (documentSnapshot.getLong("radius") < Util.getDistance(safe_latitude, safe_longitude, lat, lng)) {
                             // 안전구역과의 거리가 안전구역의 반지름보다 클 경우 : 알림보내기
                             // 알림을 보내는 동작을 수행 (노약자 핸드폰의 Message 문서에 위치 정보 넣기)
@@ -212,18 +214,19 @@ public class Locationservice extends Service {
                             int minute = calendar.get(Calendar.MINUTE);
 
                             newUser.put("check", "0");
-                            newUser.put("content", "안전구역을 " + outrange + "M 벗어났습니다");
+                            newUser.put("content", "안전구역을 " + outrange2 + "M 벗어났습니다");
                             int month = calendar.get(Calendar.MONTH) + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
                             int day = calendar.get(Calendar.DAY_OF_MONTH);
-                            newUser.put("month", month);
-                            newUser.put("day", day);
-                            newUser.put("hour", hour);
-                            newUser.put("minute", minute);
+                            newUser.put("month", String.valueOf(month));
+                            newUser.put("day", String.valueOf(day));
+                            newUser.put("hour", String.valueOf(hour));
+                            newUser.put("minute", String.valueOf(minute));
                             newUser.put("title", "위치 알림");
 
                             // 컬렉션("users")에 문서 추가
                             SharedPreferences preferences = getSharedPreferences("user_preferences", MODE_PRIVATE);
                             String who = preferences.getString("who", "");
+                            Log.d("LocationService", "who : " + who);
 
                             db.collection("Users").document(who).collection("message")
                                     .add(newUser)
