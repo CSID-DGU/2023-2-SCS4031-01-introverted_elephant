@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:text="일상 돌봄 서비스"
+        android:textStyle="bold"
         android:textAlignment="center"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/carButton"
@@ -238,13 +239,27 @@
         app:layout_constraintStart_toStartOf="@+id/workButton"
         app:layout_constraintTop_toBottomOf="@+id/familyButton" />
 
+    <TextView
+        android:id="@+id/warningText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="어르신 안부 확인하기를 통해\n어르신에게 우선적으로 연락할 수 있어요."
+        android:textAlignment="center"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizonGuideline" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/warningButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="150dp"
         android:background="@drawable/rect_orange"
-        android:text="경고 알림 보내기"
+        android:text="어르신 안부 확인하기"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/hospitalButton"

@@ -26,6 +26,7 @@
         android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:layout_marginTop="10dp"
+        android:layout_marginLeft="-10dp"
         app:layout_constraintLeft_toRightOf="@+id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/guidelineTop"
         app:lottie_autoPlay="true"
@@ -104,7 +105,8 @@
         android:textAlignment="center"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/oldDeleteIDChip"
-        app:layout_constraintLeft_toRightOf="@+id/guidelineLeft"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <com.google.android.material.chip.Chip
         android:id="@+id/oldDeleteIDChip"
@@ -114,7 +116,8 @@
         android:textAlignment="center"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/guidelineLeft"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/Settings"
@@ -136,7 +139,8 @@
         android:textSize="15sp"
         android:layout_marginBottom="15dp"
         app:layout_constraintBottom_toTopOf="@+id/Management"
-        app:layout_constraintLeft_toRightOf="@+id/guidelineLeft" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <com.google.android.material.chip.Chip
         android:id="@+id/oldWarningChip"
@@ -146,7 +150,8 @@
         android:textAlignment="center"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/finishChip"
-        app:layout_constraintLeft_toRightOf="@+id/guidelineLeft"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/informationTextView"

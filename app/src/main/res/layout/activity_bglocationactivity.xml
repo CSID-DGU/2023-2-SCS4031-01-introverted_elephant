@@ -13,12 +13,27 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.35"/>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/mapIcon"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/check_location"
+        android:layout_marginBottom="15dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/fragment_community2"
+        tools:layout_editor_absoluteY="-1dp" />
+
     <Switch
         android:id="@+id/switchLocationUpdates_inmap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="132dp"
         android:text="위치공유"
+        android:textStyle="bold"
         android:textSize="20sp"
         android:layout_marginBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -73,7 +73,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@+id/editTextNumber"
-        app:layout_constraintTop_toTopOf="@+id/editTextNumber" />
+        app:layout_constraintBottom_toBottomOf="@+id/editTextNumber" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline1"
