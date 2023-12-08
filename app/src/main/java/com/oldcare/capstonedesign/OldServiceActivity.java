@@ -25,7 +25,7 @@ public class OldServiceActivity extends AppCompatActivity {
         if(intent1 != null) {
             // 데이터가 있는지 확인 후 추출
             String receivedVariable = intent1.getStringExtra("key");
-            if(receivedVariable.equals("first")) {
+            if(receivedVariable != null && receivedVariable.equals("first2223")) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     Intent serviceIntent = new Intent(OldServiceActivity.this, FirestoreNotificationService.class);
                     startService(serviceIntent);
