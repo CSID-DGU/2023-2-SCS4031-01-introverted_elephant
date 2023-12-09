@@ -17,6 +17,13 @@
 > 6) 활동 확인 기능 : 어르신의 일일 걸음 수를 확인할 수 있다. 보호자는 어르신의 걸음 수 목표를 정할 수 있으며, 일주일 걸음 수 통계, 평균 걸음 수 등을 확인할 수 있다. 또한 어르신들 중 일일 걸음 수 순위를 확인할 수 있다.
 <br/>
 
+
+## Tech Stack
+<b>Android</b>
+<img src="https://img.shields.io/badge/Android-3DDC84?style=flat-square&logo=android&logoColor=white"/>
+
+
+
 ## Team Member
 **Team Leader**: [[이유빈](https://github.com/a0100019)] 동국대학교 식품생명공학과 <br>
 **Team Member**: [[김재홍](https://github.com/MealWithoutSoup)] 동국대학교 경제학과 <br>
