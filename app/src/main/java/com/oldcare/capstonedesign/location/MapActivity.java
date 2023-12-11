@@ -118,7 +118,7 @@ public class MapActivity extends AppCompatActivity {
             hpinfo(longitude, latitude);
             getAdress(longitude,latitude);
 
-            textView.setOnClickListener(v -> onTextViewClick(v));
+            textView.setOnClickListener(this::onTextViewClick);
         });
 
     } // End of onCreate
@@ -498,6 +498,7 @@ public class MapActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(task -> {
                     long currentTimeMillis = System.currentTimeMillis();
+                    locationDataList.clear();
                     for (QueryDocumentSnapshot documentSnapshot : task) {
                         // 각 문서에 대한 작업 수행
                         Map<String, Object> data = documentSnapshot.getData();
@@ -506,6 +507,7 @@ public class MapActivity extends AppCompatActivity {
                         double latitude = (double) data.get("latitude");
                         double longitude = (double) data.get("longitude");
                         Timestamp firestoreTimestamp = (Timestamp) data.get("timestamp"); // get Timestamp
+                        assert firestoreTimestamp != null;
                         Date javaDate = firestoreTimestamp.toDate(); // Transform Timestamp to Java Date
                         SimpleDateFormat sdf = new SimpleDateFormat("MM월 dd일 HH시 mm분"); // Formatting Using SimpleDateFormat
                         long timestampMillis = javaDate.getTime();
@@ -526,8 +528,8 @@ public class MapActivity extends AppCompatActivity {
 
                         // Add to List
                         locationDataList.add(locationData);
-                        showpath(locationDataList);
                     }
+                    showpath(locationDataList);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("Firestore", "Error getting documents: " + e.getMessage());
@@ -583,11 +585,9 @@ public class MapActivity extends AppCompatActivity {
                 });
     }
     public static class CustomBalloonAdapter implements CalloutBalloonAdapter {
-
         private View mCalloutBalloon;
         private TextView name;
         private TextView phone;
-
         public CustomBalloonAdapter(LayoutInflater inflater) {
             mCalloutBalloon = inflater.inflate(R.layout.balloon_layout, null);
             name = mCalloutBalloon.findViewById(R.id.ball_tv_name);
@@ -598,15 +598,15 @@ public class MapActivity extends AppCompatActivity {
         public View getCalloutBalloon(MapPOIItem poiItem) {
             double latitude = poiItem.getMapPoint().getMapPointGeoCoord().latitude;
             double longitude = poiItem.getMapPoint().getMapPointGeoCoord().longitude;
-            String formattedLatitude = String.format("%.5f", latitude);
-            String formattedLongitude = String.format("%.5f", longitude);
+            String formattedLatitude = String.valueOf(latitude);
+            String formattedLongitude = String.valueOf(longitude);
             // 마커 클릭 시 나오는 말풍선
             name.setText(poiItem.getItemName());   // 해당 마커의 정보 이용 가능
             if (poiItem.getUserObject() instanceof Institution )
                 phone.setText(((Institution) poiItem.getUserObject()).phonenumber);
             else if (poiItem.getUserObject() instanceof Hospital )
                 phone.setText(((Hospital) poiItem.getUserObject()).phone);
-            else phone.setText("위도: "+ formattedLatitude + "  경도 : "+ formattedLongitude);
+            else phone.setText("위도: "+ formattedLatitude + "\n"+"경도 : "+ formattedLongitude);
             return mCalloutBalloon;
         }
 

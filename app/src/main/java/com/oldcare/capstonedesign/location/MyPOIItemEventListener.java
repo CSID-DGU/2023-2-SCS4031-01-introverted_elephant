@@ -34,24 +34,25 @@ public class MyPOIItemEventListener implements MapView.POIItemEventListener {
         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         builder.setTitle(mapPOIItem.getItemName());
         String[] itemList = {"주소 복사", "번호 복사", "취소"};
-        String[] itemList2 = {"취소"};
+        String[] itemList2 = {"좌표 복사","취소"};
         if (mapPOIItem.getUserObject() instanceof Hospital) {
             builder.setItems(itemList, (dialog, which) -> {
+                Hospital userObject = (Hospital) mapPOIItem.getUserObject();
                 switch (which) {
                     case 0:
                         // 클립데이터 생성
-                        ClipData clipData = ClipData.newPlainText("주소 복사", ((Hospital) mapPOIItem.getUserObject()).addressName ); //Test 가 실질적으로 복사되는 Text
+                        ClipData clipData = ClipData.newPlainText("주소 복사", userObject.addressName ); //Test 가 실질적으로 복사되는 Text
                         // 클립보드에 추가
                         clipboardManager.setPrimaryClip(clipData);// 주소 복사
                         break;
                     case 1:
                         // 클립데이터 생성
-                        ClipData clipData2 = ClipData.newPlainText("번호 복사", ((Hospital) mapPOIItem.getUserObject()).phone ); //Test 가 실질적으로 복사되는 Text
+                        ClipData clipData2 = ClipData.newPlainText("번호 복사", userObject.phone );
                         // 클립보드에 추가
                         clipboardManager.setPrimaryClip(clipData2);// 번호 복사
                         break;
                     case 2:
-                        dialog.dismiss();   // 대화상자 닫기
+                        dialog.dismiss();
                         break;
                 }
             });
@@ -79,14 +80,20 @@ public class MyPOIItemEventListener implements MapView.POIItemEventListener {
             builder.setItems(itemList2, (dialog, which) -> {
                 switch (which) {
                     case 0:
-                        dialog.dismiss();   // 대화상자 닫기
+                        // 클립데이터 생성
+                        MapPoint.GeoCoordinate mapPointGeoCoord = mapPOIItem.getMapPoint().getMapPointGeoCoord();
+                        ClipData clipData = ClipData.newPlainText("좌표 복사", mapPointGeoCoord.latitude + " " + mapPointGeoCoord.longitude);
+                        // 클립보드에 추가
+                        clipboardManager.setPrimaryClip(clipData);
+                        break;
+                    case 1:
+                        dialog.dismiss();
                         break;
                 }
             });
         }
         builder.show();
     }
-
     @Override
     public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
 
@@ -94,5 +101,4 @@ public class MyPOIItemEventListener implements MapView.POIItemEventListener {
     public MapPOIItem getLastClickedPOIItem() {
         return lastClickedPOIItem;
     }
-
 }

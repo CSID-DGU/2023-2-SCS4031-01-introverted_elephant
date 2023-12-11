@@ -1,7 +1,6 @@
 package com.oldcare.capstonedesign.location;
 
 import java.io.Serializable;
-// RealtimeDatabase에서 기관정보를 받아오기 위한 클래스
 public class Institution implements Serializable {
     String name;
     String address;

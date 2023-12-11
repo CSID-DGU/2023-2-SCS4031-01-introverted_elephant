@@ -10,19 +10,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oldcare.capstonedesign.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
-import net.daum.mf.map.api.CalloutBalloonAdapter;
 import net.daum.mf.map.api.MapCircle;
 import net.daum.mf.map.api.MapView;
 import net.daum.mf.map.api.MapPOIItem;
@@ -83,13 +78,14 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
                     int distValue = Integer.parseInt(distString);
                     // distValue를 사용한 작업 수행
                     getnumber(distValue);
+                    showToast(distValue +"m 입력하였습니다.");
                 } catch (NumberFormatException e) {
                     // 정수로 변환할 수 없는 경우에 대한 예외 처리
                     e.printStackTrace(); // 또는 적절한 오류 처리를 추가
                 }
             } else {
                 // 빈 문자열에 대한 처리 또는 오류 메시지 출력
-                Toast.makeText(getApplicationContext(), "숫자를 입력해주세요", Toast.LENGTH_SHORT).show();
+                showToast("숫자를 입력해주세요");
             }
         });
 
@@ -98,6 +94,7 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
             MapPOIItem lastClickedPOIItem = poiItemEventListener.getLastClickedPOIItem();
             if (lastClickedPOIItem != null) {
                 setZone(lastClickedPOIItem, distance);
+                showToast("구역이 설정되었습니다.");
             } else {
                 // searchText가 null인 경우
                 showToast("지도에서 마커를 클릭해야 합니다.");
@@ -176,7 +173,8 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
                         marker.setCustomImageResourceId(R.drawable.mapmarker_blue);
                         marker.setSelectedMarkerType(MapPOIItem.MarkerType.CustomImage); // (마커 클릭 후) 모양.
                         marker.setCustomSelectedImageResourceId(R.drawable.mapmarker_red);
-                        // 지도화면 위에 추가되는 아이콘을 추가하기 위한 호출(말풍선 모양)
+                        marker.setCustomImageAutoscale(false);
+                        marker.setCustomImageAnchor(0.5f, 1.0f);
                         mapView.addPOIItem(marker);
                     }
                 }
@@ -208,7 +206,7 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
             safezone.setTag(2);
             mapView.addCircle(safezone);
         } else {
-            showToast("마커를 클릭한 뒤 눌러주세요");
+            showToast("지도에서 마커를 선택한 뒤 눌러주세요");
         }
     }
 
@@ -236,6 +234,9 @@ public class SetSafetyZoneActivity extends AppCompatActivity {
     }
 
     public void resetzone() {
+        last_latitude = 0;
+        last_longitude = 0;
+        distance = 0;
         mapView.removeAllCircles();
         mapView.removeAllPOIItems();
         firestore.collection("Users")
