@@ -159,8 +159,8 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 // 경고 메시지 생성
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("경고 전송");
-                builder.setMessage("보호대상자의 핸드폰으로 확인이 필수적인 경고가 즉시 전송됩니다. 전송하시겠습니까?");
+                builder.setTitle("어르신 안부 확인하기");
+                builder.setMessage("어르신의 핸드폰으로 안부 확인 알림을 전송하시겠습니까?");
                 builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -181,7 +181,7 @@ public class MainFragment extends Fragment {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(getActivity(), "경고 알림이 전송되었습니다.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), "안부확인 알림이 전송되었습니다.", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 

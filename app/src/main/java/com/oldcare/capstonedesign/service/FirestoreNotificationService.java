@@ -119,7 +119,7 @@ public class FirestoreNotificationService extends Service {
 
                             if (titleValue != null) {
                                 if (titleValue.equals("경고")) {
-                                    sendCustomLocalNotification("보호자께서 경고 알림을 전송하였습니다. 알림을 클릭해주세요.");
+                                    sendCustomLocalNotification("보호자께서 안부 확인 알림을 보냈습니다. 알림을 클릭해주세요.");
                                     Log.d("121212", "경고알림도착");
                                 } else {
                                     Log.d("121212", "일반알림도착");
@@ -201,7 +201,7 @@ public class FirestoreNotificationService extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         notificationBuilder.setSmallIcon(R.drawable.old_person);
-        notificationBuilder.setContentTitle("경고 알림 도착");
+        notificationBuilder.setContentTitle("안부 확인 알림 도착");
         notificationBuilder.setContentText(message);
         notificationBuilder.setContentIntent(pendingIntent);
 
